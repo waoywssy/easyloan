@@ -1,0 +1,15 @@
+.jobIcon{
+	cursor:pointer;
+	padding:4px 4px 0 0;
+	}
+.disabled{display:none;}
+
+#jqContextMenu.li{
+	border: solid 1px #FEF;
+}
+
+#datalist{
+	max-height:300px;
+	overflow: auto;	
+}
+

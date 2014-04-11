@@ -1,0 +1,56 @@
+<?php
+/*
+  The schema function function bots_schema(){} should be placed in file: bots.install,
+  which has not been created here 
+*/
+/**
+ * Implements hook_install()
+ */
+function _easyloan_install(){
+	// create any roles we will be using
+	$junior_admin_permissions = array(
+		'view easyloan basic info',
+	);
+	$senior_admin_permissions = array(
+		'view easyloan basic info',
+		'edit easyloan user info',
+	);
+	$super_senior_admin_permissions = array(
+		'view easyloan basic info',
+		'edit easyloan user info',
+	);
+	
+	_add_role('junior_admin');
+	_add_role('senior_admin', 1);
+	
+	_add_permissions('junior_admin', $junior_admin_permissions);
+	_add_permissions('senior_admin', $senior_admin_permissions);
+}
+/**
+ * Implements hook_uninstall()
+ */
+function easyloan_uninstall(){
+	// remove any roles we created
+	user_role_delete('junior_admin');
+	user_role_delete('senior_admin');
+}
+/**
+ *	Adds a new role
+ *      @machine_name - the name of the role to be added
+ *      @weight - the optional display weight for role
+ */
+function _add_role($machine_name, $weight = 0){
+	$role = new stdClass();
+	$role->name = $machine_name;
+	$role->weight = $weight;
+	user_role_save($role);
+}
+/**
+ *	Adds permissions to a role
+ *	@role_name - the name of the role to receive an update
+ *	@permissions - the array of permissions to add
+ */
+function _add_permissions($role_name, $permissions){
+	$role = user_role_load_by_name($role_name);
+	user_role_grant_permissions($role->rid, $permissions);
+}
