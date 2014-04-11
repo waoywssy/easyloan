@@ -9,10 +9,19 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/jquery.powertip.min.c
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/jquery.powertip.min.js');
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account.js');
 
-
 global $base_url;
 $img_path = drupal_get_path('theme','easyloan') . '/images/default-avatar-96.png';
 ?>
+<script>
+(function ($, Drupal, window, document, undefined) {
+// To understand behaviors, see https://drupal.org/node/756722#behaviors
+Drupal.behaviors.tip = {
+  attach: function(context, settings) {
+  $('#tips_1').powerTip({ placement: 'e' });
+  }
+};
+})(jQuery, Drupal, this, this.document);
+</script>
 <div class="grid_10">
 <div class="ui-poptip fn-hide" id="tipCon_3" style="position: absolute; left: 260px; top: 156px; display: block;">
   <div class="ui-poptip-shadow">

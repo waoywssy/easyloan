@@ -13,7 +13,7 @@
 (function ($, Drupal, window, document, undefined) {
 
 // To understand behaviors, see https://drupal.org/node/756722#behaviors
-Drupal.behaviors.account = {
+Drupal.behaviors.tab = {
   attach: function(context, settings) {
 
   	$('.ui-tab-item').click(function(){

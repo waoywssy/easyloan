@@ -15,7 +15,8 @@
 // To understand behaviors, see https://drupal.org/node/756722#behaviors
 Drupal.behaviors.account = {
   attach: function(context, settings) {
-			$('.iconfont .tips').powerTip({ placement: 'e' });
+  	alert($('.north-west').html());
+	$('#tips_1').powerTip({ placement: 'e' });
   }
 };
 
