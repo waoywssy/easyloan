@@ -10,19 +10,19 @@
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/jquery.validate.min.js');
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/reg.js');
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/reg.css');
-
-//print render($form['account']['mail']);
-
-  //print drupal_render($form['actions']);
-
-var_dump($form);
+/*
+print render($form['account']['name']);
+print render($form['account']['pass']);
+print render($form['account']['mail']);
+print render($form['captcha']);
+//print drupal_render($form['actions']);
+*/
+//var_dump($form);
 ?>
 <div id="pg-reg">
   <div class="container_12">
     <div class="p20bs color-white-bg regbox">
       <div data-name="register" data-showtip="false" class="ui-form" method="post" id="reg">
-        <input id="inviteCode" type="hidden" name="inviteCode" value="">
-        <input id="utmSource" type="hidden" name="utmSource" value="">
         <fieldset>
           <legend>注册</legend>
           <div class="ui-form-item">
