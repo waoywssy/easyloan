@@ -9,6 +9,7 @@
 ?>
 <div class="pg-container  ">
   <?php print render($page['header']); ?>
+  <?php print $messages; ?>
   <div class="pg-container-content">
     <?php print render($page['content']); ?>
   </div>
