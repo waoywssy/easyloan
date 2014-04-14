@@ -60,6 +60,7 @@ function easyloan_block_info() {
 }
 
 function easyloan_block_view($delta = ''){
+  $block = array();
   switch($delta){
     case 'footer':
       //if(user_access('access content')){ //good idea to check user perms here
@@ -82,6 +83,7 @@ function easyloan_block_view($delta = ''){
       $block['content'] = '<div>Notice</div>'; //get_top_notice();
       return $block;
     case 'investlist':
+      $block['content'] = '<a></a>';
       return $block;
     case 'newslist':
       $block['content'] = '<a></a>';
@@ -405,17 +407,18 @@ function menu_account_management_capital($arg1, $arg2, $arg3){
 }
 
 function menu_callback($menu, $param = ''){
+  $content = array();
   switch ($menu) {
     case 'management_applications':
       return theme('management-applications', $content);
     case 'management_accountsindebt':
-      if (intval($param) > 0){
+      if (intval($param) > 0) {
         return theme('management-accountsindebt-detail', $content);
       } else {
         return theme('management-accountsindebt', $content);
       }
     case 'management_readytolend':
-      if (intval($param) > 0){
+      if (intval($param) > 0) {
         return theme('management-readytolend-detail', $content);
       } else {
         return theme('management-readytolend', $content);
@@ -549,6 +552,7 @@ function easyloan_theme() {
   $path = drupal_get_path('theme', 'easyloan') . '/templates';
   
   return array(
+
     'user_login' => array(
         'path' => $path, 
         'template' => 'login',  
@@ -663,12 +667,15 @@ function easyloan_theme() {
     'account-capital' => array(
         'path' => $path . '/account',
         'template' => 'capital',),
+
     'account-invest' => array(
         'path' => $path . '/account',
         'template' => 'invest',),
     'account-investplan' => array(
         'path' => $path . '/account',
         'template' => 'investplan',),
+
+
     'account-myloan' => array(
         'path' => $path . '/account',
         'template' => 'myloan',),
@@ -713,6 +720,7 @@ function easyloan_theme() {
     'management-createinvestplan' => array(
         'path' => $path . '/account',
         'template' => 'createinvestplan',),
+
   );
 }
 
@@ -800,9 +808,9 @@ function easyloan_form_alter(&$form, &$form_state, $form_id) {
   if($form_id == 'user_register_form'){
     $form['account']['name']['#title'] = t('昵称');
     $form['account']['mail']['#title'] = t('邮件');
-    $form['account']['pass']['#title'] = t('密码');
-    $form['account']['name']['#title'] = t('昵称');
-var_dump($form['account']['pass']);
+    
+    //$form['#validate'][] = 'easyloan_user_register_validation_callback';
+
     $form['account']['phone'] = array(
             '#title' => t('手机号'),
             '#type' => 'textfield',
@@ -812,6 +820,27 @@ var_dump($form['account']['pass']);
             '#size' => 11,
             '#weight' => 10,
             );
+    
+    $form['account']['agree'] = array(
+            '#type' => 'checkboxes',
+            '#options' => array(t('')),
+            );
+
+    
+    $form['account']['name']['#theme_wrappers'] = NULL;
+    $form['account']['mail']['#theme_wrappers'] = NULL;
+    $form['account']['phone']['#theme_wrappers'] = NULL;
+    $form['account']['pass']['#theme_wrappers'] = NULL;
+    $form['captcha']['#theme_wrappers'] = NULL;
+    $form['form_build_id']['#theme_wrappers'] = NULL;
+    $form['form_id']['#theme_wrappers'] = NULL;
+    $form['account']['timezone']['#theme_wrappers'] = NULL;
+    $form['account']['agree']['#theme_wrappers'] = NULL;
+
+    $form['account']['name']['#attributes']['class'] = array('ui-input', 'input-icon');
+    $form['account']['phone']['#attributes']['class'] = array('ui-input', 'input-icon');
+
+    $form['actions']['submit']['#attributes']['class'] = array('ui-button', 'ui-button-blue', 'ui-button-mid');
   }
 }
 
@@ -830,9 +859,12 @@ function easyloan_preprocess_user_register_form(&$variables){
   }
   // Hidden form elements have no value to themers. No need for separation.
   $variables['user_register_form']['hidden'] = implode($hidden);
-//  $variables['user_register_form']['phone'] = t('手机号');  
 
   // Collect all form elements to make it easier to print the whole form.
   $variables['user_register_form'] = implode($variables['user_register_form']);
-  var_dump($variables['user_register_form']);
+  //var_dump($variables['user_register_form']);
+}
+
+function easyloan_user_register_validation_callback($form, &$form_state){
+  
 }
