@@ -89,3 +89,8 @@ padding-left:75px;
 #pg-reg input.input-icon{
 	padding-left: 30px;
 }
+
+
+#edit-captcha-response{
+	float:left;
+}

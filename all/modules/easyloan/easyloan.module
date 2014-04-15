@@ -74,7 +74,7 @@ function easyloan_block_view($delta = ''){
       $block['content'] = '<a></a>';
       return $block;
     case 'slide':
-      $block['content'] = '<a>Slide</a>';
+      $block['content'] = '<a></a>';
       return $block;
     case 'intro':
       $block['content'] = '<a></a>';
@@ -529,18 +529,18 @@ function menu_callback($menu, $param = ''){
   }
 }
 
-function menu_findpsw(){ return theme('findpassword', $content);}
+function menu_findpsw(){ return theme('findpassword', array());}
 
-function menu_borrow(){ return theme('borrow', $content);}
+function menu_borrow(){ return theme('borrow', array());}
 
-function menu_notfound(){ return theme('notfound', $content);}
+function menu_notfound(){ return theme('notfound', array());}
 
 function menu_lend($lendid = ''){ 
   if (isset($lendid) && is_numeric($lendid)){
     // $content['easyloan_id'] = $lendid; 
-    return theme('lend-detail', $content);
+    return theme('lend-detail', array());
   }
-  return theme('lend', $content);
+  return theme('lend', array());
 }
 
 
@@ -773,14 +773,13 @@ function easyloan_menu_link($variables) {
       //echo $element['#title'] . $element['#href'] . '<br />'; 
 
       // to fix the bug where $is_active set to false in 'user' page 
-      if ($element['#href']=='user' && request_path()=='user'){ 
+      if ($element['#href']=='user' && request_path()=='user'){
         $is_active = true;
       }
-      if ($element['#href']=='account/management' 
-        && preg_match('/^account\/management\/\d+\/capital/', request_path())){ 
+      if ($element['#href']=='account/management'
+        && preg_match('/^account\/management\/\d+\/capital/', request_path())){
         $is_active = true;
       }
-
       
       //account/management/123456/capital
 
@@ -809,31 +808,34 @@ function easyloan_form_alter(&$form, &$form_state, $form_id) {
     $form['account']['name']['#title'] = t('昵称');
     $form['account']['mail']['#title'] = t('邮件');
     
-    //$form['#validate'][] = 'easyloan_user_register_validation_callback';
+    $form['#validate'] = array_merge(
+      array('easyloan_user_register_validation_callback'), $form['#validate']);
 
     $form['account']['phone'] = array(
             '#title' => t('手机号'),
             '#type' => 'textfield',
             '#description' => t('请输入11位手机号码'),
-            //'#field_suffix' => t('kilograms'),
-            '#default_value' => 135,
+            //'#default_value' => 13511111111,
             '#size' => 11,
             '#weight' => 10,
             );
     
     $form['account']['agree'] = array(
             '#type' => 'checkboxes',
-            '#options' => array(t('')),
+            '#options' => array(t('我已阅读并同意')),
             );
 
     
-    $form['account']['name']['#theme_wrappers'] = NULL;
-    $form['account']['mail']['#theme_wrappers'] = NULL;
-    $form['account']['phone']['#theme_wrappers'] = NULL;
-    $form['account']['pass']['#theme_wrappers'] = NULL;
+    $form['account']['name']['#title_display'] = 'none';
+    $form['account']['name']['#description'] = '';
+    $form['account']['phone']['#title_display'] = 'none';
+    $form['account']['phone']['#description'] = ''; 
+
+    $form['account']['pass']['#title_display'] = 'none';
+    $form['account']['pass']['#description'] = '';
+
     $form['captcha']['#theme_wrappers'] = NULL;
-    $form['form_build_id']['#theme_wrappers'] = NULL;
-    $form['form_id']['#theme_wrappers'] = NULL;
+
     $form['account']['timezone']['#theme_wrappers'] = NULL;
     $form['account']['agree']['#theme_wrappers'] = NULL;
 
@@ -845,26 +847,17 @@ function easyloan_form_alter(&$form, &$form_state, $form_id) {
 }
 
 function easyloan_preprocess_user_register_form(&$variables){
-  $variables['user_register_form'] = array();
-  $hidden = array();
-  // Provide variables named after form keys so themers can print each element independently.
-  foreach (element_children($variables['form']) as $key) {
-    $type = $variables['form'][$key]['#type'];
-    if ($type == 'hidden' || $type == 'token') {
-      $hidden[] = drupal_render($variables['form'][$key]);
-    }
-    else {
-      $variables['user_register_form'][$key] = drupal_render($variables['form'][$key]);
-    }
-  }
-  // Hidden form elements have no value to themers. No need for separation.
-  $variables['user_register_form']['hidden'] = implode($hidden);
-
-  // Collect all form elements to make it easier to print the whole form.
-  $variables['user_register_form'] = implode($variables['user_register_form']);
+  
   //var_dump($variables['user_register_form']);
 }
 
 function easyloan_user_register_validation_callback($form, &$form_state){
   
+  // We notify the form API that this field has failed validation.
+  // form_set_error('Phone', t('Phone can\'t be 1234.'));
+  $form_state['values']['mail']=$form_state['values']['phone'].'@vip.com';
+  
+  //form_set_error('Phone', var_dump($form_state['values']));
 }
+
+
