@@ -7,166 +7,248 @@
  * @see https://drupal.org/node/1728096
  */
 
+function easyloan_theme() { 
+  $path = drupal_get_path('theme', 'easyloan') . '/templates';
+  
+  return array(
+    'user_login' => array(
+        'path' => $path, 
+        'template' => 'login',  
+        'render element' => 'form', 
+        //'arguments' => array('form' => NULL), 
+        'preprocess functions' => array('easyloan_preprocess_user_login'), ),
 
-/**
- * Override or insert variables into the maintenance page template.
- *
- * @param $variables
- *   An array of variables to pass to the theme template.
- * @param $hook
- *   The name of the template being rendered ("maintenance_page" in this case.)
- */
-/* -- Delete this line if you want to use this function
-function easyloan_preprocess_maintenance_page(&$variables, $hook) {
-  // When a variable is manipulated or added in preprocess_html or
-  // preprocess_page, that same work is probably needed for the maintenance page
-  // as well, so we can just re-use those functions to do that work here.
-  easyloan_preprocess_html($variables, $hook);
-  easyloan_preprocess_page($variables, $hook);
-}
-// */
+    'user_pass' => array(
+        'path' => $path, 
+        'template' => 'findpsw',  
+        'render element' => 'form', 
+        //'arguments' => array('form' => NULL), 
+        'preprocess functions' => array('easyloan_preprocess_user_login'), ),
 
-/**
- * Override or insert variables into the html templates.
- *
- * @param $variables
- *   An array of variables to pass to the theme template.
- * @param $hook
- *   The name of the template being rendered ("html" in this case.)
- */
-/* -- Delete this line if you want to use this function
-function easyloan_preprocess_html(&$variables, $hook) {
-  $variables['sample_variable'] = t('Lorem ipsum.');
+    'user_register_form' => array(
+        'path' => $path, 
+        'template' => 'user-register',
+        'render element' => 'form',
+        //'arguments' => array('form' => NULL), 
+        'preprocess functions' => array('easyloan_preprocess_user_register_form'), ),
 
-  // The body tag's classes are controlled by the $classes_array variable. To
-  // remove a class from $classes_array, use array_diff().
-  //$variables['classes_array'] = array_diff($variables['classes_array'], array('class-to-remove'));
-}
-// */
+    'about' => array(
+        'path' => $path . '/about', 
+        'template' => 'about',),
+    'about-news' => array(
+        'path' => $path . '/about', 
+        'template' => 'news',),
+    'about-news-detail' => array(
+        'path' => $path . '/about', 
+        'template' => 'news-detail',),
+    'about-notices' => array(
+        'path' => $path . '/about', 
+        'template' => 'notices',),
+    'about-notices-detail' => array(
+        'path' => $path . '/about', 
+        'template' => 'notices-detail',),
 
-/**
- * Override or insert variables into the page templates.
- *
- * @param $variables
- *   An array of variables to pass to the theme template.
- * @param $hook
- *   The name of the template being rendered ("page" in this case.)
- */
-/* -- Delete this line if you want to use this function
-function easyloan_preprocess_page(&$variables, $hook) {
-  $variables['sample_variable'] = t('Lorem ipsum.');
-}
-// */
+    'about-invite' => array(
+        'path' => $path . '/about', 
+        'template' => 'invite',),
+    'about-contact' => array(
+        'path' => $path . '/about', 
+        'template' => 'contact',),
 
-/**
- * Override or insert variables into the node templates.
- *
- * @param $variables
- *   An array of variables to pass to the theme template.
- * @param $hook
- *   The name of the template being rendered ("node" in this case.)
- */
-/* -- Delete this line if you want to use this function
-function easyloan_preprocess_node(&$variables, $hook) {
-  $variables['sample_variable'] = t('Lorem ipsum.');
+    'helpcenter' => array(
+        'path' => $path . '/help', 
+        'template' => 'help',),
+    'help-account' => array(
+        'path' => $path . '/help',
+        'template' => 'account',),
+    'help-intro' => array(
+        'path' => $path . '/help',
+        'template' => 'intro',),
+    'help-fee' => array(
+        'path' => $path . '/help',
+        'template' => 'fee',),
+    'help-borrow' => array(
+        'path' => $path . '/help',
+        'template' => 'borrow',),
+    'help-invest' => array(
+        'path' => $path . '/help',
+        'template' => 'invest',),
 
-  // Optionally, run node-type-specific preprocess functions, like
-  // easyloan_preprocess_node_page() or easyloan_preprocess_node_story().
-  $function = __FUNCTION__ . '_' . $variables['node']->type;
-  if (function_exists($function)) {
-    $function($variables, $hook);
-  }
-}
-// */
-
-/**
- * Override or insert variables into the comment templates.
- *
- * @param $variables
- *   An array of variables to pass to the theme template.
- * @param $hook
- *   The name of the template being rendered ("comment" in this case.)
- */
-/* -- Delete this line if you want to use this function
-function easyloan_preprocess_comment(&$variables, $hook) {
-  $variables['sample_variable'] = t('Lorem ipsum.');
-}
-// */
-
-/**
- * Override or insert variables into the region templates.
- *
- * @param $variables
- *   An array of variables to pass to the theme template.
- * @param $hook
- *   The name of the template being rendered ("region" in this case.)
- */
-/* -- Delete this line if you want to use this function
-function easyloan_preprocess_region(&$variables, $hook) {
-  // Don't use Zen's region--sidebar.tpl.php template for sidebars.
-  //if (strpos($variables['region'], 'sidebar_') === 0) {
-  //  $variables['theme_hook_suggestions'] = array_diff($variables['theme_hook_suggestions'], array('region__sidebar'));
-  //}
-}
-// */
-
-/**
- * Override or insert variables into the block templates.
- *
- * @param $variables
- *   An array of variables to pass to the theme template.
- * @param $hook
- *   The name of the template being rendered ("block" in this case.)
- */
-/* -- Delete this line if you want to use this function
-function easyloan_preprocess_block(&$variables, $hook) {
-  // Add a count to all the blocks in the region.
-  // $variables['classes_array'][] = 'count-' . $variables['block_id'];
-
-  // By default, Zen will use the block--no-wrapper.tpl.php for the main
-  // content. This optional bit of code undoes that:
-  //if ($variables['block_html_id'] == 'block-system-main') {
-  //  $variables['theme_hook_suggestions'] = array_diff($variables['theme_hook_suggestions'], array('block__no_wrapper'));
-  //}
-}
-// */
-
-
-//function easyloan_preprocess_user_login(){
-//}
+    'guide' => array(
+        'path' => $path . '/guide',
+        'template' => 'guide',),
+    'guide-borrow' => array(
+        'path' => $path . '/guide',
+        'template' => 'borrow',),
+    'guide-security' => array(
+        'path' => $path . '/guide',
+        'template' => 'security',),
 /*
-function easyloan_preprocess_page(&$vars, $hook) {
-  // Check to see that the user is not logged in and that we're on the correct page.
-  if ($vars['user']->uid == 0 && arg(0) == 'user' && (arg(1) == '' || arg(1) == 'login')) {
-    // Add a custom template-file "page--login.tpl.php" for user login form
-    $vars['theme_hook_suggestions'][] = 'page__login';
-  }
-}
-*//*
-function easyloan_preprocess_user_login(&$vars){
-  //$vars['intro_text'] = t('This is my awesome login form');
-  //$variables['rendered'] = drupal_render_children($variables['form']);
+    'findpassword' => array(
+        'path' => $path,
+        'template' => 'findpsw',),
+*/
+    'lend' => array(
+        'path' => $path,
+        'template' => 'lend',),
+    'lend-detail' => array(
+        'path' => $path,
+        'template' => 'lend-detail',),
+    'notfound' => array(
+        'path' => $path,
+        'template' => 'notfound',),
+
+    'borrow' => array(
+        'path' => $path . '/borrow',
+        'template' => 'borrow',),
+    'borrow-estate' => array(
+        'path' => $path . '/borrow',
+        'template' => 'estate',),
+    'borrow-gold' => array(
+        'path' => $path . '/borrow',
+        'template' => 'gold',),
+    'borrow-car' => array(
+        'path' => $path . '/borrow',
+        'template' => 'car',),
+    'borrow-else' => array(
+        'path' => $path . '/borrow',
+        'template' => 'else',),
+    'borrow-estate-apply' => array(
+        'path' => $path . '/borrow',
+        'template' => 'estate-apply',),
+    'borrow-gold-apply' => array(
+        'path' => $path . '/borrow',
+        'template' => 'gold-apply',),
+    'borrow-car-apply' => array(
+        'path' => $path . '/borrow',
+        'template' => 'car-apply',),
+    'borrow-else-apply' => array(
+        'path' => $path . '/borrow',
+        'template' => 'else-apply',),
+
+    'account-recharge' => array(
+        'path' => $path . '/account',
+        'template' => 'recharge',),
+    'account-withdraw' => array(
+        'path' => $path . '/account',
+        'template' => 'withdraw',),
+    'account-capital' => array(
+        'path' => $path . '/account',
+        'template' => 'capital',),
+
+    'account-invest' => array(
+        'path' => $path . '/account',
+        'template' => 'invest',),
+    'account-investplan' => array(
+        'path' => $path . '/account',
+        'template' => 'investplan',),
+
+
+    'account-myloan' => array(
+        'path' => $path . '/account',
+        'template' => 'myloan',),
+    'account-basicinfo' => array(
+        'path' => $path . '/account',
+        'template' => 'basicinfo',),
+    'account-security' => array(
+        'path' => $path . '/account',
+        'template' => 'security',),
+    'account-bankcard' => array(
+        'path' => $path . '/account',
+        'template' => 'bankcard',),
+    'account-settings' => array(
+        'path' => $path . '/account',
+        'template' => 'settings',),
+    'account-management' => array(
+        'path' => $path . '/account',
+        'template' => 'management',),
+    'account-management-user' => array(
+        'path' => $path . '/account',
+        'template' => 'management-user',),
+
+    'management-applications' => array(
+        'path' => $path . '/account',
+        'template' => 'applications',),
+
+    'management-accountsindebt' => array(
+        'path' => $path . '/account',
+        'template' => 'accountsindebt',),
+    'management-accountsindebt-detail' => array(
+        'path' => $path . '/account',
+        'template' => 'accountsindebt-detail',),
+    'management-readytolend' => array(
+        'path' => $path . '/account',
+        'template' => 'readytolend',),
+    'management-readytolend-detail' => array(
+        'path' => $path . '/account',
+        'template' => 'readytolend-detail',),
+    'management-withdrawappl' => array(
+        'path' => $path . '/account',
+        'template' => 'withdrawappl',),
+    'management-createinvestplan' => array(
+        'path' => $path . '/account',
+        'template' => 'createinvestplan',),
+
+  );
 }
 
 
 function easyloan_form_alter(&$form, &$form_state, $form_id) {
-  if ($form['#id'] == 'user-login') {
-    $form['name']['#title'] = t("Custom title");
-    $form['actions']['submit']['#value'] = t("登录");
+  if($form_id == 'user_register_form'){
+    $form['account']['name']['#title'] = t('昵称');
+    $form['account']['mail']['#title'] = t('邮件');
+    
+    $form['#validate'] = array_merge(
+      array('easyloan_user_register_validation_callback'), $form['#validate']);
+
+    $form['account']['phone'] = array(
+            '#title' => t('手机号'),
+            '#type' => 'textfield',
+            '#description' => t('请输入11位手机号码'),
+            '#size' => 11,
+            '#weight' => 10,);
+    
+    $form['account']['agree'] = array(
+            '#type' => 'checkboxes',
+            '#options' => array(t('我已阅读并同意')),);
+
+    
+    $form['account']['name']['#title_display'] = 'none';
+    $form['account']['name']['#description'] = '';
+    $form['account']['phone']['#title_display'] = 'none';
+    $form['account']['phone']['#description'] = ''; 
+
+    $form['account']['pass']['#title_display'] = 'none';
+    $form['account']['pass']['#description'] = '';
+
+    $form['captcha']['#theme_wrappers'] = NULL;
+
+    $form['account']['timezone']['#theme_wrappers'] = NULL;
+    $form['account']['agree']['#theme_wrappers'] = NULL;
+
+    $form['account']['name']['#attributes']['class'] = array('ui-input', 'input-icon');
+    $form['account']['phone']['#attributes']['class'] = array('ui-input', 'input-icon');
+
+    $form['actions']['submit']['#attributes']['class'] = array('ui-button', 'ui-button-blue', 'ui-button-mid');
+
+    $form['classes_array']=array();
+    $form['attributes_array']=array();
+    $form['title_attributes_array']=array();
+    $form['content_attributes_array']=array();
+
   }
 }
 
+function easyloan_preprocess_user_register_form(&$variables){
+  
+  //var_dump($variables['user_register_form']);
+}
 
-function easyloan_form($variables) {
-  $element = $variables['element'];
-  if (isset($element['#action'])) {
-    $element['#attributes']['action'] = drupal_strip_dangerous_protocols($element['#action']);
-  }
-  element_set_attributes($element, array('method', 'id'));
-  if (empty($element['#attributes']['accept-charset'])) {
-    $element['#attributes']['accept-charset'] = "UTF-8";
-  }
-  // Anonymous DIV to satisfy XHTML compliance.
-  return '<form' . drupal_attributes($element['#attributes']) . '>' . $element['#children'] . '</form>';
-}*/
-
+function easyloan_user_register_validation_callback($form, &$form_state){
+  
+  // We notify the form API that this field has failed validation.
+  // form_set_error('Phone', t('Phone can\'t be 1234.'));
+  $form_state['values']['mail']=$form_state['values']['phone'].'@vip.com';
+  
+  //form_set_error('Phone', var_dump($form_state['values']));
+}

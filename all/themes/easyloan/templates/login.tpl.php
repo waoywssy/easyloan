@@ -38,7 +38,7 @@
                 <label for="rememberme">记住账户</label>
                 <input name="auto" id="auto" type="checkbox" checked="checked">
                 <label for="auto">下次自动登录</label>
-                <a class="findpsw" href="<?php print $GLOBALS['base_url'] .'/findpsw';?>">忘记密码</a>
+                <a class="findpsw" href="<?php print $GLOBALS['base_url'] .'/user/password';?>">忘记密码</a>
               </div>
               <div class="ui-form-item">
                 <input type="submit" class="ui-button ui-button-blue ui-button-mid" value="登录" name="op" id="edit-submit">

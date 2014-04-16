@@ -1243,6 +1243,7 @@ border:1px solid #dd4a38;
 .ui-form label.error {
 display:block;
 color:red;
+font-weight: normal;
 }
 
 .ui-input {
