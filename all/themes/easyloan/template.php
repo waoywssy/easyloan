@@ -9,11 +9,11 @@
 
 function easyloan_theme() { 
   $path = drupal_get_path('theme', 'easyloan') . '/templates';
-  
+
   return array(
     'user_login' => array(
-        'path' => $path, 
-        'template' => 'login',  
+        'path' => $path,
+        'template' => 'login', 
         'render element' => 'form', 
         //'arguments' => array('form' => NULL), 
         'preprocess functions' => array('easyloan_preprocess_user_login'), ),
@@ -25,11 +25,12 @@ function easyloan_theme() {
         //'arguments' => array('form' => NULL), 
         'preprocess functions' => array('easyloan_preprocess_user_login'), ),
 
-    'user_register_form' => array(
+    'form_easyloan_wizard' => array(
+    //'user_register_form' => array(
         'path' => $path, 
         'template' => 'user-register',
         'render element' => 'form',
-        //'arguments' => array('form' => NULL), 
+        'arguments' => array('attributes' => NULL), 
         'preprocess functions' => array('easyloan_preprocess_user_register_form'), ),
 
     'about' => array(
@@ -83,11 +84,6 @@ function easyloan_theme() {
     'guide-security' => array(
         'path' => $path . '/guide',
         'template' => 'security',),
-/*
-    'findpassword' => array(
-        'path' => $path,
-        'template' => 'findpsw',),
-*/
     'lend' => array(
         'path' => $path,
         'template' => 'lend',),
@@ -143,7 +139,6 @@ function easyloan_theme() {
         'path' => $path . '/account',
         'template' => 'investplan',),
 
-
     'account-myloan' => array(
         'path' => $path . '/account',
         'template' => 'myloan',),
@@ -188,18 +183,19 @@ function easyloan_theme() {
     'management-createinvestplan' => array(
         'path' => $path . '/account',
         'template' => 'createinvestplan',),
-
-  );
+    );
 }
 
 
 function easyloan_form_alter(&$form, &$form_state, $form_id) {
-  if($form_id == 'user_register_form'){
+  if($form_id == 'form_easyloan_wizard'){
+    // var_dump($form);
+  //  if($form_id == 'user_register_form'){
     $form['account']['name']['#title'] = t('昵称');
     $form['account']['mail']['#title'] = t('邮件');
+    $form['account']['mail']['#value'] = "a@b.com"; // set to a fake value to cheat the validation for email
     
-    $form['#validate'] = array_merge(
-      array('easyloan_user_register_validation_callback'), $form['#validate']);
+    $form['#validate'][] = 'easyloan_user_register_validation_callback';
 
     $form['account']['phone'] = array(
             '#title' => t('手机号'),
@@ -226,17 +222,24 @@ function easyloan_form_alter(&$form, &$form_state, $form_id) {
     $form['account']['timezone']['#theme_wrappers'] = NULL;
     $form['account']['agree']['#theme_wrappers'] = NULL;
 
-    $form['account']['name']['#attributes']['class'] = array('ui-input', 'input-icon');
-    $form['account']['phone']['#attributes']['class'] = array('ui-input', 'input-icon');
+    $ui_input = array('ui-input', 'input-icon');
+    $form['account']['name']['#attributes']['class'] = $ui_input;
+    $form['account']['phone']['#attributes']['class'] = $ui_input;
 
-    $form['actions']['submit']['#attributes']['class'] = array('ui-button', 'ui-button-blue', 'ui-button-mid');
+    $ui_button = array('ui-button', 'ui-button-blue', 'ui-button-mid');
+    $form['actions']['submit']['#attributes']['class'] = $ui_button;
+    $form['next']['#attributes']['class'] = $ui_button;
+    $form['prev']['#attributes']['class'] = $ui_button;
+    $form['finish']['#attributes']['class'] = $ui_button;
 
-    $form['classes_array']=array();
-    $form['attributes_array']=array();
-    $form['title_attributes_array']=array();
-    $form['content_attributes_array']=array();
-
-  }
+  } else if ($form_id == 'form_easyloan_wizard') {
+    if ($form_state['step'] == 1) {
+           // Clean up the form a bit by removing 'create new account' submit button
+           // and moving 'next' button to bottom of form.
+           unset($form['actions']);
+           $form['next']['#weight'] = 100;
+       }
+    }
 }
 
 function easyloan_preprocess_user_register_form(&$variables){
@@ -247,8 +250,14 @@ function easyloan_preprocess_user_register_form(&$variables){
 function easyloan_user_register_validation_callback($form, &$form_state){
   
   // We notify the form API that this field has failed validation.
-  // form_set_error('Phone', t('Phone can\'t be 1234.'));
   $form_state['values']['mail']=$form_state['values']['phone'].'@vip.com';
   
   //form_set_error('Phone', var_dump($form_state['values']));
+}
+
+function easyloan_preprocess(&$variables){
+    $variables['classes_array']=array();
+    $variables['attributes_array']=array();
+    $variables['title_attributes_array']=array();
+    $variables['content_attributes_array']=array();
 }

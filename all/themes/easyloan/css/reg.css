@@ -58,7 +58,6 @@ padding-left:75px;
 }
 
 
-
 /**********************************/ 
 #pg-reg legend {
 	font-size:16px;
@@ -81,6 +80,7 @@ padding-left:75px;
 	display:block;
 	float:left;
 }
+
 #pg-reg .ui-form-item label {
 	display:block;
 	float:left;
@@ -88,9 +88,19 @@ padding-left:75px;
 
 #pg-reg input.input-icon{
 	padding-left: 30px;
+	margin-right: 10px;
 }
-
 
 #edit-captcha-response{
 	float:left;
+}
+
+.captcha div.form-item{
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+
+.ui-form-item .ui-button{
+	margin-right: 20px;
 }

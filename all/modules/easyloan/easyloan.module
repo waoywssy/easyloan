@@ -1,99 +1,4 @@
 <?php
-/*
-* Inplementation of the block_info hook
-*/
-function easyloan_block_info() {
-  $blocks['footer'] = array(
-    'info' => t('好易贷的页脚上部'),
-    'cache' => DRUPAL_CACHE_GLOBAL,
-    'status' => 1,
-    'region' => 'footer',
-  );
-  $blocks['bottom'] = array(
-    'info' => t('好易贷的页脚底部'),
-    'cache' => DRUPAL_CACHE_GLOBAL,
-    'status' => 1,
-    'region' => 'bottom',
-  );
-  $blocks['slide'] = array(
-    'info' => t('好易贷的首页幻灯片'),
-    'cache' => DRUPAL_CACHE_GLOBAL,
-    'status' => 1,
-    'region' => 'slide',
-  );
-  $blocks['intro'] = array(
-    'info' => t('好易贷的首页的功能介绍'),
-    'cache' => DRUPAL_NO_CACHE,
-    'status' => 1,
-    'weight' => 0,
-    'region' => 'content_top',
-  );
-  $blocks['topnotice'] = array(
-    'info' => t('好易贷的首页的通知'),
-    'cache' => DRUPAL_NO_CACHE,
-    'status' => 1,
-    'weight' => 5,
-    'region' => 'content_top',
-  );
-  $blocks['investlist'] = array(
-    'info' => t('好易贷的首页的投资列表'),
-    'cache' => DRUPAL_NO_CACHE,
-    'status' => 1,
-    'weight' => 10,
-    'region' => 'content_top',
-  );
-  $blocks['newslist'] = array(
-    'info' => t('好易贷的首页的最新动态列表'),
-    'cache' => DRUPAL_NO_CACHE,
-    'status' => 1,
-    'weight' => 15,
-    'region' => 'content_top',
-  );
-  $blocks['header'] = array(
-    'info' => t('好易贷的页面头部'),
-    'cache' => DRUPAL_NO_CACHE,
-    'status' => 1,
-    'region' => 'header',
-  );
-  
-  return $blocks;
-}
-
-function easyloan_block_view($delta = ''){
-  $block = array();
-  switch($delta){
-    case 'footer':
-      //if(user_access('access content')){ //good idea to check user perms here
-      //$block['subject'] = t('FOOTER');
-      $block['content'] = '<a></a>';
-      return $block;
-    case 'header':
-      $block['content'] = '<a></a>';
-      return $block;
-    case 'bottom':
-      $block['content'] = '<a></a>';
-      return $block;
-    case 'slide':
-      $block['content'] = '<a></a>';
-      return $block;
-    case 'intro':
-      $block['content'] = '<a></a>';
-      return $block;
-    case 'topnotice':
-      $block['content'] = '<div>Notice</div>'; //get_top_notice();
-      return $block;
-    case 'investlist':
-      $block['content'] = '<a></a>';
-      return $block;
-    case 'newslist':
-      $block['content'] = '<a></a>';
-      return $block;
-  }
-}
-
-function get_top_notice(){
-  return '<div>Notice</div>';
-}
 
 /**
 * Implementation of hook_menu().
@@ -279,7 +184,7 @@ function easyloan_menu() {
     'access callback' => TRUE, 
     'type' => MENU_NORMAL_ITEM, 
   );
-  $items['account/withdrawappl'] = array( 
+  $items['account/withdrawappl'] = array(
     'title' => t('提现申请'), 
     'page callback' => 'menu_callback', 
     'page arguments' => array('management_withdrawappl', 2),
@@ -392,8 +297,105 @@ function easyloan_menu() {
     'access callback' => TRUE, 
     'type' => MENU_NORMAL_ITEM, 
   );
+
   return $items; 
 } 
+
+/*
+* Inplementation of the block_info hook
+*/
+function easyloan_block_info() {
+  $blocks['footer'] = array(
+    'info' => t('好易贷的页脚上部'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+    'status' => 1,
+    'region' => 'footer',
+  );
+  $blocks['bottom'] = array(
+    'info' => t('好易贷的页脚底部'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+    'status' => 1,
+    'region' => 'bottom',
+  );
+  $blocks['slide'] = array(
+    'info' => t('好易贷的首页幻灯片'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+    'status' => 1,
+    'region' => 'slide',
+  );
+  $blocks['intro'] = array(
+    'info' => t('好易贷的首页的功能介绍'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 1,
+    'weight' => 0,
+    'region' => 'content_top',
+  );
+  $blocks['topnotice'] = array(
+    'info' => t('好易贷的首页的通知'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 1,
+    'weight' => 5,
+    'region' => 'content_top',
+  );
+  $blocks['investlist'] = array(
+    'info' => t('好易贷的首页的投资列表'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 1,
+    'weight' => 10,
+    'region' => 'content_top',
+  );
+  $blocks['newslist'] = array(
+    'info' => t('好易贷的首页的最新动态列表'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 1,
+    'weight' => 15,
+    'region' => 'content_top',
+  );
+  $blocks['header'] = array(
+    'info' => t('好易贷的页面头部'),
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => 1,
+    'region' => 'header',
+  );
+  
+  return $blocks;
+}
+
+function easyloan_block_view($delta = ''){
+  $block = array();
+  switch($delta){
+    case 'footer':
+      //if(user_access('access content')){ //good idea to check user perms here
+      //$block['subject'] = t('FOOTER');
+      $block['content'] = '<a></a>';
+      return $block;
+    case 'header':
+      $block['content'] = '<a></a>';
+      return $block;
+    case 'bottom':
+      $block['content'] = '<a></a>';
+      return $block;
+    case 'slide':
+      $block['content'] = '<a></a>';
+      return $block;
+    case 'intro':
+      $block['content'] = '<a></a>';
+      return $block;
+    case 'topnotice':
+      $block['content'] = '<div>Notice</div>'; //get_top_notice();
+      return $block;
+    case 'investlist':
+      $block['content'] = '<a></a>';
+      return $block;
+    case 'newslist':
+      $block['content'] = '<a></a>';
+      return $block;
+  }
+}
+
+function get_top_notice(){
+  return '<div>Notice</div>';
+}
 
 function menu_account_management_capital($arg1, $arg2, $arg3){
   //return $arg1 . $arg2 . $arg3;
@@ -539,7 +541,7 @@ function menu_lend($lendid = ''){
 
 
 function easyloan_user_login(&$edit, $account) {
-//  var_dump($edit);
+  //  var_dump($edit);
 }
 
 function easyloan_menu_tree__menu_account_second($variables){
@@ -558,7 +560,6 @@ function easyloan_menu_link($variables) {
     case 'menu_link__menu__lian_jie':
     case 'menu_link__menu_about':
     case 'menu_link__menu__ye_mian_':
-
       // for top level menu 
       $depth = $element['#original_link']['depth'];
       $li_class = 'ui-side-item';
@@ -598,8 +599,6 @@ function easyloan_menu_link($variables) {
         $is_active = true;
       }
       
-      //account/management/123456/capital
-
       $output = '<li class="' . $li_class . ' ' . ($is_active ? 'active' : '') . '">' . $output . $sub_menu . '</li>';
       return $output;
 
@@ -618,4 +617,225 @@ function easyloan_menu_link($variables) {
       return theme_menu_link($variables);
       break;
   }
+}
+
+/*
+ * Override the user/register menu to display wizard pages
+ */
+function easyloan_menu_alter(&$items) {
+  $items['user/register']['page arguments'] = array('form_easyloan_wizard');
+  return $items;
+}
+
+/*
+ * Steps of the wizard
+ */
+function _easyloan_registration_steps() { 
+  return array( 
+            1 => array( 'form' => 'user_register_form', ), 
+            2 => array( 'form' => 'phone_validation_form', ), );
+}
+
+/*
+ * The registeration form 
+ */
+function form_easyloan_wizard($form, &$form_state) { 
+   // Initialize a description of the steps for the wizard.
+  if (empty($form_state['step'])) {
+    $form_state['step'] = 1;
+    // This array contains the function to be called at each step to get the
+    // relevant form elements. It will also store state information for each
+    // step.
+    $form_state['step_information'] = _easyloan_registration_steps();
+  }
+
+  $step = &$form_state['step'];
+
+  drupal_set_title(t('注册新用户: 第 @step 步', array('@step' => $step)));
+ 
+  // Call the function named in $form_state['step_information'] to get the
+  // form elements to display for this step.
+  $form = $form_state['step_information'][$step]['form']($form, $form_state);
+ 
+  // Show the 'previous' button if appropriate. Note that #submit is set to
+  // a special submit handler, and that we use #limit_validation_errors to
+  // skip all complaints about validation when using the back button. The
+  // values entered will be discarded, but they will not be validated, which
+  // would be annoying in a "back" button.
+  if ($step > 1) {
+    $form['prev'] = array(
+      '#type' => 'submit',
+      '#value' => t('后退'),
+      '#name' => 'prev',
+      '#submit' => array('easyloan_wizard_previous_submit'),
+      '#limit_validation_errors' => array(),
+    );
+  }
+ 
+  // Show the Next button only if there are more steps defined.
+  if ($step < count($form_state['step_information'])) {
+    // The Next button should be included on every step
+    $form['next'] = array(
+      '#type' => 'submit',
+      '#value' => t('立即注册'),
+      '#name' => 'next',
+      '#submit' => array('easyloan_wizard_next_submit'),
+    );
+  }
+  else {
+    // Just in case there are no more steps, we use the default submit handler
+    // of the form wizard. When this button is clicked, the
+    // grasmash_registration_wizard_submit handler will be called.
+    $form['finish'] = array(
+      '#type' => 'submit',
+      '#value' => t('完成'),
+    );
+  }
+ 
+//$form['next']['#validate'] = array();
+  // Include each validation function defined for the different steps.
+  // First, look for functions that match the form_id_validate naming convention.
+  if (function_exists($form_state['step_information'][$step]['form'] . '_validate')) {
+    $form['next']['#validate'] = array($form_state['step_information'][$step]['form'] . '_validate');
+  }
+
+/*
+  // Next, merge in any other validate functions defined by child form.
+  if (isset($form['#validate'])) {
+    $form['next']['#validate'] = array_merge($form['next']['#validate'], $form['#validate']);
+    unset($form['#validate']);
+  }
+  
+  // Let's do the same thing for #submit handlers.
+  // First, look for functions that match the form_id_submit naming convention.
+  if (function_exists($form_state['step_information'][$step]['form'] . '_submit')) {
+    $form['next']['#submit'] = array_merge($form_state['step_information'][$step]['form'] . '_submit', $form['next']['#submit']);
+  }
+  // Next, merge in any other submit functions defined by child form.
+  if (isset($form['#submit'])) {
+    // It's important to merge in the form-specific handlers first, before 
+    // easyloan_registration_wizard_next_submit clears $form_state['values].
+    $form['next']['#submit'] = array_merge($form['#submit'], $form['next']['#submit']);
+    unset($form['#submit']);
+  }
+*/
+  return $form;
+}
+
+/**
+ * Submit handler for the "previous" button.
+ * - Stores away $form_state['values']
+ * - Decrements the step counter
+ * - Replaces $form_state['values'] with the values from the previous state.
+ * - Forces form rebuild.
+ *
+ * You are not required to change this function.
+ *
+ * @ingroup form_example
+ */
+function easyloan_wizard_previous_submit($form, &$form_state) {
+  $current_step = &$form_state['step'];
+  $form_state['step_information'][$current_step]['stored_values'] = $form_state['values'];
+  if ($current_step > 1) {
+    $current_step--;
+    $form_state['values'] = $form_state['step_information'][$current_step]['stored_values'];
+  }
+  $form_state['rebuild'] = TRUE;
+}
+ 
+/**
+ * Submit handler for the 'next' button.
+ * - Saves away $form_state['values']
+ * - Increments the step count.
+ * - Replace $form_state['values'] from the last time we were at this page
+ * or with array() if we haven't been here before.
+ * - Force form rebuild.
+ *
+ * You are not required to change this function.
+ *
+ * @param $form
+ * @param $form_state
+ *
+ * @ingroup form_example
+ */
+function easyloan_wizard_next_submit($form, &$form_state) {
+   $current_step = &$form_state['step'];
+   $form_state['step_information'][$current_step]['stored_values'] = $form_state['values'];
+   
+   if ($current_step < count($form_state['step_information'])) {
+      $current_step++;
+      if (!empty($form_state['step_information'][$current_step]['stored_values'])) {
+          $form_state['values'] = $form_state['step_information'][$current_step]['stored_values'];
+      }
+      else {
+          $form_state['values'] = array();
+      }
+      $form_state['rebuild'] = TRUE; // Force rebuild with next step.
+      return;
+   }
+}
+
+/**
+ * Build form elements for step 2.
+ */
+function phone_validation_form(&$form, &$form_state)  {
+    $form['validate-phone'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('验证手机'),
+    );
+ 
+    // Allow users to create a new organic group upon registration.
+    $form['validate-phone']['code'] = array(
+      '#type' => 'textfield',
+      '#title' => t('验证码'),
+      '#description' => t('请填写您收到的验证码'),
+      '#required' => TRUE,
+      '#weight' => -40,
+    );
+ 
+    //$form['#validate'][] = 'easyloan_registration_validate_og';
+    $form['#submit'][] = 'easyloan_wizard_submit';
+    return $form;
+}
+
+
+// And now comes the magic of the wizard, the function that should handle all the
+// inputs from the user on each different step.
+/**
+ * Wizard form submit handler.
+ * - Saves away $form_state['values']
+ * - Process all the form values.
+ *
+ * This demonstration handler just do a drupal_set_message() with the information
+ * collected on each different step of the wizard.
+ *
+ * @param $form
+ * @param $form_state
+ *
+ * @ingroup form_example
+ */
+function easyloan_wizard_submit($form, &$form_state) {
+  $current_step = &$form_state['step'];
+  $form_state['step_information'][$current_step]['stored_values'] = $form_state['values'];
+ 
+  // In this case we've completed the final page of the wizard, so process the
+  // submitted information.
+  foreach ($form_state['step_information'] as $index => $value) {
+    // Remove FAPI fields included in the values (form_token, form_id and form_build_id
+    // This is not required, you may access the values using $value['stored_values']
+    // but I'm removing them to make a more clear representation of the collected
+    // information as the complete array will be passed through drupal_set_message().
+    unset($value['stored_values']['form_id']);
+    unset($value['stored_values']['form_build_id']);
+    unset($value['stored_values']['form_token']);
+ 
+    // Now show all the values.
+    drupal_set_message(t('Step @num collected the following values: <pre>@result</pre>', array('@num' => $index, '@result' => print_r($value['stored_values'], TRUE))));
+  }
+
+  //user_register_submit($form, &$form_state)
+
+  // Redirect the new user to their user page.
+  $user = user_load($form_state['uid']);
+  drupal_goto('user/' . $user->uid);
 }

@@ -10,7 +10,7 @@ drupal_add_js(drupal_get_path('theme','easyloan') . '/js/jquery.powertip.min.js'
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account.js');
 
 global $base_url;
-$img_path = drupal_get_path('theme','easyloan') . '/images/default-avatar-96.png';
+$img_path = drupal_get_path('theme','easyloan') . '/images/';
 ?>
 <script>
 (function ($, Drupal, window, document, undefined) {
@@ -35,13 +35,13 @@ Drupal.behaviors.tip = {
 </div>
 </div>
 <div class="ad-section">
-<img src="../images/default-banner.png?rrdversion=20131013b">
+<img src="<?php print $img_path; ?>default-banner.png">
 </div>
 
 <div class="box box-user-info">
 <div class="user-avatar-container">
   <a href="/account/info!basicInfo.action">
-    <img width="96" height="96" src="<?php print $img_path; ?>">
+    <?php print render($user_profile['user_picture']); ?>
   </a>
 </div>
 <?php

@@ -4,7 +4,6 @@
  * Returns the HTML for a the user-register form.
  *
  */
-
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/jquery.validate.min.js');
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/reg.js');
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/reg.css');
@@ -16,9 +15,8 @@ $form['captcha']['captcha_widgets']['captcha_response']['#required']=false;
 $form['captcha']['captcha_widgets']['captcha_refresh']['#theme_wrappers']=NULL;
 $form['captcha']['captcha_widgets']['captcha_response']['#attributes']['class']=array('ui-input','input-icon','code');
 
-var_dump($form);
 ?>
-<div id="pg-reg"> 
+<div id="pg-reg">
   <div class="container_12"> 
     <div class="p20bs color-white-bg regbox"> 
       <div data-name="register" class="ui-form" id="reg"> 
@@ -26,20 +24,21 @@ var_dump($form);
           <?php 
             print render($form['form_build_id']);
             print render($form['form_id']);
+            print render($form['account']['timezone']);
+
+            if(empty($form['validate-phone'])){
           ?>
           <legend>注册</legend>
           <div class="ui-form-item">
             <label class="ui-label">昵称</label>
-            <input type="text" maxlength="60" size="60" value="" name="name" id="edit-name" class="ui-input input-icon form-text required">
+            <input type="text" value="" name="name" id="edit-name" class="ui-input input-icon form-text required">
             <span class="icon input-icon-user"></span>
           </div>
           <div class="ui-form-item">
             <label class="ui-label">手机号</label>
-            <input type="text" maxlength="128" size="11" value="" name="phone" id="edit-phone" class="ui-input input-icon form-text isMobile">
+            <input type="text" value="" name="phone" id="edit-phone" class="ui-input input-icon form-text isMobile">
             <span class="icon input-icon-mobile"></span>
-            <input type="hidden" name="mail" id="edit-mail" value="@">
           </div>
-
           <div class="ui-form-item">
             <label class="ui-label">密码</label>
             <input class="ui-input input-icon" type="password" name="pass[pass1]" id="edit-pass-pass1">
@@ -52,7 +51,7 @@ var_dump($form);
             <span class="icon input-icon-key"></span>
           </div>
           <?php 
-            if($form['captcha']['#captcha_type']){
+            if(isset($form['captcha'])&&isset($form['captcha']['#captcha_type'])){
               print render($form['captcha']['captcha_sid']);
               print render($form['captcha']['captcha_token']);
           ?>
@@ -61,18 +60,41 @@ var_dump($form);
             <?php print render($form['captcha']); ?>
             <span class="icon input-icon-lock"></span>
           </div>
-          
           <?php } ?>
+          <?php print render($form['pre']); ?>
           <div class="ui-form-item ui-form-item-check">
-            <?php print render($form['account']['agree']); ?>
+            <!--?php print render($form['account']['agree']); ?-->
+            <input type="checkbox" class="form-checkbox" value="0" name="agree[0]" id="edit-agree-0">
+            我已阅读并同意
             <a href="/agreement/rv_webservice.html" target="_blank">《好易贷网站服务协议》</a>
           </div>
           <div class="ui-form-item">
             <?php 
-              print render($form['account']['timezone']);
-              print render($form['actions']['submit']); 
+              //print render($form['actions']['submit']);
+              print render($form['next']); 
             ?>
           </div>
+          <?php } else {?>
+          <legend>短信已发送至您手机，请输入短信中的验证码，确保您的手机号真实有效</legend>
+          <div class="ui-form-item">
+            <label class="ui-label">手机号确认</label>
+            <label class="input-icon form-text">13574810441</label>
+          </div>
+          <div class="ui-form-item">
+            <label class="ui-label">验证码</label>
+            <input type="text" value="" name="code" id="edit-code" class="ui-input input-icon form-text">
+            <span class="icon input-icon-lock"></span>
+          </div>
+          <div class="ui-form-item">
+            <?php 
+              print render($form['prev']); 
+              print render($form['finish']);
+            ?>
+          </div>
+          <div class="ui-form-item">
+          如果您在1分钟之内没有收到验证码，请 <a>返回修改手机号</a> 或 <a>30秒重新获取</a>
+          </div>
+          <?php } ?>
         </fieldset>
       </div>
     </div>

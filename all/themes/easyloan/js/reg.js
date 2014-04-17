@@ -21,7 +21,8 @@ Drupal.behaviors.vali = {
 		return length == 11 && mobile.exec(value);
  	}, "请正确填写您的手机号码");
 
-	$("#user-register-form").validate({
+	$("#form-easyloan-wizard").validate({
+		//$("#user-register-form").validate({
 		rules: {
 			name:{
 				required: true,
