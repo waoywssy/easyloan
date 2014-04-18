@@ -1,239 +1,112 @@
 /*
- * jQuery.counter plugin
+ * jquery-counter plugin
  *
- * Copyright (c) 2012 Sophilabs <hi@sophilabs.com>
- * MIT License
+ * Copyright (c) 2009 Martin Conte Mac Donell <Reflejo@gmail.com>
+ * Dual licensed under the MIT and GPL licenses.
+ * http://docs.jquery.com/License
  */
- 
-define("lib/counter/0.0.1/jquery.counter", ["jquery"], function(require) {
-    var $ = require("jquery"); 
-    var checkStop = function(data) {
-        var stop = 0;
-        var current = 0;
-        $.each(data.parts, function(i, part) {
-            stop += (stop * part.limit) + part.stop;
-            current += (current * part.limit) + part.value;
-        });
-        return data.down ? stop >= current : stop <= current;
-    };
+jQuery.fn.countdown = function(userOptions)
+{
+  // Default options
+  var options = {
+    stepTime: 60,
+    // startTime and format MUST follow the same format.
+    // also you cannot specify a format unordered (e.g. hh:ss:mm is wrong)
+    format: "dd:hh:mm:ss",
+    startTime: "01:12:32:55",
+    digitImages: 6,
+    digitWidth: 53,
+    digitHeight: 77,
+    timerEnd: function(){},
+    image: "digits.png"
+  };
+  var digits = [], interval;
 
-    var tick = function() {
-        var e = $(this);
-        var data = e.data('counter');
-        var i = data.parts.length - 1;
-        while(i >= 0) {
-            var part = data.parts[i];
-            part.value += data.down ? -1 : 1;
-            if (data.down && part.value < 0) {
-                part.value = part.limit;
-            } else if (!data.down && part.value > part.limit) {
-                part.value = 0;
-            } else {
-                break;
-            }
-            i--;
+  // Draw digits in given container
+  var createDigits = function(where) 
+  {
+    var c = 0;
+    // Iterate each startTime digit, if it is not a digit
+    // we'll asume that it's a separator
+    for (var i = 0; i < options.startTime.length; i++)
+    {
+      if (parseInt(options.startTime[i]) >= 0) 
+      {
+        elem = $('<div id="cnt_' + i + '" class="cntDigit" />').css({
+          height: options.digitHeight * options.digitImages * 10, 
+          float: 'left', background: 'url(\'' + options.image + '\')',
+          width: options.digitWidth});
+        digits.push(elem);
+        margin(c, -((parseInt(options.startTime[i]) * options.digitHeight *
+                              options.digitImages)));
+        digits[c].__max = 9;
+        // Add max digits, for example, first digit of minutes (mm) has 
+        // a max of 5. Conditional max is used when the left digit has reach
+        // the max. For example second "hours" digit has a conditional max of 4 
+        switch (options.format[i]) {
+          case 'h':
+            digits[c].__max = (c % 2 == 0) ? 2: 9;
+            if (c % 2 == 0)
+              digits[c].__condmax = 4;
+            break;
+          case 'd': 
+            digits[c].__max = 9;
+            break;
+          case 'm':
+          case 's':
+            digits[c].__max = (c % 2 == 0) ? 5: 9;
         }
-        refresh(e, i);
-        if (checkStop(data)) {
-            clearInterval(data.intervalId);
-            e.trigger("counterStop");
+        ++c;
+      }
+      else 
+        elem = $('<div class="cntSeparator"/>').css({float: 'left'})
+                .text(options.startTime[i]);
+
+      where.append(elem)
+    }
+  };
+  
+  // Set or get element margin
+  var margin = function(elem, val) 
+  {
+    if (val !== undefined)
+      return digits[elem].css({'marginTop': val + 'px'});
+
+    return parseInt(digits[elem].css('marginTop').replace('px', ''));
+  };
+
+  // Makes the movement. This is done by "digitImages" steps.
+  var moveStep = function(elem) 
+  {
+    digits[elem]._digitInitial = -(digits[elem].__max * options.digitHeight * options.digitImages);
+    return function _move() {
+      mtop = margin(elem) + options.digitHeight;
+      if (mtop == options.digitHeight) {
+        margin(elem, digits[elem]._digitInitial);
+        if (elem > 0) moveStep(elem - 1)();
+        else 
+        {
+          clearInterval(interval);
+          for (var i=0; i < digits.length; i++) margin(i, 0);
+          options.timerEnd();
+          return;
         }
-    };
+        if ((elem > 0) && (digits[elem].__condmax !== undefined) && 
+            (digits[elem - 1]._digitInitial == margin(elem - 1)))
+          margin(elem, -(digits[elem].__condmax * options.digitHeight * options.digitImages));
+        return;
+      }
 
-    var refresh = function(e, to) {
-        var data = e.data('counter');
-        var i = data.parts.length - 1;
-        var animateIJ = function(j, digit) {
-            animate(e, i, j, digit);
-        };
-        while (i >= to) {
-            var part = data.parts[i];
-            var digits = part.value + '';
-            while (digits.length < part.padding) {
-                digits = '0' + digits;
-            }
-            $.each(split(digits, ''), animateIJ);
-            i--;
-        }
-    };
+      margin(elem, mtop);
+      if (margin(elem) / options.digitHeight % options.digitImages != 0)
+        setTimeout(_move, options.stepTime);
 
-    var animate = function(e, ipart, idigit, digit) {
-        var edigit = $($(e.children('span.part').get(ipart)).find('span.digit').get(idigit));
-        edigit.attr('class', 'digit digit' + digit +  ' digit' + edigit.text() + digit).text(digit);
-    };
+      if (mtop == 0) digits[elem].__ismax = true;
+    }
+  };
 
-    //from http://blog.stevenlevithan.com/archives/cross-browser-split
-    var split = function(undef) {
-
-        var nativeSplit = String.prototype.split,
-            compliantExecNpcg = /()??/.exec("")[1] === undef, // NPCG: nonparticipating capturing group
-            self;
-
-        self = function (str, separator, limit) {
-            // If `separator` is not a regex, use `nativeSplit`
-            if (Object.prototype.toString.call(separator) !== "[object RegExp]") {
-                return nativeSplit.call(str, separator, limit);
-            }
-            var output = [],
-                flags = (separator.ignoreCase ? "i" : "") +
-                        (separator.multiline  ? "m" : "") +
-                        (separator.extended   ? "x" : "") + // Proposed for ES6
-                        (separator.sticky     ? "y" : ""), // Firefox 3+
-                lastLastIndex = 0,
-                // Make `global` and avoid `lastIndex` issues by working with a copy
-                separator = new RegExp(separator.source, flags + "g"),
-                separator2, match, lastIndex, lastLength;
-            str += ""; // Type-convert
-            if (!compliantExecNpcg) {
-                // Doesn't need flags gy, but they don't hurt
-                separator2 = new RegExp("^" + separator.source + "$(?!\\s)", flags);
-            }
-            /* Values for `limit`, per the spec:
-             * If undefined: 4294967295 // Math.pow(2, 32) - 1
-             * If 0, Infinity, or NaN: 0
-             * If positive number: limit = Math.floor(limit); if (limit > 4294967295) limit -= 4294967296;
-             * If negative number: 4294967296 - Math.floor(Math.abs(limit))
-             * If other: Type-convert, then use the above rules
-             */
-            limit = limit === undef ?
-                -1 >>> 0 : // Math.pow(2, 32) - 1
-                limit >>> 0; // ToUint32(limit)
-            while (match = separator.exec(str)) {
-                // `separator.lastIndex` is not reliable cross-browser
-                lastIndex = match.index + match[0].length;
-                if (lastIndex > lastLastIndex) {
-                    output.push(str.slice(lastLastIndex, match.index));
-                    // Fix browsers whose `exec` methods don't consistently return `undefined` for
-                    // nonparticipating capturing groups
-                    if (!compliantExecNpcg && match.length > 1) {
-                        match[0].replace(separator2, function () {
-                            for (var i = 1; i < arguments.length - 2; i++) {
-                                if (arguments[i] === undef) {
-                                    match[i] = undef;
-                                }
-                            }
-                        });
-                    }
-                    if (match.length > 1 && match.index < str.length) {
-                        Array.prototype.push.apply(output, match.slice(1));
-                    }
-                    lastLength = match[0].length;
-                    lastLastIndex = lastIndex;
-                    if (output.length >= limit) {
-                        break;
-                    }
-                }
-                if (separator.lastIndex === match.index) {
-                    separator.lastIndex++; // Avoid an infinite loop
-                }
-            }
-            if (lastLastIndex === str.length) {
-                if (lastLength || !separator.test("")) {
-                    output.push("");
-                }
-            } else {
-                output.push(str.slice(lastLastIndex));
-            }
-            return output.length > limit ? output.slice(0, limit) : output;
-        };
-        return self;
-    }();
-
-    var methods = {
-        init: function(options) {
-            options = options || {};
-            return this.each(function() {
-                var e = $(this);
-                var data = e.data('counter') || {};
-                data.interval = parseInt(options.interval || e.attr('data-interval') || '1000', 10);
-                data.down = (options.direction || e.attr('data-direction') || 'down') == 'down';
-                data.parts = [];
-                var initial = split(options.initial || e.text(), /([^0-9]+)/);
-                //WARN: Use attr() no data()
-                var format = split(options.format || e.attr('data-format') || "23:59:59", /([^0-9]+)/);
-                var stop =  options.stop || e.attr('data-stop');
-                if (stop) {
-                    stop = split(stop, /([^0-9]+)/);
-                }
-                e.html('');
-                $.each(format, function(index, value) {
-                    if (/^\d+$/.test(value)) {
-                        var part = {};
-                        part.index = index;
-                        part.padding = (value + '').length;
-                        part.limit = parseInt(value, 10);
-                        part.value = parseInt(initial[initial.length - format.length + index] || 0, 10);
-                        part.value = part.value > part.limit ? part.limit : part.value;
-                        part.reset = part.value;
-                        part.stop = parseInt(stop ? stop[stop.length - format.length + index] : (data.down ? 0 : part.limit), 10);
-                        part.stop = part.stop > part.limit ? part.limit : part.stop;
-                        part.stop = part.stop < 0 ? 0 : part.stop;
-                        var epart = $('<span>').addClass('part').addClass('part' + index);
-                        var digits = part.value + '';
-                        while (digits.length < part.padding) {
-                            digits = '0' + digits;
-                        }
-                        $.each(split(digits, ''), function(dindex, dvalue){
-                            epart.append($('<span>').addClass('digit digit' + dvalue).text(dvalue));
-                        });
-                        e.append(epart);
-                        data.parts.push(part);
-                    } else {
-                        e.append($('<span>').addClass('separator').addClass('separator' + index).text(value));
-                    }
-                });
-                if (!checkStop(data)) {
-                    data.intervalId = setInterval($.proxy(tick, this), data.interval);
-                } else {
-                    e.trigger("counterStop");
-                }
-                e.data('counter', data);
-                return this;
-            });
-        },
-        play: function() {
-            return this.each(function() {
-                var e = $(this);
-                var data = e.data('counter');
-                if (!data.intervalId) {
-                    data.intervalId = setInterval($.proxy(tick, this), data.interval);
-                }
-            });
-        },
-        reset: function() {
-            return this.each(function() {
-                var e = $(this);
-                var data = e.data('counter');
-                $.each(data.parts, function(pindex, pvalue){
-                    pvalue.value = pvalue.reset;
-                });
-                refresh($(this), 0);
-                if (data.intervalId) {
-                    clearInterval(data.intervalId);
-                    data.intervalId = setInterval($.proxy(tick, this), data.interval);
-                }
-            });
-        },
-        stop: function() {
-            return this.each(function() {
-                var e = $(this);
-                var data = e.data('counter');
-                clearInterval(data.intervalId);
-                data.intervalId = 0;
-                e.trigger("counterStop");
-            });
-        }
-    };
-
-    $.fn.counter = function(method) {
-        // Method calling logic
-        if (methods[method]) {
-            return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-        } else if (typeof method === 'object' || ! method) {
-            return methods.init.apply(this, arguments);
-        } else {
-            $.error('Method ' +  method + ' does not exist on jQuery.counter');
-        }
-    };
-
-});
+  $.extend(options, userOptions);
+  this.css({height: options.digitHeight, overflow: 'hidden'});
+  createDigits(this);
+  interval = setInterval(moveStep(digits.length - 1), 1000);
+};

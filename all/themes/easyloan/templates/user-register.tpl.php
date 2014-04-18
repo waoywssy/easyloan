@@ -26,17 +26,17 @@ $form['captcha']['captcha_widgets']['captcha_response']['#attributes']['class']=
             print render($form['form_id']);
             print render($form['account']['timezone']);
 
-            if(empty($form['validate-phone'])){
+            if(empty($form['vcode'])){
           ?>
           <legend>注册</legend>
           <div class="ui-form-item">
             <label class="ui-label">昵称</label>
-            <input type="text" value="" name="name" id="edit-name" class="ui-input input-icon form-text required">
+            <input type="text" name="name" id="edit-name" value="<?php print $form['account']['name']['#value'];?>" class="ui-input input-icon form-text required">
             <span class="icon input-icon-user"></span>
           </div>
           <div class="ui-form-item">
             <label class="ui-label">手机号</label>
-            <input type="text" value="" name="phone" id="edit-phone" class="ui-input input-icon form-text isMobile">
+            <input type="text" name="phone" id="edit-phone" value="<?php print $form['account']['phone']['#value'];?>" class="ui-input input-icon form-text isMobile">
             <span class="icon input-icon-mobile"></span>
           </div>
           <div class="ui-form-item">
@@ -67,32 +67,40 @@ $form['captcha']['captcha_widgets']['captcha_response']['#attributes']['class']=
             <input type="checkbox" class="form-checkbox" value="0" name="agree[0]" id="edit-agree-0">
             我已阅读并同意
             <a href="/agreement/rv_webservice.html" target="_blank">《好易贷网站服务协议》</a>
-          </div>
-          <div class="ui-form-item">
+          </div> 
+          <div class="ui-form-item"> 
             <?php 
-              //print render($form['actions']['submit']);
               print render($form['next']); 
-            ?>
-          </div>
-          <?php } else {?>
+            ?> 
+          </div> 
+          <?php 
+            } else {  
+                drupal_add_js(drupal_get_path('theme','easyloan') . '/js/counter.js');
+                drupal_add_js(drupal_get_path('theme','easyloan') . '/js/regvcode.js');
+          ?>
           <legend>短信已发送至您手机，请输入短信中的验证码，确保您的手机号真实有效</legend>
           <div class="ui-form-item">
             <label class="ui-label">手机号确认</label>
-            <label class="input-icon form-text">13574810441</label>
+            <label class="input-icon form-text"><?php
+              if (array_key_exists('phone', $form['account'])){  
+                print $form['account']['phone']['#value']; 
+              }
+              ?>
+            </label>
           </div>
-          <div class="ui-form-item">
-            <label class="ui-label">验证码</label>
-            <input type="text" value="" name="code" id="edit-code" class="ui-input input-icon form-text">
-            <span class="icon input-icon-lock"></span>
-          </div>
-          <div class="ui-form-item">
+          <div class="ui-form-item"> 
+            <label class="ui-label">验证码</label> 
+            <input type="text" value="" name="vcode" id="edit-vcode" class="ui-input input-icon form-text">
+            <span class="icon input-icon-lock"></span> 
+          </div> 
+          <div class="ui-form-item"> 
             <?php 
               print render($form['prev']); 
               print render($form['finish']);
             ?>
           </div>
           <div class="ui-form-item">
-          如果您在1分钟之内没有收到验证码，请 <a>返回修改手机号</a> 或 <a>30秒重新获取</a>
+          如果您在1分钟之内没有收到验证码，请退回<strong>上一步</strong>填写新号码<br /> 或 <span id="countdown"><span id="seconds">60</span>秒后</span><a id="resend">重新获取</a>
           </div>
           <?php } ?>
         </fieldset>

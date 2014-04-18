@@ -30,7 +30,7 @@ function easyloan_theme() {
         'path' => $path, 
         'template' => 'user-register',
         'render element' => 'form',
-        'arguments' => array('attributes' => NULL), 
+        //'arguments' => array('attributes' => NULL), 
         'preprocess functions' => array('easyloan_preprocess_user_register_form'), ),
 
     'about' => array(
@@ -188,76 +188,82 @@ function easyloan_theme() {
 
 
 function easyloan_form_alter(&$form, &$form_state, $form_id) {
-  if($form_id == 'form_easyloan_wizard'){
-    // var_dump($form);
-  //  if($form_id == 'user_register_form'){
-    $form['account']['name']['#title'] = t('昵称');
-    $form['account']['mail']['#title'] = t('邮件');
-    $form['account']['mail']['#value'] = "a@b.com"; // set to a fake value to cheat the validation for email
-    
-    $form['#validate'][] = 'easyloan_user_register_validation_callback';
 
-    $form['account']['phone'] = array(
-            '#title' => t('手机号'),
-            '#type' => 'textfield',
-            '#description' => t('请输入11位手机号码'),
-            '#size' => 11,
-            '#weight' => 10,);
-    
-    $form['account']['agree'] = array(
-            '#type' => 'checkboxes',
-            '#options' => array(t('我已阅读并同意')),);
+    if($form_id == 'form_easyloan_wizard'){
 
-    
-    $form['account']['name']['#title_display'] = 'none';
-    $form['account']['name']['#description'] = '';
-    $form['account']['phone']['#title_display'] = 'none';
-    $form['account']['phone']['#description'] = ''; 
+        $ui_button = array('ui-button', 'ui-button-blue', 'ui-button-mid');
 
-    $form['account']['pass']['#title_display'] = 'none';
-    $form['account']['pass']['#description'] = '';
+        if (!in_array('easyloan_user_register_validation_callback', $form['#validate'])){
+            // prevent from adding the same validation callback method twice 
+            $form['#validate'][] = 'easyloan_user_register_validation_callback';
+        }
 
-    $form['captcha']['#theme_wrappers'] = NULL;
+        if ($form_state['step'] == 1) {
 
-    $form['account']['timezone']['#theme_wrappers'] = NULL;
-    $form['account']['agree']['#theme_wrappers'] = NULL;
+            $form['account']['mail']['#value'] = "a@b.com"; // set to a fake value to cheat the validation for email
 
-    $ui_input = array('ui-input', 'input-icon');
-    $form['account']['name']['#attributes']['class'] = $ui_input;
-    $form['account']['phone']['#attributes']['class'] = $ui_input;
+            $form['account']['phone'] = array(
+                    '#title' => t('手机号'),
+                    '#type' => 'textfield',
+                    '#description' => t('请输入11位手机号码'),
+                    '#size' => 11,
+                    '#weight' => 10,);
+            
+            $form['account']['agree'] = array(
+                    '#type' => 'checkboxes',
+                    '#options' => array(t('我已阅读并同意')),);
 
-    $ui_button = array('ui-button', 'ui-button-blue', 'ui-button-mid');
-    $form['actions']['submit']['#attributes']['class'] = $ui_button;
-    $form['next']['#attributes']['class'] = $ui_button;
-    $form['prev']['#attributes']['class'] = $ui_button;
-    $form['finish']['#attributes']['class'] = $ui_button;
+            $form['captcha']['#theme_wrappers'] = NULL;
 
-  } else if ($form_id == 'form_easyloan_wizard') {
-    if ($form_state['step'] == 1) {
-           // Clean up the form a bit by removing 'create new account' submit button
-           // and moving 'next' button to bottom of form.
-           unset($form['actions']);
-           $form['next']['#weight'] = 100;
-       }
+            $ui_input = array('ui-input', 'input-icon');
+            $form['account']['name']['#attributes']['class'] = $ui_input;
+            $form['account']['phone']['#attributes']['class'] = $ui_input;
+            
+            $form['actions']['submit']['#attributes']['class'] = $ui_button;
+            $form['next']['#attributes']['class'] = $ui_button;
+
+            // when press 'previous' button, save the submitted user name and phone 
+            if (array_key_exists('step_information', $form_state) && 
+                    array_key_exists('stored_values', $form_state['step_information'][1])
+                ) {
+                $form['account']['name']['#value'] = $form_state['step_information'][1]['stored_values']['name'];
+                $form['account']['phone']['#value'] = $form_state['step_information'][1]['stored_values']['phone'];
+            }
+
+            // Clean up the form a bit by removing 'create new account' submit button
+            unset($form['actions']);
+        } else if ($form_state['step'] == 2) {
+            $form['prev']['#attributes']['class'] = $ui_button;
+            $form['finish']['#attributes']['class'] = $ui_button;
+        }
     }
 }
 
 function easyloan_preprocess_user_register_form(&$variables){
-  
-  //var_dump($variables['user_register_form']);
+
 }
 
 function easyloan_user_register_validation_callback($form, &$form_state){
   
-  // We notify the form API that this field has failed validation.
-  $form_state['values']['mail']=$form_state['values']['phone'].'@vip.com';
+    if ($form_state['step'] == 1) {
+        // create a fake email for phone user
+        $form_state['values']['mail']=$form_state['values']['phone'].'@vip.com';
+    } else if ($form_state['step'] == 2) {
+        if ($form_state['values']['vcode'] != variable_get("phonecode")){
+            form_set_error('Phone', $form_state['values']['vcode'] . ' vs ' . variable_get("phonecode"));
+        } else {
+            drupal_set_message('Code is correct!');
+        }
+    };
   
-  //form_set_error('Phone', var_dump($form_state['values']));
+  
 }
+
 
 function easyloan_preprocess(&$variables){
     $variables['classes_array']=array();
     $variables['attributes_array']=array();
     $variables['title_attributes_array']=array();
     $variables['content_attributes_array']=array();
+
 }
