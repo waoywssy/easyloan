@@ -6,9 +6,8 @@
  * Complete documentation for this file is available online.
  * @see https://drupal.org/node/1728096
  */
-
-function easyloan_theme() { 
-  $path = drupal_get_path('theme', 'easyloan') . '/templates';
+function easyloan_theme() {  
+  $path = drupal_get_path('theme', 'easyloan') . '/templates'; 
 
   return array(
     'user_login' => array(
@@ -23,15 +22,17 @@ function easyloan_theme() {
         'template' => 'findpsw',  
         'render element' => 'form', 
         //'arguments' => array('form' => NULL), 
-        'preprocess functions' => array('easyloan_preprocess_user_login'), ),
+        //'preprocess functions' => array('easyloan_preprocess_user_pass'), 
+        ),
 
     'form_easyloan_wizard' => array(
     //'user_register_form' => array(
         'path' => $path, 
         'template' => 'user-register',
         'render element' => 'form',
-        //'arguments' => array('attributes' => NULL), 
-        'preprocess functions' => array('easyloan_preprocess_user_register_form'), ),
+        'preprocess functions' => array('easyloan_preprocess_user_register_form'),
+        //'file' => ''
+        ),
 
     'about' => array(
         'path' => $path . '/about', 
@@ -137,7 +138,7 @@ function easyloan_theme() {
         'template' => 'invest',),
     'account-investplan' => array(
         'path' => $path . '/account',
-        'template' => 'investplan',),
+        'template' => 'investplan',), 
 
     'account-myloan' => array(
         'path' => $path . '/account',
@@ -193,33 +194,23 @@ function easyloan_form_alter(&$form, &$form_state, $form_id) {
 
         $ui_button = array('ui-button', 'ui-button-blue', 'ui-button-mid');
 
-        if (!in_array('easyloan_user_register_validation_callback', $form['#validate'])){
-            // prevent from adding the same validation callback method twice 
-            $form['#validate'][] = 'easyloan_user_register_validation_callback';
-        }
-
         if ($form_state['step'] == 1) {
 
             $form['account']['mail']['#value'] = "a@b.com"; // set to a fake value to cheat the validation for email
-
-            $form['account']['phone'] = array(
-                    '#title' => t('手机号'),
-                    '#type' => 'textfield',
-                    '#description' => t('请输入11位手机号码'),
-                    '#size' => 11,
-                    '#weight' => 10,);
+            $form['account']['phone'] = array( 
+                    '#title' => t('手机号'), 
+                    '#type' => 'textfield', 
+                    '#description' => t('请输入11位手机号码'), 
+                    '#size' => 11, 
+                    '#weight' => 10,); 
             
-            $form['account']['agree'] = array(
-                    '#type' => 'checkboxes',
-                    '#options' => array(t('我已阅读并同意')),);
+            $form['account']['agree'] = array( 
+                    '#type' => 'checkboxes', 
+                    '#options' => array(t('我已阅读并同意')),); 
 
-            $form['captcha']['#theme_wrappers'] = NULL;
-
-            $ui_input = array('ui-input', 'input-icon');
-            $form['account']['name']['#attributes']['class'] = $ui_input;
-            $form['account']['phone']['#attributes']['class'] = $ui_input;
-            
-            $form['actions']['submit']['#attributes']['class'] = $ui_button;
+            $form['captcha']['#theme_wrappers'] = NULL; 
+           
+            $form['actions']['submit']['#attributes']['class'] = $ui_button; 
             $form['next']['#attributes']['class'] = $ui_button;
 
             // when press 'previous' button, save the submitted user name and phone 
@@ -231,7 +222,7 @@ function easyloan_form_alter(&$form, &$form_state, $form_id) {
             }
 
             // Clean up the form a bit by removing 'create new account' submit button
-            unset($form['actions']);
+            unset($form['actions']); 
         } else if ($form_state['step'] == 2) {
             $form['prev']['#attributes']['class'] = $ui_button;
             $form['finish']['#attributes']['class'] = $ui_button;
@@ -239,31 +230,28 @@ function easyloan_form_alter(&$form, &$form_state, $form_id) {
     }
 }
 
+
+
+/*
+ * The following two methods are really heart-bleeding bug for the developer himself T_T
+ * 
+ */
 function easyloan_preprocess_user_register_form(&$variables){
-
+        $variables['classes_array']=array(' ');
+        $variables['attributes_array']=array(' ');
+        $variables['title_attributes_array']=array(' ');
+        $variables['content_attributes_array']=array(' ');
 }
-
-function easyloan_user_register_validation_callback($form, &$form_state){
-  
-    if ($form_state['step'] == 1) {
-        // create a fake email for phone user
-        $form_state['values']['mail']=$form_state['values']['phone'].'@vip.com';
-    } else if ($form_state['step'] == 2) {
-        if ($form_state['values']['vcode'] != variable_get("phonecode")){
-            form_set_error('Phone', $form_state['values']['vcode'] . ' vs ' . variable_get("phonecode"));
-        } else {
-            drupal_set_message('Code is correct!');
-        }
-    };
-  
-  
+function easyloan_preprocess_user_login(&$variables){
+        $variables['classes_array']=array(' ');
+        $variables['attributes_array']=array(' ');
+        $variables['title_attributes_array']=array(' ');
+        $variables['content_attributes_array']=array(' ');
 }
-
-
-function easyloan_preprocess(&$variables){
-    $variables['classes_array']=array();
-    $variables['attributes_array']=array();
-    $variables['title_attributes_array']=array();
-    $variables['content_attributes_array']=array();
-
-}
+/*  // to find out the caller method
+    if ($elements['#theme'][0] == 'form_easyloan_wizard'){
+      $caller = null;
+      list(, $caller) = debug_backtrace(false);
+      //var_dump($caller);
+    }
+    */

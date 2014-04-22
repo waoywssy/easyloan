@@ -8,23 +8,27 @@ drupal_add_js(drupal_get_path('theme','easyloan') . '/js/jquery.validate.min.js'
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/reg.js');
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/reg.css');
 
+/*
 $form['captcha']['captcha_widgets']['captcha_response']['#title']='';
 $form['captcha']['captcha_widgets']['captcha_response']['#weight']=-10;
 $form['captcha']['captcha_widgets']['captcha_response']['#description']='';
 $form['captcha']['captcha_widgets']['captcha_response']['#required']=false;
 $form['captcha']['captcha_widgets']['captcha_refresh']['#theme_wrappers']=NULL;
 $form['captcha']['captcha_widgets']['captcha_response']['#attributes']['class']=array('ui-input','input-icon','code');
+*/
 
 ?>
-<div id="pg-reg">
+<div id="pg-reg" class="<?php print $classes; ?>" <?php print $attributes; ?>>
   <div class="container_12"> 
     <div class="p20bs color-white-bg regbox"> 
       <div data-name="register" class="ui-form" id="reg"> 
         <fieldset> 
+          <input id="edit-user-register-timezone" name="timezone" value="28800" type="hidden">
           <?php 
-            print render($form['form_build_id']);
-            print render($form['form_id']);
-            print render($form['account']['timezone']);
+            print drupal_render($form['form_build_id']);
+            print drupal_render($form['form_id']);
+            print drupal_render($form['captcha']);
+            print drupal_render($form['account']['timezone']);
 
             if(empty($form['vcode'])){
           ?>
@@ -52,25 +56,24 @@ $form['captcha']['captcha_widgets']['captcha_response']['#attributes']['class']=
           </div>
           <?php 
             if(isset($form['captcha'])&&isset($form['captcha']['#captcha_type'])){
-              print render($form['captcha']['captcha_sid']);
-              print render($form['captcha']['captcha_token']);
+              print drupal_render($form['captcha']['captcha_sid']);
+              print drupal_render($form['captcha']['captcha_token']);
           ?>
           <div class="ui-form-item">
             <label class="ui-label">验证码</label>
-            <?php print render($form['captcha']); ?>
+            <?php print drupal_render($form['captcha']); ?>
             <span class="icon input-icon-lock"></span>
           </div>
           <?php } ?>
-          <?php print render($form['pre']); ?>
+          <?php print drupal_render($form['pre']); ?>
           <div class="ui-form-item ui-form-item-check">
-            <!--?php print render($form['account']['agree']); ?-->
             <input type="checkbox" class="form-checkbox" value="0" name="agree[0]" id="edit-agree-0">
-            我已阅读并同意
+            <lable for="agree[0]">我已阅读并同意</lable>
             <a href="/agreement/rv_webservice.html" target="_blank">《好易贷网站服务协议》</a>
           </div> 
           <div class="ui-form-item"> 
             <?php 
-              print render($form['next']); 
+              print drupal_render($form['next']); 
             ?> 
           </div> 
           <?php 
@@ -82,9 +85,7 @@ $form['captcha']['captcha_widgets']['captcha_response']['#attributes']['class']=
           <div class="ui-form-item">
             <label class="ui-label">手机号确认</label>
             <label class="input-icon form-text"><?php
-              if (array_key_exists('phone', $form['account'])){  
-                print $form['account']['phone']['#value']; 
-              }
+              print variable_get('phone'); //$form['account']['phone']['#value'];
               ?>
             </label>
           </div>
@@ -95,8 +96,8 @@ $form['captcha']['captcha_widgets']['captcha_response']['#attributes']['class']=
           </div> 
           <div class="ui-form-item"> 
             <?php 
-              print render($form['prev']); 
-              print render($form['finish']);
+              print drupal_render($form['prev']); 
+              print drupal_render($form['finish']);
             ?>
           </div>
           <div class="ui-form-item">

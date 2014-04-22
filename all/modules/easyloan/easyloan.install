@@ -1,0 +1,88 @@
+<?php
+/**
+ * Implements hook_install()
+ */
+function easyloan_install(){
+	// create any roles we will be using
+	$auditor_permissions = array(
+		'auditor permission',
+	);
+	$accountant_permissions = array(
+		'accountant permission',
+	);
+	$manager_permissions = array(
+		'manager permission',
+	);
+	
+	_add_role('auditor', 10);
+	_add_role('accountant', 20);
+	_add_role('manager', 30);
+
+
+
+	$modules = user_permission_get_modules();
+	var_dump($modules);
+
+	_add_permissions('auditor', $auditor_permissions);
+	_add_permissions('accountant', $accountant_permissions);
+	_add_permissions('manager', $manager_permissions);
+}
+
+
+/**
+ *	Adds a new role
+ *      @machine_name - the name of the role to be added
+ *      @weight - the optional display weight for role
+ */
+function _add_role($machine_name, $weight = 0){
+	$role = new stdClass();
+	$role->name = $machine_name;
+	$role->weight = $weight;
+	
+	if (!user_role_load_by_name($role->name))  {
+    	user_role_save($role);
+  	}
+}
+
+/**
+ *	Adds permissions to a role
+ *	@role_name - the name of the role to receive an update
+ *	@permissions - the array of permissions to add
+ */
+function _add_permissions($role_name, $permissions){
+	$role = user_role_load_by_name($role_name);
+	user_role_grant_permissions($role->rid, $permissions);
+}
+
+
+function easyloan_enable() {
+	$t = get_t();
+	// Create a custom menu, if Menu module is enabled.
+	// @see easyloan_modules_installed()
+	if (module_exists('menu')) {
+		$menu = array(
+		  'menu_name' => 'easyloan',
+		  'title' => $t('Easyloan'),
+		  'description' => $t('Easyloan link'),
+		);
+		menu_save($menu);
+	}
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function easyloan_uninstall() {
+	// remove any roles we created
+	user_role_delete('auditor');
+	user_role_delete('accountant');
+	user_role_delete('manager');
+
+	//  variable_del('devel_debug_mail_directory'); 
+	// Delete the development menu.
+	if (module_exists('menu')) {
+		if ($easyloan_menu = menu_load('easyloan')) {
+			menu_delete($easyloan_menu);
+		}
+	}
+}
