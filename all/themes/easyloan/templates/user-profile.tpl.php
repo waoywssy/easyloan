@@ -10,7 +10,10 @@ drupal_add_js(drupal_get_path('theme','easyloan') . '/js/jquery.powertip.min.js'
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account.js');
 
 global $base_url;
-$img_path = drupal_get_path('theme','easyloan') . '/images/';
+$img_path = $base_url . '/' . drupal_get_path('theme','easyloan') . '/images/';
+
+
+global $user;
 ?>
 <script>
 (function ($, Drupal, window, document, undefined) {

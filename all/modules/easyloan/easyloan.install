@@ -14,18 +14,13 @@ function easyloan_install(){
 		'manager permission',
 	);
 	
-	_add_role('auditor', 10);
-	_add_role('accountant', 20);
-	_add_role('manager', 30);
+	add_role('auditor', 10);
+	add_role('accountant', 20);
+	add_role('manager', 30);
 
-
-
-	$modules = user_permission_get_modules();
-	var_dump($modules);
-
-	_add_permissions('auditor', $auditor_permissions);
-	_add_permissions('accountant', $accountant_permissions);
-	_add_permissions('manager', $manager_permissions);
+	add_permissions('auditor', $auditor_permissions);
+	add_permissions('accountant', $accountant_permissions);
+	add_permissions('manager', $manager_permissions); 
 }
 
 
@@ -34,13 +29,13 @@ function easyloan_install(){
  *      @machine_name - the name of the role to be added
  *      @weight - the optional display weight for role
  */
-function _add_role($machine_name, $weight = 0){
-	$role = new stdClass();
-	$role->name = $machine_name;
-	$role->weight = $weight;
+function add_role($machine_name, $weight = 0){ 
+	$role         = new stdClass(); 
+	$role->name   = $machine_name; 
+	$role->weight = $weight; 
 	
-	if (!user_role_load_by_name($role->name))  {
-    	user_role_save($role);
+	if (!user_role_load_by_name($role->name)){ 
+    	user_role_save($role); 
   	}
 }
 
@@ -49,8 +44,11 @@ function _add_role($machine_name, $weight = 0){
  *	@role_name - the name of the role to receive an update
  *	@permissions - the array of permissions to add
  */
-function _add_permissions($role_name, $permissions){
+function add_permissions($role_name, $permissions){
 	$role = user_role_load_by_name($role_name);
+
+	// to make sure this method works, we have to implement the 
+	// hook_permissions() in the module
 	user_role_grant_permissions($role->rid, $permissions);
 }
 
@@ -60,12 +58,52 @@ function easyloan_enable() {
 	// Create a custom menu, if Menu module is enabled.
 	// @see easyloan_modules_installed()
 	if (module_exists('menu')) {
-		$menu = array(
-		  'menu_name' => 'easyloan',
-		  'title' => $t('Easyloan'),
-		  'description' => $t('Easyloan link'),
+		menu_save(array(
+			'menu_name'   => 'easyloan_exchange', 
+			'title'       => $t('好易贷友情链接'),
+			'description' => $t('好易贷的友情链接'), 
+		));
+
+		menu_save(array(
+			'menu_name'   => 'easyloan_guide', 
+			'title'       => $t('好易贷新手指引链接'), 
+			'description' => $t('新手指引菜单'), 
+		));
+
+		menu_save(array(
+			'menu_name'   => 'easyloan_about', 
+			'title'       => $t('好易贷关于我们链接'), 
+			'description' => $t('关于我们左边菜单'), 
+		));
+
+		menu_save(array(
+			'menu_name'   => 'easyloan_account', 
+			'title'       => $t('好易贷个人账户链接'), 
+			'description' => $t('个人账户页面左边菜单'), 
+		));
+
+		menu_save(array(
+			'menu_name'   => 'easyloan_help', 
+			'title'       => $t('好易贷帮助中心链接'), 
+			'description' => $t('帮助中心左边链接'), 
+		));
+
+		$menu_item = array(
+		  'link_title' => $t('我的好易贷'),
+		  'menu_name'  => 'easyloan_account',
+		  'customized' => 1,
+		  'link_path'  => 'user', 
 		);
-		menu_save($menu);
+		menu_link_save($menu_item); // You don't need to receive it in a variable
+
+		// add sample exchange links
+		$menu_item = array(
+		  'link_title' => $t('人人贷'),
+		  'menu_name'  => 'easyloan_exchange',
+		  'customized' => 1,
+		  'link_path'  => 'http://www.renrendai.com', 
+		);
+		menu_link_save($menu_item);
 	}
 }
 
@@ -73,16 +111,30 @@ function easyloan_enable() {
  * Implements hook_uninstall().
  */
 function easyloan_uninstall() {
-	// remove any roles we created
+
+	// remove any roles we created 
 	user_role_delete('auditor');
 	user_role_delete('accountant');
 	user_role_delete('manager');
 
 	//  variable_del('devel_debug_mail_directory'); 
 	// Delete the development menu.
-	if (module_exists('menu')) {
-		if ($easyloan_menu = menu_load('easyloan')) {
-			menu_delete($easyloan_menu);
+	if (module_exists('menu')) { 
+		if ($menu = menu_load('easyloan_exchange')) { 
+			menu_delete($menu); 
+		}
+		if ($menu = menu_load('easyloan_guide')) { 
+			menu_delete($menu); 
+		}
+		if ($menu = menu_load('easyloan_about')) { 
+			menu_delete($menu); 
+		}
+		if ($menu = menu_load('easyloan_account')) { 
+			menu_delete($menu); 
+		}
+		if ($menu = menu_load('easyloan_help')) { 
+			menu_delete($menu); 
 		}
 	}
 }
+

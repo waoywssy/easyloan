@@ -104,3 +104,10 @@ padding-left:75px;
 .ui-form-item .ui-button{
 	margin-right: 20px;
 }
+
+
+#pg-reg .ui-form-item label.error {
+    display: block;
+    clear: both;
+    margin-top: 5px;
+}

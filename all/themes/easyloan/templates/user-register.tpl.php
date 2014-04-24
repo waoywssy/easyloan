@@ -18,7 +18,7 @@ $form['captcha']['captcha_widgets']['captcha_response']['#attributes']['class']=
 */
 
 ?>
-<div id="pg-reg" class="<?php print $classes; ?>" <?php print $attributes; ?>>
+<div id="pg-reg">
   <div class="container_12"> 
     <div class="p20bs color-white-bg regbox"> 
       <div data-name="register" class="ui-form" id="reg"> 
@@ -67,8 +67,7 @@ $form['captcha']['captcha_widgets']['captcha_response']['#attributes']['class']=
           <?php } ?>
           <?php print drupal_render($form['pre']); ?>
           <div class="ui-form-item ui-form-item-check">
-            <input type="checkbox" class="form-checkbox" value="0" name="agree[0]" id="edit-agree-0">
-            <lable for="agree[0]">我已阅读并同意</lable>
+            <input type="checkbox" class="form-checkbox" value="0" name="agree" id="edit-agree">我已阅读并同意
             <a href="/agreement/rv_webservice.html" target="_blank">《好易贷网站服务协议》</a>
           </div> 
           <div class="ui-form-item"> 

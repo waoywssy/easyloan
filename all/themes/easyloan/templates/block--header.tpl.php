@@ -9,7 +9,7 @@
 global $base_url;
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/easyloan.js');
 ?>
-<div class="ui-header" id="header">
+<div class="ui-header <?php print $classes; ?>" id="header">
   <div class="ui-header-main">
     <div class="container_12 fn-clear">
       <div class="grid_2 ui-header-grid">
@@ -36,10 +36,10 @@ drupal_add_js(drupal_get_path('theme','easyloan') . '/js/easyloan.js');
             </ul>
           </li>
           <li class="ui-nav-item">
-            <a class="ui-nav-item-link rrd-dimgray" href="<?php print $base_url;?>/guide">新手指引</a>
+            <a class="ui-nav-item-link rrd-dimgray" href="<?php print $base_url;?>/guide/guide">新手指引</a>
           </li>
           <li class="ui-nav-item">
-            <a class="ui-nav-item-link rrd-dimgray" href="<?php print $base_url;?>/about">关于我们</a>
+            <a class="ui-nav-item-link rrd-dimgray" href="<?php print $base_url;?>/about/company">关于我们</a>
           </li>
         </ul>
       </div>
@@ -56,13 +56,16 @@ drupal_add_js(drupal_get_path('theme','easyloan') . '/js/easyloan.js');
             </a>
             <ul class="ui-nav-dropdown ui-nav-dropdown-account fn-hide">
               <li class="ui-nav-dropdown-angle"><span></span></li>
-              <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/account/recharge">充值</a></li>
-              <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/account/withdraw">提现</a></li>
+              <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/capital_management/recharge">充值</a></li>
+              <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/capital_management/withdraw">提现</a></li>
               <li class="ui-nav-dropdown-separator"></li>
-              <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="http://localhost/d71/devel/cache/clear">清除缓存</a></li>
-              <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/account/applications">好易贷管理</a></li>
-              <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/account/capital">理财管理</a></li>
-              <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/account/myloan">借款管理</a></li>
+              <?php if (management_access()){ ?>
+              <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/management">好易贷管理</a></li>
+              <?php
+                    }
+              ?>
+              <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/invest_management">理财管理</a></li>
+              <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/loan_management">借款管理</a></li>
               <li class="ui-nav-dropdown-separator"></li>
               <li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="<?php print $base_url;?>/user/logout">退出</a></li>
             </ul>

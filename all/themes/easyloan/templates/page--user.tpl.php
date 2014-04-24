@@ -7,7 +7,7 @@
  * @see https://drupal.org/node/1728148
  */
 ?>
-<div class="pg-container  ">
+<div class="pg-container <?php print $classes; ?>" <?php print $attributes; ?>>
   <?php print render($page['header']); ?>
   <?php print $messages; ?>
   <div class="pg-container-content">
