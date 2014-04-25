@@ -62,37 +62,43 @@ function easyloan_enable() {
 			'menu_name'   => 'easyloan_exchange', 
 			'title'       => $t('好易贷友情链接'),
 			'description' => $t('好易贷的友情链接'), 
+			'module'     => 'easyloan',
 		));
 
 		menu_save(array(
 			'menu_name'   => 'easyloan_guide', 
 			'title'       => $t('好易贷新手指引链接'), 
 			'description' => $t('新手指引菜单'), 
+			'module'     => 'easyloan',
 		));
 
 		menu_save(array(
 			'menu_name'   => 'easyloan_about', 
 			'title'       => $t('好易贷关于我们链接'), 
 			'description' => $t('关于我们左边菜单'), 
+			'module'     => 'easyloan',
 		));
 
 		menu_save(array(
 			'menu_name'   => 'easyloan_account', 
 			'title'       => $t('好易贷个人账户链接'), 
 			'description' => $t('个人账户页面左边菜单'), 
+			'module'     => 'easyloan',
 		));
 
 		menu_save(array(
 			'menu_name'   => 'easyloan_help', 
 			'title'       => $t('好易贷帮助中心链接'), 
 			'description' => $t('帮助中心左边链接'), 
+			'module'     => 'easyloan',
 		));
 
 		$menu_item = array(
-		  'link_title' => $t('我的好易贷'),
-		  'menu_name'  => 'easyloan_account',
-		  'customized' => 1,
-		  'link_path'  => 'user', 
+			'link_title' => $t('我的好易贷'),
+			'menu_name'  => 'easyloan_account',
+			'customized' => 1,
+			'link_path'  => 'user', 
+			'module'     => 'easyloan',
 		);
 		menu_link_save($menu_item); // You don't need to receive it in a variable
 
@@ -102,9 +108,85 @@ function easyloan_enable() {
 		  'menu_name'  => 'easyloan_exchange',
 		  'customized' => 1,
 		  'link_path'  => 'http://www.renrendai.com', 
+		  'module'     => 'easyloan',
 		);
 		menu_link_save($menu_item);
 	}
+	
+	// 好易贷‘关于我们’左边菜单模块设置
+	db_update('block') 
+	    ->fields(array(
+			'region'     => 'sidebar_first',
+			'visibility' => 1,	// show only on listed pages 
+			'status'     => 1,
+			'title'      => '<none>',
+			'pages'      => 'about/*',
+			'cache'      => DRUPAL_CACHE_GLOBAL, // 8 is for DRUPAL_CACHE_GLOBAL
+	    ))
+	    ->condition('module', 'menu')
+	    ->condition('theme', 'easyloan')
+	    ->condition('delta', 'easyloan_about') // always cache 
+	    ->execute();
+
+	// 好易贷‘新手指导’菜单模块设置
+	db_update('block') 
+	    ->fields(array(
+			'region'     => 'content_top',
+			'status'     => 1,
+			'visibility' => 1,	// show only on listed pages 
+			'title'      => '<none>',
+			'pages'      => 'guide/*',
+			'cache'      => DRUPAL_CACHE_GLOBAL,
+	    ))
+	    ->condition('module', 'menu')
+	    ->condition('theme', 'easyloan')
+	    ->condition('delta', 'easyloan_guide') // always cache 
+	    ->execute();
+
+	// 好易贷‘友情链接’菜单模块设置
+	db_update('block') 
+	    ->fields(array(
+			'region'     => 'footer',
+			'status'     => 1,
+			'visibility' => 0,	// show on all pages
+			'title'      => '<none>',
+			'pages'      => '',
+			'cache'      => DRUPAL_CACHE_GLOBAL,
+	    ))
+	    ->condition('module', 'menu')
+	    ->condition('theme', 'easyloan')
+	    ->condition('delta', 'easyloan_exchange') // always cache 
+	    ->execute();
+
+	// 好易贷‘帮助中心’菜单模块设置
+	db_update('block') 
+	    ->fields(array(
+			'region'     => 'sidebar_first',
+			'status'     => 1,
+			'visibility' => 1,	// show only on listed pages 
+			'title'      => '<none>',
+			'pages'      => 'help/*',
+			'cache'      => DRUPAL_CACHE_GLOBAL,
+	    ))
+	    ->condition('module', 'menu')
+	    ->condition('theme', 'easyloan')
+	    ->condition('delta', 'easyloan_help') // always cache 
+	    ->execute();
+
+	// 好易贷‘个人账户’菜单模块设置
+	db_update('block') 
+	    ->fields(array(
+			'region'     => 'sidebar_first',
+			'status'     => 1,
+			'visibility' => 1,	// show only on listed pages 
+			'title'      => '<none>',
+			'pages'      => 'user\r\nuser/*\r\ncapital_management/*\r\ninvest_management\r\nloan_management\r\naccount_management/*\r\nmanagement/*',
+			'cache'      => DRUPAL_CACHE_PER_ROLE,	// cache per role
+	    ))
+	    ->condition('module', 'menu')
+	    ->condition('theme', 'easyloan')
+	    ->condition('delta', 'easyloan_account') // always cache 
+	    ->execute();
 }
 
 /**
@@ -117,8 +199,7 @@ function easyloan_uninstall() {
 	user_role_delete('accountant');
 	user_role_delete('manager');
 
-	//  variable_del('devel_debug_mail_directory'); 
-	// Delete the development menu.
+		// Delete the development menu.
 	if (module_exists('menu')) { 
 		if ($menu = menu_load('easyloan_exchange')) { 
 			menu_delete($menu); 
@@ -136,5 +217,11 @@ function easyloan_uninstall() {
 			menu_delete($menu); 
 		}
 	}
+
+	//  variable_del('devel_debug_mail_directory'); 
+}
+
+function easyloan_disable(){
+
 }
 
