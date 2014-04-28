@@ -7,7 +7,10 @@
  * @see https://drupal.org/node/1728148
  */
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/guide.css');
+
 global $base_url;
+$image_path = $base_url . '/sites/all/themes/easyloan/images/';
+
 ?>
 <div class="pg-guide-info mt20">
   <div class="pg-guide-item">
@@ -19,7 +22,7 @@ global $base_url;
         </p>
       </div>
       <div class="grid_6 omega text-center">
-        <img src="/static/img/guide/platform.png?rrdversion=20131013b" alt="好易贷平台原理">
+        <img src="<?php print $image_path; ?>platform.png" alt="好易贷平台原理">
       </div>
     </div>
   </div>
@@ -27,7 +30,7 @@ global $base_url;
     <h4 class="h4bg-green"><span>为什么选择好易贷</span></h4>
     <div class="fn-clear">
       <div class="grid_6 alpha text-center">
-        <img src="/static/img/guide/interest-compare.png?rrdversion=20131013b" alt="好易贷理财12-14%的高收益">
+        <img src="<?php print $image_path; ?>interest-compare.png" alt="好易贷理财12-14%的高收益">
       </div>
       <div class="grid_6 omega">
         <dl class="p20 pr40">
@@ -48,7 +51,7 @@ global $base_url;
         </dl>
       </div>
       <div class="grid_6 omega text-center">
-        <img class="mt30" src="/static/img/guide/loans.png?rrdversion=20131013b" alt="100%本金保障计划，资金灵活周转">
+        <img class="mt30" src="<?php print $image_path; ?>loans.png" alt="100%本金保障计划，资金灵活周转">
       </div>
     </div>
   </div>
@@ -57,7 +60,7 @@ global $base_url;
     <div class="fn-clear">
       <div class="grid_6 alpha text-center performance">
         <div class="pl20">
-          <img src="/static/img/guide/performance.png?rrdversion=20131013b" alt="好易贷业绩">
+          <img src="<?php print $image_path; ?>performance.png" alt="好易贷业绩">
           <p class="num-xxl performance-item performance-item-trade">总交易金额<em>23</em>亿元</p>
           <p class="num-l performance-item performance-item-interest">为用户赚取<em>11,910</em>万元</p>
           <p class="num-l performance-item performance-item-count">累计交易<em>182</em>万人次</p>
@@ -90,11 +93,11 @@ global $base_url;
               <p>三步走完，轻松赚取收益</p>
             </dd>
           </dl>
-          <a class="ui-button ui-button-blue ui-button-mid" href="/lend/index.action" target="_blank">我要去理财</a>
+          <a class="ui-button ui-button-blue ui-button-mid" href="<?php print $base_url; ?>/lend" target="_blank">我要去理财</a>
         </div>
       </div>
       <div class="grid_7 omega text-center">
-        <img class="mt40" src="/static/img/guide/steps-for-investing.png?rrdversion=20131013b" alt="简单3步，完成理财投资">
+        <img class="mt40" src="<?php print $image_path; ?>steps-for-investing.png" alt="简单3步，完成理财投资">
       </div>
     </div>
   </div>
@@ -102,9 +105,9 @@ global $base_url;
     <h4 class="h4bg-orange"><span>产品介绍</span></h4>
     <div class="fn-clear">
       <div class="grid_6 alpha text-center img-container">
-        <img class="icon-plan" src="/static/img/guide/invest-product-plan.png?rrdversion=20131013b" alt="优选理财计划">
-        <img class="icon-loan" src="/static/img/guide/invest-product-loan.png?rrdversion=20131013b" alt="散标投资列表">
-        <img class="icon-transfer" src="/static/img/guide/invest-product-transfer.png?rrdversion=20131013b" alt="债权转让列表">
+        <img class="icon-plan" src="<?php print $image_path; ?>invest-product-plan.png" alt="优选理财计划">
+        <img class="icon-loan" src="<?php print $image_path; ?>invest-product-loan.png" alt="散标投资列表">
+        <img class="icon-transfer" src="<?php print $image_path; ?>invest-product-transfer.png" alt="债权转让列表">
       </div>
       <div class="grid_6 omega">
         <dl class="p20 pr30">

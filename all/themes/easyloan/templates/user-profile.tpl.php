@@ -79,8 +79,8 @@ global $user;
         <span class="fn-left num-xl color-orange-text">
           <em>0.00</em>元
         </span>
-        <a class="fn-left ui-button ui-button-green ui-button-mid mr4" href="<?php print $base_url;?>/account/recharge">充值</a>
-        <a class="fn-left ui-button ui-button-blue ui-button-mid last" href="<?php print $base_url;?>/account/withdraw">提现</a>
+        <a class="fn-left ui-button ui-button-green ui-button-mid mr4" href="<?php print $base_url;?>/capital_management/recharge">充值</a>
+        <a class="fn-left ui-button ui-button-blue ui-button-mid last" href="<?php print $base_url;?>/capital_management/withdraw">提现</a>
       </div>
       <div class="surplus-detail fn-clear">
         <div class="fn-left mr40">

@@ -192,7 +192,6 @@ function easyloan_theme() {
 function easyloan_form_alter(&$form, &$form_state, $form_id) {
 
     if($form_id == 'form_easyloan_wizard'){
-
         $ui_button = array('ui-button', 'ui-button-blue', 'ui-button-mid');
 
         if ($form_state['step'] == 1) {
@@ -205,7 +204,6 @@ function easyloan_form_alter(&$form, &$form_state, $form_id) {
                     '#size' => 11, 
                     '#weight' => 10,); 
 
-            $form['captcha']['#theme_wrappers'] = NULL; 
             $form['actions']['submit']['#attributes']['class'] = $ui_button; 
             $form['next']['#attributes']['class'] = $ui_button;
 

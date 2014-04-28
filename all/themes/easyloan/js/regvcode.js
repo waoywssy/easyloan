@@ -6,7 +6,6 @@
 (function($, Drupal, window, document, undefined) {
 	Drupal.behaviors.vali = {
 		attach: function(context, settings) {
-
 			$("#form-easyloan-wizard").validate({
 				rules: {
 					vcode: {
@@ -23,7 +22,8 @@
 					},
 				}
 			});
-			// $("#edit-prev").submit(function(){return false;})
+			//$("#edit-prev").submit(function(){return false;})
+			$( "#edit-prev").unbind("click");
 		}
 	};
 })(jQuery, Drupal, this, this.document);

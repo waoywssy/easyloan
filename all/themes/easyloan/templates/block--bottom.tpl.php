@@ -8,17 +8,17 @@
  */
 global $base_url;
 ?>
-<div class="ui-footer-section ui-footer-narrow-hide fn-clear">
+<div class="ui-footer-section ui-footer-narrow-hide fn-clear <?php print $classes; ?>">
     <div class="ui-footer-links grid_9 alpha">
       <ul class="fn-clear">
         <li class="fn-left">
-          <a class="gray" target="_blank" href="<?php print $base_url;?>/about">公司介绍</a>
+          <a class="gray" target="_blank" href="<?php print $base_url;?>/about/company">公司介绍</a>
         </li>
         <li class="fn-left">
           <a class="gray" target="_blank" href="<?php print $base_url;?>/guide/security">安全保障</a>
         </li>
         <li class="fn-left">
-          <a class="gray" target="_blank" href="<?php print $base_url;?>/help">帮助中心</a>
+          <a class="gray" target="_blank" href="<?php print $base_url;?>/help/help">帮助中心</a>
         </li>
         <li class="fn-left">
           <a class="gray" target="_blank" href="<?php print $base_url;?>/about/contact">联系我们</a>

@@ -6,17 +6,12 @@
  * Complete documentation for this file is available online.
  * @see https://drupal.org/node/1728148
  */
-global $user;
 ?>
-<div class="pg-container <?php print $classes; ?>" <?php print $attributes; ?>>
+<div class="pg-container  ">
   <?php print render($page['header']); ?>
   <?php print $messages; ?>
-
-  <?php 
-    if ($user->uid > 0){
-  ?>
-    <div class="pg-container-content">
-    <div id="pg-account-index">
+  <div class="pg-container-content">
+	<div id="pg-account-index" class="pg-account">
 	    <div class="container_12 mt10 fn-clear">
 	      <div class="grid_2">
 			<?php print render($page['sidebar_first']); ?>
@@ -25,17 +20,8 @@ global $user;
 			<?php print render($page['content']); ?>
 		  </div>
 	  	</div>
-    </div>
-    </div>
-  <?php 
-    } else {
-  ?>
-  <div class="pg-container-content">
-    <?php print render($page['content']); ?>
+  	</div>
   </div>
-<?php 
-    }
-  ?>
 <div class="ui-footer" id="footer">
   <div class="container_12">
     <div class="grid_12">

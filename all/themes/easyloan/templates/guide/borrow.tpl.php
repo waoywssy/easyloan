@@ -8,17 +8,19 @@
  */
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/guide.css');
 global $base_url;
+$image_path = $base_url . '/sites/all/themes/easyloan/images/';
+
 ?>
 <div class="pg-guide-info mt20">
   <div class="pg-guide-item">
     <h4 class="h4bg-bule"><span>什么是好易贷</span></h4>
     <div class="fn-clear">
       <div class="grid_6 alpha text-center">
-        <img src="/static/img/guide/platform.png?rrdversion=20131013b" alt="好易贷平台原理">
+        <img src="<?php print $image_path; ?>platform.png" alt="好易贷平台原理">
       </div>
       <div class="grid_6 omega">
         <p class="p20 pr40">
-          <span class="guide-first-word">人</span>人贷(renrendai.com)是目前中国互联网金融中P2P信贷行业的领军企业，是一个以个人对个人小额借贷为主要产品，为借贷两端搭建的公平、透明、安全、高效的互联网金融服务平台。借款用户可以在好易贷上获得信用评级、发布借款请求来实现个人快捷的融资需要；理财用户可以把自己的部分闲余资金通过好易贷平台出借给信用良好有资金需求的个人，在获得有保障，高收益的理财回报的同时帮助了优质的借款人。
+          <span class="guide-first-word">好</span>易贷(easyloan.com)是目前中国互联网金融中P2P信贷行业的领军企业，是一个以个人对个人小额借贷为主要产品，为借贷两端搭建的公平、透明、安全、高效的互联网金融服务平台。借款用户可以在好易贷上获得信用评级、发布借款请求来实现个人快捷的融资需要；理财用户可以把自己的部分闲余资金通过好易贷平台出借给信用良好有资金需求的个人，在获得有保障，高收益的理财回报的同时帮助了优质的借款人。
         </p>
       </div>
     </div>
@@ -35,12 +37,12 @@ global $base_url;
         </dl>
       </div>
       <div class="grid_6 omega text-center">
-        <img class="mt40" src="/static/img/guide/fast.png?rrdversion=20131013b" alt="信用借款，无需抵押，快速获得借款">
+        <img class="mt40" src="<?php print $image_path; ?>fast.png" alt="信用借款，无需抵押，快速获得借款">
       </div>
     </div>
     <div class="fn-clear">
       <div class="grid_6 alpha text-center">
-        <img class="mt40" src="/static/img/guide/safe.png?rrdversion=20131013b" alt="最便捷的借款方式，最安全的平台保障" style="margin-top: -15px;">
+        <img class="mt40" src="<?php print $image_path; ?>safe.png" alt="最便捷的借款方式，最安全的平台保障" style="margin-top: -15px;">
       </div>
       <div class="grid_6 omega">
         <dl class="p20 pr40">
@@ -68,7 +70,7 @@ global $base_url;
       </div>
       <div class="grid_6 omega text-center performance">
         <div class="pr20">
-          <img src="/static/img/guide/performance.png?rrdversion=20131013b" alt="好易贷业绩">
+          <img src="<?php print $image_path; ?>performance.png" alt="好易贷业绩">
           <p class="num-xxl performance-item borrow performance-item-trade">总交易金额<em>23</em>亿元</p>
           <p class="num-l performance-item borrow performance-item-interest">借款用户平均借款用时<em>2.89</em>天</p>
           <p class="num-l performance-item borrow performance-item-count">累计交易<em>184</em>万人次</p>
@@ -80,7 +82,7 @@ global $base_url;
     <h4 class="h4bg-cyanblue"><span>借款，从未如此轻松</span></h4>
     <div class="fn-clear">
       <div class="grid_6 alpha text-center">
-        <img src="/static/img/guide/steps-for-borrowing.png?rrdversion=20131013b" alt="轻松借款，只需4步" class="text-xl">
+        <img src="<?php print $image_path; ?>steps-for-borrowing.png" alt="轻松借款，只需4步" class="text-xl">
       </div>
       <div class="grid_6 omega">
         <div class="p20 pr40">
@@ -94,7 +96,7 @@ global $base_url;
               <p>满标后，借款完成立刻放款，之后您只需每月还款即可</p>
             </dd>
           </dl>
-          <a class="ui-button ui-button-blue ui-button-mid" href="/borrow/index.action" target="_blank">我要去借款</a>
+          <a class="ui-button ui-button-blue ui-button-mid" href="<?php print $base_url; ?>borrow" target="_blank">我要去借款</a>
         </div>
       </div>
     </div>
@@ -113,9 +115,9 @@ global $base_url;
         </dl>
       </div>
       <div class="grid_6 omega text-center img-container">
-        <img class="icon-work" src="/static/img/guide/borrow-product-work.png?rrdversion=20131013b" alt="工薪贷">
-        <img class="icon-biz" src="/static/img/guide/borrow-product-biz.png?rrdversion=20131013b" alt="生意贷">
-        <img class="icon-ecomm" src="/static/img/guide/borrow-product-ecomm.png?rrdversion=20131013b" alt="网商贷">
+        <img class="icon-work" src="<?php print $image_path; ?>borrow-product-work.png" alt="工薪贷">
+        <img class="icon-biz" src="<?php print $image_path; ?>borrow-product-biz.png" alt="生意贷">
+        <img class="icon-ecomm" src="<?php print $image_path; ?>borrow-product-ecomm.png" alt="网商贷">
       </div>
     </div>
   </div>

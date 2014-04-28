@@ -21,7 +21,7 @@ global $base_url;
         <dt>本金保障计划是如何运作的？</dt>
         <dd>平台每笔借款成交时，提取一定比例的金额放入“风险备用金账户”。<br>借款出现严重逾期时（即逾期超过30天），根据“风险备用金账户使用规则”，通过“风险备用金”向理财人垫付此笔借款的剩余出借本金或本息（具体情况视投资标的类型的具体垫付规则为准）。</dd>
       </dl>
-      <a href="/help/intro.action#capital-safe" target="_blank">了解“风险备用金账户”的使用规则</a>
+      <a href="<?php print $base_url; ?>/help/intro#capital-safe" target="_blank">了解“风险备用金账户”的使用规则</a>
     </div>
   </div>
 
@@ -40,7 +40,7 @@ global $base_url;
         <dt>第三方资金托管</dt>
         <dd>好易贷目前对客户交易资金的保管完全按照"专户专款专用"的标准模式进行运作，客户在好易贷的交易资金是可以完全放心的。</dd>
       </dl>
-      <a href="/help/intro.action#account-intro-safe" target="_blank">了解更多…</a>
+      <a href="<?php print $base_url; ?>/help/intro#account-intro-safe" target="_blank">了解更多…</a>
     </div>
   </div>
 
@@ -63,7 +63,7 @@ global $base_url;
         <dt>关于理财人通过好易贷平台获得的出借理财收益的合法性</dt>
         <dd>根据最高人民法院《关于人民法院审理借贷案件的若干意见》第6条：“民间借贷的利率可以适当高于银行的利率，各地人民法院可以根据本地区的实际情况具体掌握，但最高不得超过银行同类贷款利率的四倍（包含利率本数）。超出此限度的，超出部分的利息不予保护。”好易贷的出借理财收益未超过银行同类贷款利率的四倍，为合法利息收益，受到法律保护。</dd>
       </dl>
-      <a href="/help/intro.action#laws-safe" target="_blank">了解更多…</a>
+      <a href="<?php print $base_url; ?>/help/intro#laws-safe" target="_blank">了解更多…</a>
     </div>
   </div>
 
@@ -106,7 +106,7 @@ global $base_url;
         <dt>避免私下交易</dt>
         <dd>好易贷建议用户避免私下交易。私下交易的约束力极低，造成逾期的风险非常高，同时您的个人信息将有可能被泄漏，存在遭遇诈骗甚至受到严重犯罪侵害的隐患。</dd>
       </dl>
-      <a href="/help/intro.action#userself-safe" target="_blank">了解更多…</a>
+      <a href="<?php print $base_url; ?>/help/intro#userself-safe" target="_blank">了解更多…</a>
     </div>
   </div>
 

@@ -1,15 +1,18 @@
 <?php
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/account.css');
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account.js');
+
+global $base_url;
+$img_path = $base_url . '/' . drupal_get_path('theme','easyloan') . '/images/';
 ?>
-    <div class="p20bs color-white-bg fn-clear">
+    <div class="p20bs color-white-bg fn-clear" id="pg-account-withdraw">
        <form data-name="withdraw" class="ui-form" method="post" action="/account/cashDraw.action" onsubmit="return false;" novalidate="novalidate">
          <div id="bankList" class="bankList">
             <div class="title">选择提现银行卡</div>
             <div id="banklis">
 <ul class="fn-clear">
 
-<li class="bankli" data-bank="92585"><img alt="" title="" src="../../../../static/img/banks/code_104.jpg?rrdversion=20131013b"><div class="card">6247 **** **** 6247</div><em></em> </li>
+<li class="bankli" data-bank="92585"><img alt="" title="" src="<?php print $img_path; ?>code_308.jpg"><div class="card">6247 **** **** 6247</div><em></em> </li>
 
 </ul>
 </div>

@@ -1,8 +1,12 @@
 <?php
+drupal_add_css(drupal_get_path('theme','easyloan') . '/css/iconfont.css');
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/account.css');
+
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account.js');
+global $base_url;
+$image_path = $base_url . '/sites/all/themes/easyloan/images/';
 ?>
-	  <div class="p20bs color-white-bg fn-clear">
+	  <div class="p20bs color-white-bg fn-clear" id="pg-account-recharge">
 	      <form data-name="recharge" class="ui-form" method="post" id="regchargeForm" name="checkinForm" target="_blank" action="/account/userCheckin.action" novalidate="novalidate">
 	        <div class="bankList" id="bankList">
 	          <div class="title mb20">选择充值方式</div>
@@ -10,11 +14,11 @@ drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account.js');
 <dt>最近使用的充值方式</dt>
 
 <dd>
-  <input type="radio" name="bank" data-type="QUICKPAY" value="ICBC" id="bank_recent0"><label for="bank_recent0"><img alt="中国工商银行" title="中国工商银行" src="../../../../static/img/banks/code_102.jpg"></label>
+  <input type="radio" name="bank" data-type="QUICKPAY" value="ICBC" id="bank_recent0"><label for="bank_recent0"><img alt="中国工商银行" title="中国工商银行" src="<?php print $image_path; ?>code_102.jpg"></label>
 </dd>
 
 <dd>
-  <input type="radio" name="bank" data-type="QUICKPAY" value="CMB" id="bank_recent1"><label for="bank_recent1"><img alt="招商银行" title="招商银行" src="../../../../static/img/banks/code_308.jpg"></label>
+  <input type="radio" name="bank" data-type="QUICKPAY" value="CMB" id="bank_recent1"><label for="bank_recent1"><img alt="招商银行" title="招商银行" src="<?php print $image_path; ?>code_308.jpg"></label>
 </dd>
 
  </dl>
@@ -22,63 +26,63 @@ drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account.js');
 <dt>充值银行</dt>
 
 <dd>
-  <input type="radio" name="bank" data-type="QUICKPAY" value="ICBC" id="bank_1"><label for="bank_1"><img alt="中国工商银行" title="中国工商银行" src="../../../../static/img/banks/code_102.jpg"></label>
+  <input type="radio" name="bank" data-type="QUICKPAY" value="ICBC" id="bank_1"><label for="bank_1"><img alt="中国工商银行" title="中国工商银行" src="<?php print $image_path; ?>code_102.jpg"></label>
 </dd>
 
 <dd>
-  <input type="radio" name="bank" data-type="QUICKPAY" value="ABC" id="bank_2"><label for="bank_2"><img alt="中国农业银行" title="中国农业银行" src="../../../../static/img/banks/code_103.jpg"></label>
+  <input type="radio" name="bank" data-type="QUICKPAY" value="ABC" id="bank_2"><label for="bank_2"><img alt="中国农业银行" title="中国农业银行" src="<?php print $image_path; ?>code_103.jpg"></label>
 </dd>
 
 <dd>
-  <input type="radio" name="bank" data-type="QUICKPAY" value="CMB" id="bank_5"><label for="bank_5"><img alt="招商银行" title="招商银行" src="../../../../static/img/banks/code_308.jpg"></label>
+  <input type="radio" name="bank" data-type="QUICKPAY" value="CMB" id="bank_5"><label for="bank_5"><img alt="招商银行" title="招商银行" src="<?php print $image_path; ?>code_308.jpg"></label>
 </dd>
 
 <dd>
-  <input type="radio" name="bank" data-type="TENPAY" value="COMM" id="bank_9"><label for="bank_9"><img alt="交通银行" title="交通银行" src="../../../../static/img/banks/code_301.jpg"></label>
+  <input type="radio" name="bank" data-type="TENPAY" value="COMM" id="bank_9"><label for="bank_9"><img alt="交通银行" title="交通银行" src="<?php print $image_path; ?>code_301.jpg"></label>
 </dd>
 
 <dd>
-  <input type="radio" name="bank" data-type="TENPAY" value="POSTGC" id="bank_7"><label for="bank_7"><img alt="中国邮政储蓄银行" title="中国邮政储蓄银行" src="../../../../static/img/banks/code_403.jpg"></label>
+  <input type="radio" name="bank" data-type="TENPAY" value="POSTGC" id="bank_7"><label for="bank_7"><img alt="中国邮政储蓄银行" title="中国邮政储蓄银行" src="<?php print $image_path; ?>code_403.jpg"></label>
 </dd>
 
 <dd>
-  <input type="radio" name="bank" data-type="QUICKPAY" value="GDB" id="bank_15"><label for="bank_15"><img alt="广东发展银行" title="广东发展银行" src="../../../../static/img/banks/code_306.jpg"></label>
+  <input type="radio" name="bank" data-type="QUICKPAY" value="GDB" id="bank_15"><label for="bank_15"><img alt="广东发展银行" title="广东发展银行" src="<?php print $image_path; ?>code_306.jpg"></label>
 </dd>
 
 <dd>
-  <input type="radio" name="bank" data-type="QUICKPAY" value="CIB" id="bank_8"><label for="bank_8"><img alt="兴业银行" title="兴业银行" src="../../../../static/img/banks/code_309.jpg"></label>
+  <input type="radio" name="bank" data-type="QUICKPAY" value="CIB" id="bank_8"><label for="bank_8"><img alt="兴业银行" title="兴业银行" src="<?php print $image_path; ?>code_309.jpg"></label>
 </dd>
 
 <dd>
-  <input type="radio" name="bank" data-type="QUICKPAY" value="CCB" id="bank_4"><label for="bank_4"><img alt="中国建设银行" title="中国建设银行" src="../../../../static/img/banks/code_105.jpg"></label>
+  <input type="radio" name="bank" data-type="QUICKPAY" value="CCB" id="bank_4"><label for="bank_4"><img alt="中国建设银行" title="中国建设银行" src="<?php print $image_path; ?>code_105.jpg"></label>
 </dd>
 
 <dd>
-  <input type="radio" name="bank" data-type="QUICKPAY" value="BOC" id="bank_3"><label for="bank_3"><img alt="中国银行" title="中国银行" src="../../../../static/img/banks/code_104.jpg"></label>
+  <input type="radio" name="bank" data-type="QUICKPAY" value="BOC" id="bank_3"><label for="bank_3"><img alt="中国银行" title="中国银行" src="<?php print $image_path; ?>code_104.jpg"></label>
 </dd>
 
 <dd>
-  <input type="radio" name="bank" data-type="QUICKPAY" value="SPDB" id="bank_12"><label for="bank_12"><img alt="上海浦东发展银行" title="上海浦东发展银行" src="../../../../static/img/banks/code_310.jpg"></label>
+  <input type="radio" name="bank" data-type="QUICKPAY" value="SPDB" id="bank_12"><label for="bank_12"><img alt="上海浦东发展银行" title="上海浦东发展银行" src="<?php print $image_path; ?>code_310.jpg"></label>
 </dd>
 
 <dd>
-  <input type="radio" name="bank" data-type="QUICKPAY" value="CMBC" id="bank_17"><label for="bank_17"><img alt="中国民生银行" title="中国民生银行" src="../../../../static/img/banks/code_305.jpg"></label>
+  <input type="radio" name="bank" data-type="QUICKPAY" value="CMBC" id="bank_17"><label for="bank_17"><img alt="中国民生银行" title="中国民生银行" src="<?php print $image_path; ?>code_305.jpg"></label>
 </dd>
 
 <dd>
-  <input type="radio" name="bank" data-type="QUICKPAY" value="CEB" id="bank_6"><label for="bank_6"><img alt="中国光大银行" title="中国光大银行" src="../../../../static/img/banks/code_303.jpg"></label>
+  <input type="radio" name="bank" data-type="QUICKPAY" value="CEB" id="bank_6"><label for="bank_6"><img alt="中国光大银行" title="中国光大银行" src="<?php print $image_path; ?>code_303.jpg"></label>
 </dd>
 
 <dd>
-  <input type="radio" name="bank" data-type="QUICKPAY" value="CITIC" id="bank_10"><label for="bank_10"><img alt="中信银行" title="中信银行" src="../../../../static/img/banks/code_302.jpg"></label>
+  <input type="radio" name="bank" data-type="QUICKPAY" value="CITIC" id="bank_10"><label for="bank_10"><img alt="中信银行" title="中信银行" src="<?php print $image_path; ?>code_302.jpg"></label>
 </dd>
 
 <dd>
-  <input type="radio" name="bank" data-type="QUICKPAY" value="SDB" id="bank_16"><label for="bank_16"><img alt="平安银行" title="平安银行" src="../../../../static/img/banks/code_307.jpg"></label>
+  <input type="radio" name="bank" data-type="QUICKPAY" value="SDB" id="bank_16"><label for="bank_16"><img alt="平安银行" title="平安银行" src="<?php print $image_path; ?>code_307.jpg"></label>
 </dd>
 
 <dd>
-  <input type="radio" name="bank" data-type="QUICKPAY" value="HXB" id="bank_11"><label for="bank_11"><img alt="华夏银行" title="华夏银行" src="../../../../static/img/banks/code_304.jpg"></label>
+  <input type="radio" name="bank" data-type="QUICKPAY" value="HXB" id="bank_11"><label for="bank_11"><img alt="华夏银行" title="华夏银行" src="<?php print $image_path; ?>code_304.jpg"></label>
 </dd>
 
  </dl>
@@ -86,19 +90,19 @@ drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account.js');
 <dt>充值渠道</dt>
 
 <dd>
-  <input type="radio" name="bank" data-type="QUICKPAY" value="QUICKPAY" id="bank_q1"><label for="bank_q1"><img alt="快钱" title="快钱" src="/static/img/bank/checkin_kq.jpg"></label>
+  <input type="radio" name="bank" data-type="QUICKPAY" value="QUICKPAY" id="bank_q1"><label for="bank_q1"><img alt="快钱" title="快钱" src="<?php print $image_path; ?>checkin_kq.jpg"></label>
 </dd>
 
 <dd>
-  <input type="radio" name="bank" data-type="TENPAY" value="TENPAY" id="bank_q4"><label for="bank_q4"><img alt="财付通" title="财付通" src="/static/img/bank/tenpay.jpg"></label>
+  <input type="radio" name="bank" data-type="TENPAY" value="TENPAY" id="bank_q4"><label for="bank_q4"><img alt="财付通" title="财付通" src="<?php print $image_path; ?>tenpay.jpg"></label>
 </dd>
 
 <dd>
-  <input type="radio" name="bank" data-type="YEEPAY" value="YEEPAY" id="bank_q3"><label for="bank_q3"><img alt="易宝" title="易宝" src="/static/img/bank/yeepay.jpg"></label>
+  <input type="radio" name="bank" data-type="YEEPAY" value="YEEPAY" id="bank_q3"><label for="bank_q3"><img alt="易宝" title="易宝" src="<?php print $image_path; ?>yeepay.jpg"></label>
 </dd>
 
 <dd>
-  <input type="radio" name="bank" data-type="CHINAPNR" value="CHINAPNR" id="bank_q2"><label for="bank_q2"><img alt="汇付天下" title="汇付天下" src="/static/img/bank/chinapnr.jpg"></label>
+  <input type="radio" name="bank" data-type="CHINAPNR" value="CHINAPNR" id="bank_q2"><label for="bank_q2"><img alt="汇付天下" title="汇付天下" src="<?php print $image_path; ?>chinapnr.jpg"></label>
 </dd>
 
  </dl><p class="foldbox"><a>查看更多充值方式</a></p>

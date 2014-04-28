@@ -8,7 +8,7 @@ global $base_url;
     <h3 class="text-xl">账户余额</h3>
     <p class="num color-orange-text"><em>0.00</em>元</p>
   </div>
-  <div class="fn-left box-summary-right last">
+  <div class="fn-left box-summary-right last mt10">
     <div class="fn-clear color-dimgray-text">
       <div class="grid_2 alpha">
         <h5 class="text-big">可用资金</h5>
@@ -86,7 +86,7 @@ global $base_url;
         <span class="ui-list-title w90 fn-left credit">收入</span>
         <span class="ui-list-title w90 fn-left debit">支出</span>
         <span class="ui-list-title w110 fn-left balance">结余</span>
-        <span class="ui-list-title w180 fn-left note last">备注</span>
+        <span class="ui-list-title w160 fn-left note last">备注</span>
       </li>
       <li class="ui-list-status">
         <p class="color-gray-text">没有记录</p>

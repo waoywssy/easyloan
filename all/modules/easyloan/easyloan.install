@@ -100,8 +100,9 @@ function easyloan_enable() {
 			'link_path'  => 'user', 
 			'module'     => 'easyloan',
 		);
-		menu_link_save($menu_item); // You don't need to receive it in a variable
+		menu_link_save($menu_item);
 
+/*
 		// add sample exchange links
 		$menu_item = array(
 		  'link_title' => $t('人人贷'),
@@ -111,6 +112,7 @@ function easyloan_enable() {
 		  'module'     => 'easyloan',
 		);
 		menu_link_save($menu_item);
+*/
 	}
 	
 	// 好易贷‘关于我们’左边菜单模块设置
@@ -173,15 +175,21 @@ function easyloan_enable() {
 	    ->condition('delta', 'easyloan_help') // always cache 
 	    ->execute();
 
-	// 好易贷‘个人账户’菜单模块设置
+	// 好易贷‘个人账户’菜单模块设置 
 	db_update('block') 
-	    ->fields(array(
-			'region'     => 'sidebar_first',
-			'status'     => 1,
+	    ->fields(array( 
+			'region'     => 'sidebar_first', 
+			'status'     => 1, 
 			'visibility' => 1,	// show only on listed pages 
-			'title'      => '<none>',
-			'pages'      => 'user\r\nuser/*\r\ncapital_management/*\r\ninvest_management\r\nloan_management\r\naccount_management/*\r\nmanagement/*',
-			'cache'      => DRUPAL_CACHE_PER_ROLE,	// cache per role
+			'title'      => '<none>', 
+			'pages'      => 'user/*
+user
+capital_management/*
+invest_management
+loan_management
+account_management/*
+management/*', // Please DO NOT change the 'pages' list, the whitespaces format are important
+			'cache'      => DRUPAL_CACHE_PER_ROLE,	// cache per role 
 	    ))
 	    ->condition('module', 'menu')
 	    ->condition('theme', 'easyloan')
@@ -199,7 +207,7 @@ function easyloan_uninstall() {
 	user_role_delete('accountant');
 	user_role_delete('manager');
 
-		// Delete the development menu.
+		// Delete the easyloan menu.
 	if (module_exists('menu')) { 
 		if ($menu = menu_load('easyloan_exchange')) { 
 			menu_delete($menu); 
@@ -222,6 +230,12 @@ function easyloan_uninstall() {
 }
 
 function easyloan_disable(){
-
+	// Delete all links of the easyloan menu.
+	if (module_exists('menu')) { 
+		menu_delete_links('easyloan_exchange');  // this one should be deleted manually
+		menu_delete_links('easyloan_guide'); 
+		menu_delete_links('easyloan_about'); 
+		menu_delete_links('easyloan_account'); 
+		menu_delete_links('easyloan_help'); 
+	}
 }
-

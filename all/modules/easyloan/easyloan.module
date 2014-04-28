@@ -21,70 +21,6 @@ function easyloan_permission() {
 }
 
 /**
- * Implements hook_modules_installed().
- *
- * @see devel_install()
- */
-/*
-function easyloan_modules_installed($modules) {
-  if (in_array('menu', $modules)) {
-    menu_save(array(
-      'menu_name'   => 'easyloan_exchange', 
-      'title'       => $t('好易贷友情链接'),
-      'description' => $t('好易贷的友情链接'), 
-      'module'     => 'easyloan',
-    ));
-
-    menu_save(array(
-      'menu_name'   => 'easyloan_guide', 
-      'title'       => $t('好易贷新手指引链接'), 
-      'description' => $t('新手指引菜单'), 
-      'module'     => 'easyloan',
-    ));
-
-    menu_save(array(
-      'menu_name'   => 'easyloan_about', 
-      'title'       => $t('好易贷关于我们链接'), 
-      'description' => $t('关于我们左边菜单'), 
-      'module'     => 'easyloan',
-    ));
-
-    menu_save(array(
-      'menu_name'   => 'easyloan_account', 
-      'title'       => $t('好易贷个人账户链接'), 
-      'description' => $t('个人账户页面左边菜单'), 
-      'module'     => 'easyloan',
-    ));
-
-    menu_save(array(
-      'menu_name'   => 'easyloan_help', 
-      'title'       => $t('好易贷帮助中心链接'), 
-      'description' => $t('帮助中心左边链接'), 
-      'module'     => 'easyloan',
-    ));
-
-    $menu_item = array(
-      'link_title' => $t('我的好易贷'),
-      'menu_name'  => 'easyloan_account',
-      'customized' => 1,
-      'link_path'  => 'user', 
-      'module'     => 'easyloan',
-    );
-    menu_link_save($menu_item); // You don't need to receive it in a variable
-
-    // add sample exchange links
-    $menu_item = array(
-      'link_title' => $t('人人贷'),
-      'menu_name'  => 'easyloan_exchange',
-      'customized' => 1,
-      'link_path'  => 'http://www.renrendai.com', 
-      'module'     => 'easyloan',
-    );
-    menu_link_save($menu_item);
-  }
-} */
-
-/**
 * Implementation of hook_menu().
 */
 function easyloan_menu() { 
@@ -300,7 +236,7 @@ function easyloan_menu() {
     'access arguments' => array('auditor permission'),
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
-    'weight'          => '100'
+    'weight'          => '0'
   );
   $items['management/%/capital'] = array(
     'title'           => t('用户管理交易查看'), 
@@ -309,16 +245,16 @@ function easyloan_menu() {
     'access arguments' => array('auditor permission'),
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
-    'weight'          => '100'
+    'weight'          => '5'
   );
-  $items['management/applications'] = array( 
+  $items['management/applications'] = array(
     'title'           => t('借款审核'), 
     'page callback'   => 'menu_callback', 
     'page arguments'  => array('management_applications'),
     'access arguments' => array('auditor permission'),
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
-    'weight'          => '100'
+    'weight'          => '10'
   );
   $items['management/accountsindebt'] = array( 
     'title'           => t('欠款账户'), 
@@ -327,7 +263,7 @@ function easyloan_menu() {
     'access arguments' => array('auditor permission'),
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
-    'weight'          => '100'
+    'weight'          => '15'
   );
   $items['management/readytolend'] = array( 
     'title'           => t('审定放款'), 
@@ -336,7 +272,7 @@ function easyloan_menu() {
     'access arguments' => array('accountant permission'),
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
-    'weight'          => '100'
+    'weight'          => '20'
   );
   $items['management/withdrawappl'] = array(
     'title'           => t('提现申请'), 
@@ -345,7 +281,7 @@ function easyloan_menu() {
     'access arguments' => array('accountant permission'),
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
-    'weight'          => '100'
+    'weight'          => '25'
   );
   $items['management/settings'] = array( 
     'title'           => t('通知设置'), 
@@ -354,7 +290,7 @@ function easyloan_menu() {
     'access arguments' => array('accountant permission'),
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
-    'weight'          => '100'
+    'weight'          => '30'
   );
   $items['management/createinvestplan'] = array( 
     'title'           => t('投资产品管理'), 
@@ -363,7 +299,7 @@ function easyloan_menu() {
     'access arguments' => array('manager permission'),
     'type'            => MENU_NORMAL_ITEM, 
     'menu_name'       => 'easyloan_account',
-    'weight'          => '100'
+    'weight'          => '35'
   );
   /*******************个人账户页面菜单 end*************************/
 
@@ -827,7 +763,6 @@ function easyloan_menu_link($variables){
       // for top level menu 
       $depth = $element['#original_link']['depth'];
       $li_class = 'ui-side-item';
-
       // the left menu for helpcenter/about/account 
       //if ($element['#original_link']['router_path']=='user' && $depth == '1') 
       //var_dump($element);
@@ -852,16 +787,15 @@ function easyloan_menu_link($variables){
       
       $output = l($element['#title'], $element['#href'], $element['#localized_options']);
 
-      //echo $element['#title'] . $element['#href'] . '<br />'; 
-
       // to fix the bug where $is_active set to false in 'user' page 
-      if ($element['#href']=='user' && request_path()=='user'){
-        $is_active = true;
+      if ((preg_match('/^user\/?\d*/', request_path()) && $element['#href']=='user')) { 
+        $is_active = true; 
       }
+      /*
       if ($element['#href']=='management'
         && preg_match('/^management\/\d+\/capital/', request_path())){
         $is_active = true;
-      }
+      }*/
       
       $output = '<li class="' . $li_class . ' ' . ($is_active ? 'active' : '') . '">' . $output . $sub_menu . '</li>';
 
@@ -1109,7 +1043,6 @@ function easyloan_user_register_validation_callback($form, &$form_state){
 * Implements hook_user_logout
 */
 function easyloan_user_logout($account) { 
-  // drupal_set_message(t('谢谢光临')); 
   // Destroy the current session, and reset $user to the anonymous user.
   session_destroy();
   drupal_goto(); 
@@ -1132,13 +1065,13 @@ function easyloan_modules_installed($modules) {
 */
 
 function easyloan_menu_alter(&$items) {
+  // the wizard registeration form menu
   $items['user/register']['page arguments'] = array('form_easyloan_wizard');
-
-
-  global $user;
-  if(super_admin_access()){
-    //$form['field_non_foo'] = FALSE;
-  }
+  
+  // disable the user/%/edit page to all users 
+  $items['user/%/edit'] = array(
+    'access callback' => FALSE,
+  );
   return $items;
 }
 
@@ -1186,3 +1119,7 @@ function easyloan_block_list_alter(&$blocks){
 function easyloan_goto($path = NULL){
   drupal_goto($path);
 }
+
+
+
+

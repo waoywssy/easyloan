@@ -8,14 +8,14 @@ drupal_add_js(drupal_get_path('theme','easyloan') . '/js/jquery.validate.min.js'
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/reg.js');
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/reg.css');
 
-/*
+
+$form['captcha']['#theme_wrappers'] = NULL; 
 $form['captcha']['captcha_widgets']['captcha_response']['#title']='';
-$form['captcha']['captcha_widgets']['captcha_response']['#weight']=-10;
-$form['captcha']['captcha_widgets']['captcha_response']['#description']='';
+$form['captcha']['captcha_widgets']['captcha_response']['#weight']=-10; // for style 
+$form['captcha']['captcha_widgets']['captcha_response']['#description']=''; 
 $form['captcha']['captcha_widgets']['captcha_response']['#required']=false;
 $form['captcha']['captcha_widgets']['captcha_refresh']['#theme_wrappers']=NULL;
 $form['captcha']['captcha_widgets']['captcha_response']['#attributes']['class']=array('ui-input','input-icon','code');
-*/
 
 ?>
 <div id="pg-reg">
@@ -27,7 +27,6 @@ $form['captcha']['captcha_widgets']['captcha_response']['#attributes']['class']=
           <?php 
             print drupal_render($form['form_build_id']);
             print drupal_render($form['form_id']);
-            print drupal_render($form['captcha']);
             print drupal_render($form['account']['timezone']);
 
             if(empty($form['vcode'])){
@@ -83,9 +82,10 @@ $form['captcha']['captcha_widgets']['captcha_response']['#attributes']['class']=
           <legend>短信已发送至您手机，请输入短信中的验证码，确保您的手机号真实有效</legend>
           <div class="ui-form-item">
             <label class="ui-label">手机号确认</label>
-            <label class="input-icon form-text"><?php
+            <label class="input-icon form-text">
+            <?php
               print variable_get('phone'); //$form['account']['phone']['#value'];
-              ?>
+            ?>
             </label>
           </div>
           <div class="ui-form-item"> 
