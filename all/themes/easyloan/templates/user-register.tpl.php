@@ -17,6 +17,9 @@ $form['captcha']['captcha_widgets']['captcha_response']['#required']=false;
 $form['captcha']['captcha_widgets']['captcha_refresh']['#theme_wrappers']=NULL;
 $form['captcha']['captcha_widgets']['captcha_response']['#attributes']['class']=array('ui-input','input-icon','code');
 
+$f = drupal_get_form('user_register_form');
+var_dump($f);
+
 ?>
 <div id="pg-reg">
   <div class="container_12"> 

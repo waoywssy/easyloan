@@ -1,5 +1,6 @@
 <?php
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/account.css');
+drupal_add_css(drupal_get_path('theme','easyloan') . '/css/iconfont.css');
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account.js');
 
 global $base_url;
@@ -10,12 +11,12 @@ $img_path = $base_url . '/' . drupal_get_path('theme','easyloan') . '/images/';
          <div id="bankList" class="bankList">
             <div class="title">选择提现银行卡</div>
             <div id="banklis">
-<ul class="fn-clear">
-
-<li class="bankli" data-bank="92585"><img alt="" title="" src="<?php print $img_path; ?>code_308.jpg"><div class="card">6247 **** **** 6247</div><em></em> </li>
-
-</ul>
-</div>
+              <ul class="fn-clear">
+              <li class="bankli" data-bank="92585">
+                <img alt="" title="" src="<?php print $img_path; ?>code_308.jpg"><div class="card">6247 **** **** 6247</div><em></em> 
+              </li>
+              </ul>
+            </div>
       
             <div class="fn-clear invisiblediv"><input class="fn-left invisible" type="text" name="userBankId" id="userBankId"></div>
             <div class="operateBank fn-clear">
@@ -40,7 +41,7 @@ $img_path = $base_url . '/' . drupal_get_path('theme','easyloan') . '/images/';
                 <label class="ui-label">提现费用</label>
                 <em class="value" id="withdrawFee">0.00</em>元
                 <i id="tips" class="iconfont tips"></i>
-                <span class="info">提现费用将从您的人人贷账户余额中扣除</span>
+                <span class="info">提现费用将从您的好易贷账户余额中扣除</span>
                 <div class="ui-poptip fn-hide" id="tipCon" data-widget-cid="widget-2">
               <div class="ui-poptip-shadow">
               <div class="ui-poptip-container">

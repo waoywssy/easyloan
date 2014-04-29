@@ -8,6 +8,13 @@
  */
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/details.css');
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/details2.css');
+drupal_add_css(drupal_get_path('theme','easyloan') . '/css/tab.css');
+drupal_add_css(drupal_get_path('theme','easyloan') . '/css/iconfont.css');
+drupal_add_js(drupal_get_path('theme','easyloan') . '/js/tab.js');
+
+global $user;
+global $base_url;
+
 ?>
 <div id="pg-loan-invest" class="pg-details">
 <div id="loan-basic">
@@ -16,7 +23,7 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/details2.css');
           <div class="ui-box-title fn-clear">
             <h3 class="fn-left fn-text-overflow" title="机构担保标"><em class="icon-loantype JGDB mr10"></em>资金周转</h3>
             <a class="fn-left ui-box-username fn-text-overflow w180 pl20" href="/account/myInfo.action?userId=636370" target="_blank">ZD7550080002413</a>
-            <a class="fn-right text ui-box-text" href="javascript:void(0)" onclick="javascript:window.showModalDialog('../account/emptyContract.action?loanId=168545','','dialogWidth=1024px;dialogHeight=768px,status=0,toolbar=no,menubar=no,location=no,scrollbars=yes,top=20,left=20,resizable=no')">借款协议（范本）</a>
+            <a class="fn-right text ui-box-text" href="javascript:void(0)">借款协议（范本）</a>
           </div>
           <div class="p20 fn-clear">
             <div class="fn-left loaninfo">
@@ -81,22 +88,11 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/details2.css');
                       </div>
                   </div>
               
-              
-
-              
-              
-              
-              
                   <div class="fn-right loan-status loan-ready">
                       <div class="box"><em>满标用时</em><span id="fullTime" data-time="0天0时4分41秒">0时4分41秒</span></div>
                       <div class="hr"></div>
                       <div class="box"><em>加入人次</em><span>35</span></div>
                   </div>
-              
-              
-              
-              
-              
           </div>
 
         </div>
@@ -111,10 +107,10 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/details2.css');
   <div class="container_12">
     <div class="ui-tab ui-tab-transparent" id="loan-tab">
       <ul class="fn-clear">
-        <li class="ui-tab-item" data-name="info">
+        <li class="ui-tab-item ui-tab-item-current" data-name="info">
             <a class="ui-tab-item-link">标的详情</a>
         </li>
-        <li class="ui-tab-item ui-tab-item-current" data-name="investment">
+        <li class="ui-tab-item " data-name="investment">
           <a class="ui-tab-item-link">投标记录</a>
         </li>
         
@@ -123,15 +119,12 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/details2.css');
   </div>
   <div class="container_12 color-white-bg" id="loan-tab-content">
     <div class="ui-box-white-bg fn-clear">
-    <div class="ui-tab-content ui-tab-content-info" data-name="info">
-
+    <div class="ui-tab-content ui-tab-content-current ui-tab-content-info" data-name="info">
+    <?php if ($user->uid > 0){ ?>
     <div class="ui-tab-content-basic border-bottom p35">
         <h4 class="ui-tab-content-title color-dark-text">用户信息
-        
             <span class="ml10">ID: 636370</span>
-        
         </h4>
-        
         <ul class="ui-tab-list fn-clear">
             <li>
                 <span class="tab-list-label mr30">用户名</span>
@@ -189,8 +182,6 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/details2.css');
             <li>
                 <span class="tab-list-label mr30">车&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;产</span>
               <span class="tab-list-value">
-                  
-                  
                       <span class="mr20"><i class="icon icon-check-unchecked mr5"></i>有 </span>
                       <span><i class="icon icon-check-checked mr5"></i>无</span>
                   
@@ -212,10 +203,7 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/details2.css');
               </span>
             </li>
         </ul>
-        
-        
     </div>
-    
     <div class="ui-tab-content-expediente border-bottom p35">
         <h4 class="ui-tab-content-title color-dark-text">信用档案   <span title="信用分数：145" class="icon-creditlevel A snow ml10">A</span></h4>
         <ul class="ui-tab-list fn-clear">
@@ -260,6 +248,13 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/details2.css');
             <span class="pg-helper large-number" data-name="available-level"></span>
         </div>
     </div>
+<?php } else { ?>
+    <div class="ui-tab-content-basic border-bottom p35">
+        <h4 class="ui-tab-content-title color-dark-text">用户信息
+        </h4>
+            <h4 class="auth-hint narrow">请 <a href="<?php print $base_url;?>/user/login">登录</a> 或 <a href="<?php print $base_url;?>/user/register">注册</a> 后查看</h4>
+    </div>
+<?php } ?>
     
 
     <div class="ui-tab-content-auditoria border-bottom p35">
@@ -371,38 +366,8 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/details2.css');
         </div>
     </div>
 
-    
-    <div class="ui-comments p35">
-        <h4 class="ui-tab-content-title color-dark-text">留言板</h4>
-        <div class="fn-clear ui-comments-content ml100">
-            <div class="fn-clear mb20">
-                <form class="ui-form" action="">
-                    <textarea class="ui-textarea ui-comments-textarea mb5" id="comment-content"></textarea>
-                    <div class="clearfix">
-                        <a class="fn-right ui-button-blue-new ui-button-blue-new-large ui-comments-submit  mt10" id="comment-post">发表</a>
-                        <span class="comment-msg fn-right rrdcolor-red-text mr20 mt20"></span>
-                    </div>
-                </form>
-            </div>
-            <ul class="ui-list comments-list" id="comments">
-
-<li class="ui-list-status">
-  <p class="color-gray-text">无留言</p>
-</li>
-
-</ul>
-            <div id="comments-pagination" class="fn-right"></div>
-
-            <div class="comments-list">
-
-            </div>
-        </div>
     </div>
-    
-
-    </div>
-      <div class="ui-tab-content p35 fn-clear ui-tab-content-current" data-name="investment">
-        
+      <div class="ui-tab-content p35 fn-clear" data-name="investment">
         <div class="text-right text-big color-red-text mb10">
           <span class="mr50">加入人次 <em id="investor-count">35</em> 人</span>
           <span class="mr10">投标总额 <em>40,000</em>元</span>

@@ -1,6 +1,5 @@
 <?php
 
-
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/account.css');
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/common.css');
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/iconfont.css');
@@ -12,12 +11,13 @@ drupal_add_js(drupal_get_path('theme','easyloan') . '/js/account.js');
 global $base_url;
 $img_path = $base_url . '/' . drupal_get_path('theme','easyloan') . '/images/';
 
-
 global $user;
+$current_user = $variables["elements"]["#account"];
+
 ?>
 <script>
 (function ($, Drupal, window, document, undefined) {
-// To understand behaviors, see https://drupal.org/node/756722#behaviors
+// To understand behaviors, see https://drupal.org/node/756722#behaviors 
 Drupal.behaviors.tip = {
   attach: function(context, settings) {
   $('#tips_1').powerTip({ placement: 'e' });
@@ -44,14 +44,11 @@ Drupal.behaviors.tip = {
 <div class="box box-user-info">
 <div class="user-avatar-container">
   <a href="/account/info!basicInfo.action">
-    <?php print render($user_profile['user_picture']); ?>
+    <?php print render($variables["elements"]['user_picture']["#markup"]); ?>
   </a>
 </div>
-<?php
-global $user;
-?>
 <div class="user-info-container">
-  <h3 title="<?php print $user->name; ?>"><?php print $user->name; ?></h3>
+  <h3 title="<?php print $current_user->name; ?>"><?php print $current_user->name; ?></h3>
   <div class="fn-clear">
     <div class="fn-left user-security-container mr10" id="info-box">
       <div class="safe fn-clear">

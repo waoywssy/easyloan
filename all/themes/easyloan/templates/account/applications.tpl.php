@@ -28,7 +28,7 @@ global $base_url;
             <span class="ui-list-title w100 fn-left">计划用款时间</span>
             <span class="ui-list-title w40 fn-left">状态</span>
             <span class="ui-list-title w100 fn-left">申请日期</span>
-            <span class="ui-list-title w100 fn-left last">备注</span>
+            <span class="ui-list-title w90 fn-left last">备注</span>
           </li>
           <li class="ui-list-item fn-clear dark">
             <span class="ui-list-field w120 ph10 fn-left"><a>借钱结婚</a></span>
@@ -38,7 +38,7 @@ global $base_url;
             <span class="ui-list-field w100 fn-left text-center">2014-08-08</span>
             <span class="ui-list-field w40 fn-left">预约</span>
             <span class="ui-list-field w100 fn-left text-center">2014-04-08</span>
-            <span class="ui-list-field w100 fn-left last">一定会还钱</span>
+            <span class="ui-list-field w90 fn-left last">一定会还钱</span>
           </li>
           <li class="ui-list-item fn-clear">
             <span class="ui-list-field w120 ph10 fn-left"><a>借钱炒房</a></span>
@@ -48,7 +48,7 @@ global $base_url;
             <span class="ui-list-field w100 fn-left text-center">2014-08-08</span>
             <span class="ui-list-field w40 fn-left">初审</span>
             <span class="ui-list-field w100 fn-left text-center">2014-04-08</span>
-            <span class="ui-list-field w100 fn-left last">不一定会还钱</span>
+            <span class="ui-list-field w90 fn-left last">不一定会还钱</span>
           </li>
           </ul>
         <div class="fn-right mt10 ui-pagination simple-pagination" id="repaid-list-pagination">
@@ -76,7 +76,7 @@ global $base_url;
             <span class="ui-list-title w100 fn-left">计划用款时间</span>
             <span class="ui-list-title w40 fn-left">状态</span>
             <span class="ui-list-title w100 fn-left">申请日期</span>
-            <span class="ui-list-title w100 fn-left last">备注</span>
+            <span class="ui-list-title w90 fn-left last">备注</span>
           </li>
           <li class="ui-list-status">
             <p class="color-gray-text">没有记录</p>

@@ -740,10 +740,6 @@ function menu_lend($lendid = ''){
   return theme('lend', array());
 }
 
-function easyloan_user_login(&$edit, $account){
-  //  var_dump($edit); 
-}
-
 function easyloan_menu_tree__menu_account_second($variables){
   return '<ul class="ui-side-sub-list">' . $variables['tree'] . '</ul>';
 }
@@ -1048,21 +1044,16 @@ function easyloan_user_logout($account) {
   drupal_goto(); 
 }
 
-/** 
- * Implements hook_install().
- */ 
-/*
-function easyloan_modules_installed($modules) {
-  if (in_array('menu', $modules)) {
-    $menu = array(
-      'menu_name' => 'easyloan',
-      'title' => t('Easyloan'),
-      'description' => t('Easyloan link'),
-    );
-    menu_save($menu);
-  }
-}
+/**
+* Implements hook_user_logout
 */
+function easyloan_user_login(&$edit, $account) { 
+  // Destroy the current session, and reset $user to the anonymous user.
+  drupal_set_message($edit);
+
+  //drupal_get_destination();
+  //drupal_goto(); 
+}
 
 function easyloan_menu_alter(&$items) {
   // the wizard registeration form menu
@@ -1070,7 +1061,7 @@ function easyloan_menu_alter(&$items) {
   
   // disable the user/%/edit page to all users 
   $items['user/%/edit'] = array(
-    'access callback' => FALSE,
+    //'access callback' => FALSE,
   );
   return $items;
 }
@@ -1085,7 +1076,7 @@ function super_admin_access(){
 } 
 
 /*
- * Any easyloan worker can get accessed 
+ * Any easyloan manager can get accessed 
  */
 function management_access() { 
   global $user; 

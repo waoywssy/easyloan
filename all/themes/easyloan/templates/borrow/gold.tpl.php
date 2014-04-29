@@ -58,10 +58,10 @@ drupal_add_css(drupal_get_path('theme','easyloan') . '/css/prod.css');
           <div class="info-list-material">
             <h2 class="h4 mb15">必要申请材料</h2>
             <ul class="ui-list-disc">
-              <li><i></i>身份证<a class="ui-button ui-button-mid ui-list-invest-button" target="_blank" href="/help/borrow.action#IDSample">查看示例</a></li>
-              <li><i></i>个人征信报告（可去当地人民银行打印）<a class="ui-button ui-button-mid ui-list-invest-button" target="_blank" href="/help/borrow.action#creditSample">查看示例</a></li>
-              <li><i></i>带公司公章的劳动合同或工作证明<a class="ui-button ui-button-mid ui-list-invest-button" target="_blank" href="/help/borrow.action#salarySample">查看示例</a></li>
-              <li><i></i>近3个月工资卡银行流水<a class="ui-button ui-button-mid ui-list-invest-button" target="_blank" href="/help/borrow.action#incomeSample">查看示例</a></li>
+              <li><i></i>身份证<a class="ui-button ui-button-mid ui-list-invest-button" target="_blank" href="#">查看示例</a></li>
+              <li><i></i>个人征信报告（可去当地人民银行打印）<a class="ui-button ui-button-mid ui-list-invest-button" target="_blank" href="#">查看示例</a></li>
+              <li><i></i>带公司公章的劳动合同或工作证明<a class="ui-button ui-button-mid ui-list-invest-button" target="_blank" href="#">查看示例</a></li>
+              <li><i></i>近3个月工资卡银行流水<a class="ui-button ui-button-mid ui-list-invest-button" target="_blank" href="#">查看示例</a></li>
             </ul>
           </div>
           <div class="review-button">

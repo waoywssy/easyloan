@@ -18,18 +18,18 @@ global $base_url;
       <span class="ui-list-title w60 fn-left">年利率</span>
       <span class="ui-list-title w60 fn-left">还款方式</span>
       <span class="ui-list-title w60 fn-left">借款期限</span>
-      <span class="ui-list-title w70 fn-left">借款日期</span>
+      <span class="ui-list-title w80 fn-left">借款日期</span>
       <span class="ui-list-title w80 fn-left">还款记录</span>
     </li>
     <li class="ui-list-item color-gray-text fn-clear">
       <span class="ui-list-field w60 ph10 fn-left" title="习近平"><a>TheBigBoss</a></span>
       <span class="ui-list-field w60 ph10 fn-left">借钱买房</span>
       <span class="ui-list-field w80 fn-left">机动车抵押</span>
-      <span class="ui-list-field w80 fn-left text-right">1,000,000元</span>
+      <span class="ui-list-field w80 fn-left text-right">1,000元</span>
       <span class="ui-list-field w60 fn-left text-center">18%</span>
       <span class="ui-list-field w60 fn-left text-center">18%</span>
       <span class="ui-list-field w60 two-line fn-left">先息后本月头支付</span>
-      <span class="ui-list-field w70 fn-left text-center">18个月</span>
+      <span class="ui-list-field w60 fn-left text-center">18个月</span>
       <span class="ui-list-field w80 fn-left">2014-04-04</span>
       <span class="ui-list-field w80 fn-left text-center"><a href="accountsindebt/123456" target="_blank"  class="ui-button ui-button-small ui-button-blue">查看</a></span>
     </li>
@@ -41,7 +41,7 @@ global $base_url;
       <span class="ui-list-field w60 fn-left text-center">12%</span>
       <span class="ui-list-field w60 fn-left text-center">12%</span>
       <span class="ui-list-field w60 two-line fn-left">先息后本月头支付</span>
-      <span class="ui-list-field w70 fn-left text-center">12个月</span>
+      <span class="ui-list-field w60 fn-left text-center">12个月</span>
       <span class="ui-list-field w80 fn-left">2014-04-04</span>
       <span class="ui-list-field w80 fn-left text-center"><a href="accountsindebt/123457" target="_blank" class="ui-button ui-button-small ui-button-blue">查看</a></span>
     </li>
@@ -53,7 +53,7 @@ global $base_url;
       <span class="ui-list-field w60 fn-left text-center">20%</span>
       <span class="ui-list-field w60 fn-left text-center">20%</span>
       <span class="ui-list-field w60 two-line fn-left">先息后本月头支付</span>
-      <span class="ui-list-field w70 fn-left text-center">3个月</span>
+      <span class="ui-list-field w60 fn-left text-center">3个月</span>
       <span class="ui-list-field w80 fn-left">2014-04-04</span>
       <span class="ui-list-field w80 fn-left text-center"><a href="accountsindebt/123458" target="_blank" class="ui-button ui-button-small ui-button-blue">查看</a></span>
     </li>
