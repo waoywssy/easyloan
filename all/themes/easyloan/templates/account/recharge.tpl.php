@@ -7,7 +7,7 @@ global $base_url;
 $image_path = $base_url . '/sites/all/themes/easyloan/images/';
 ?>
 	  <div class="p20bs color-white-bg fn-clear" id="pg-account-recharge">
-	      <form data-name="recharge" class="ui-form" method="post" id="regchargeForm" name="checkinForm" target="_blank" action="/account/userCheckin.action" novalidate="novalidate">
+	      <form class="ui-form" method="post" id="regchargeForm" name="checkinForm" target="_blank" action="#">
 	        <div class="bankList" id="bankList">
 	          <div class="title mb20">选择充值方式</div>
 	          <dl class="clearfix" style="display: block;">
@@ -118,7 +118,7 @@ $image_path = $base_url . '/sites/all/themes/easyloan/images/';
 	            </div>
 	            <div class="ui-form-item">
 	              <label class="ui-label"><span class="ui-form-required">*</span>充值金额</label>
-	              <input class="ui-input" type="text" name="amount" id="rechargeAmount" data-is="isAmount" value="">元
+	              <input class="ui-input" type="text" name="amount" id="rechargeAmount" value="">元
 	            </div>
 	            <div class="ui-form-item">
 	              <label class="ui-label">充值费用</label>

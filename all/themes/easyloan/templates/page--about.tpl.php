@@ -9,7 +9,7 @@
 ?>
 <div class="pg-container  ">
   <?php print render($page['header']); ?>
-  <?php print $messages; ?>
+  <?php //print $messages; ?>
   <div class="pg-container-content">
 	<div id="pg-about-intro">
 	    <div class="container_12 mt20">

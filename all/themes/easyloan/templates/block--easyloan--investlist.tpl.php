@@ -50,7 +50,7 @@ global $base_url;
 
       <li class="ui-list-item fn-clear ">
         <span class="ui-list-field fn-left text-big w200 pr20">
-          <a class="fn-left w200 rrd-dimgray fn-text-overflow" href="#" target="_blank" title="以房养老，周游世界">以房养老，周游世界，周游世界</a>
+          <a class="fn-left w200 rrd-dimgray fn-text-overflow" href="./lend/10001" target="_blank" title="以房养老，周游世界">以房养老，周游世界，周游世界</a>
         </span>
         <span class="ui-list-field fn-left w80">房产商铺</span>
         <span class="ui-list-field fn-left w110">一次性还本付息</span>
@@ -71,7 +71,7 @@ global $base_url;
       </li>
       <li class="ui-list-item fn-clear ">
         <span class="ui-list-field fn-left text-big w200 pr20">
-          <a class="fn-left w200 rrd-dimgray fn-text-overflow" href="#" target="_blank" title="借钱供子女出国留学">借钱供子女出国留学</a>
+          <a class="fn-left w200 rrd-dimgray fn-text-overflow" href="./lend/10001" target="_blank" title="借钱供子女出国留学">借钱供子女出国留学</a>
         </span>
         <span class="ui-list-field fn-left w80">房产商铺</span>
         <span class="ui-list-field fn-left w110">一次性还本付息</span>
@@ -114,7 +114,7 @@ global $base_url;
 
       <li class="ui-list-item fn-clear ">
         <span class="ui-list-field fn-left text-big w200 pr20">
-          <a class="fn-left w200 rrd-dimgray fn-text-overflow" href="#" target="_blank" title="以房养老，周游世界">以房养老，周游世界，周游世界</a>
+          <a class="fn-left w200 rrd-dimgray fn-text-overflow" href="./lend/10001" target="_blank" title="以房养老，周游世界">以房养老，周游世界，周游世界</a>
         </span>
         <span class="ui-list-field fn-left w80">房产商铺</span>
         <span class="ui-list-field fn-left w110">一次性还本付息</span>

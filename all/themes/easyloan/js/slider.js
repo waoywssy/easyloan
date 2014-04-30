@@ -4,9 +4,6 @@
 // To understand behaviors, see https://drupal.org/node/756722#behaviors
 Drupal.behaviors.slider = {
   attach: function(context, settings) {
-
-
-  	
   		$('div.view-content li:not(.ui-slide01)').remove();
   		$('div.view-content ul').addClass('bjqs');
   		$('div.view-content li').each(function(){

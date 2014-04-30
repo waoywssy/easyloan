@@ -1030,7 +1030,7 @@ function easyloan_user_register_validation_callback($form, &$form_state){
         if ($form_state['values']['vcode'] != variable_get("phonecode")){
             form_set_error('验证码错误', '验证码错误');//$form_state['values']['vcode'] . ' vs ' . variable_get("phonecode"));
         } else {
-            drupal_set_message('Code is correct!');
+            drupal_set_message('Phone code is correct!');
         }
     };
 }
@@ -1049,7 +1049,6 @@ function easyloan_user_logout($account) {
 */
 function easyloan_user_login(&$edit, $account) { 
   // Destroy the current session, and reset $user to the anonymous user.
-  drupal_set_message($edit);
 
   //drupal_get_destination();
   //drupal_goto(); 
@@ -1059,10 +1058,11 @@ function easyloan_menu_alter(&$items) {
   // the wizard registeration form menu
   $items['user/register']['page arguments'] = array('form_easyloan_wizard');
   
+  /*
   // disable the user/%/edit page to all users 
   $items['user/%/edit'] = array(
     //'access callback' => FALSE,
-  );
+  );*/
   return $items;
 }
 
@@ -1071,8 +1071,7 @@ function easyloan_menu_alter(&$items) {
  */
 function super_admin_access(){  
   global $user; 
-  $uid = $user->uid; 
-  return $uid == '1'; 
+  return $user->uid == '1'; 
 } 
 
 /*

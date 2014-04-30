@@ -13,6 +13,9 @@
   // var_dump($form['form_build_id']);
   // var_dump($form['form_id']);
   // var_dump($form['actions']);
+
+  global $base_url;
+  $img_path = $base_url . '/' . drupal_get_path('theme','easyloan') . '/images/';
 ?>
   <div id="pg-login">
     <div class="container_12">
@@ -57,7 +60,7 @@
         </div>
         <div class="grid_7 pull_5">
           <div class="logininfo">
-            <img src="../sites/all/themes/easyloan/images/logininfopic.jpg">
+            <img src="<?php print $img_path; ?>logininfopic.jpg">
             <h1>优选理财计划</h1>
             <p>以投资好易贷平台现有信贷产品为基础的稳健，安全，流动性好的投资计划理财操作更轻松，收益处理更灵活</p>
           </div>

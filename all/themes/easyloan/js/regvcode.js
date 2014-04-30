@@ -22,8 +22,10 @@
 					},
 				}
 			});
-			//$("#edit-prev").submit(function(){return false;})
-			$( "#edit-prev").unbind("click");
+
+			$("#edit-prev").prop('type', 'button').bind('click', function(){
+				$("#edit-prev").submit();
+			});
 		}
 	};
 })(jQuery, Drupal, this, this.document);

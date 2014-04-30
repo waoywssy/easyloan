@@ -19,7 +19,7 @@ global $base_url;
         <p class="num-s"><em>0.00</em>元</p>
       </div>
       <div class="grid_2 omega">
-        <a class="summary-button ui-button ui-button-small ui-button-green" href="<?php print $base_url;?>/account/recharge">充值</a>
+        <a class="summary-button ui-button ui-button-small ui-button-green" href="<?php print $base_url;?>/capital_management/recharge">充值</a>
       </div>
     </div>
     <hr class="mt10">
@@ -33,7 +33,7 @@ global $base_url;
         <p class="num-s"><em>0.00</em>元</p>
       </div>
       <div class="grid_2 omega">
-        <a class="summary-button ui-button ui-button-small ui-button-blue" href="<?php print $base_url;?>/account/withdraw">提现</a>
+        <a class="summary-button ui-button ui-button-small ui-button-blue" href="<?php print $base_url;?>/capital_management/withdraw">提现</a>
       </div>
     </div>
   </div>

@@ -7,7 +7,7 @@ global $base_url;
 $img_path = $base_url . '/' . drupal_get_path('theme','easyloan') . '/images/';
 ?>
     <div class="p20bs color-white-bg fn-clear" id="pg-account-withdraw">
-       <form data-name="withdraw" class="ui-form" method="post" action="/account/cashDraw.action" onsubmit="return false;" novalidate="novalidate">
+       <form class="ui-form" method="post" action="#" onsubmit="return false;">
          <div id="bankList" class="bankList">
             <div class="title">选择提现银行卡</div>
             <div id="banklis">

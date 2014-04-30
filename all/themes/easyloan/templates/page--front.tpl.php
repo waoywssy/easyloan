@@ -13,7 +13,7 @@ global $base_url;
 ?>
 <div class="pg-container color-white-bg">
   <?php print render($page['header']); ?>
-  <?php print $messages; ?>
+  <?php //print $messages; ?>
   <div class="pg-container-content">
   <div id="pg-index">
     <!-- Slide -->

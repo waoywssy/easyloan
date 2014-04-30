@@ -9,16 +9,17 @@ drupal_add_js(drupal_get_path('theme','easyloan') . '/js/reg.js');
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/reg.css');
 
 
-$form['captcha']['#theme_wrappers'] = NULL; 
-$form['captcha']['captcha_widgets']['captcha_response']['#title']='';
-$form['captcha']['captcha_widgets']['captcha_response']['#weight']=-10; // for style 
-$form['captcha']['captcha_widgets']['captcha_response']['#description']=''; 
-$form['captcha']['captcha_widgets']['captcha_response']['#required']=false;
-$form['captcha']['captcha_widgets']['captcha_refresh']['#theme_wrappers']=NULL;
-$form['captcha']['captcha_widgets']['captcha_response']['#attributes']['class']=array('ui-input','input-icon','code');
-
-$f = drupal_get_form('user_register_form');
-var_dump($f);
+$f = drupal_get_form('user_register_form'); // use this to retrieve the captcha
+if ($f['captcha']){
+  $form['captcha'] = $f['captcha'];
+  $form['captcha']['#theme_wrappers']                                       = NULL; 
+  $form['captcha']['captcha_widgets']['captcha_response']['#title']         ='';
+  $form['captcha']['captcha_widgets']['captcha_response']['#weight']        =-10; // for style 
+  $form['captcha']['captcha_widgets']['captcha_response']['#description']   =''; 
+  $form['captcha']['captcha_widgets']['captcha_response']['#required']      =false;
+  $form['captcha']['captcha_widgets']['captcha_refresh']['#theme_wrappers'] =NULL;
+  $form['captcha']['captcha_widgets']['captcha_response']['#attributes']['class']=array('ui-input','input-icon','code');  
+}
 
 ?>
 <div id="pg-reg">
@@ -31,7 +32,6 @@ var_dump($f);
             print drupal_render($form['form_build_id']);
             print drupal_render($form['form_id']);
             print drupal_render($form['account']['timezone']);
-
             if(empty($form['vcode'])){
           ?>
           <legend>注册</legend>
@@ -72,11 +72,11 @@ var_dump($f);
             <input type="checkbox" class="form-checkbox" value="0" name="agree" id="edit-agree">我已阅读并同意
             <a href="/agreement/rv_webservice.html" target="_blank">《好易贷网站服务协议》</a>
           </div> 
-          <div class="ui-form-item"> 
-            <?php 
-              print drupal_render($form['next']); 
+          <div class="ui-form-item">
+            <?php
+              print drupal_render($form['next']);
             ?> 
-          </div> 
+          </div>
           <?php 
             } else {  
                 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/counter.js');
