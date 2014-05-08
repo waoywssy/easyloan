@@ -6,19 +6,36 @@
 function easyloan_permission() {
   return array(
     'auditor permission' => array(
-      'title'       => t('注册用户借款审核员'),
-      'description' => t('网站初级管理员，负责审核网站新注册用户资料、抵押借款申请资料、浏览用户资料、获取应付款账户（投资用户）及金额列表，获取应还款账户（借款用户）及金额列表，浏览抵押借款欠款用户及金额列表'),
+      'title'       => t('注册用户借款审核员权限'),
+      'description' => t('注册用户借款审核员：网站初级管理员，负责审核网站新注册用户资料、抵押借款申请资料、浏览用户资料、获取应付款账户（投资用户）及金额列表，获取应还款账户（借款用户）及金额列表，浏览抵押借款欠款用户及金额列表'),
     ),
     'accountant permission' => array(
-      'title'       => t('财务人员'),
-      'description' => t('网站中级管理员，除具备所有初级管理员的权限外，负责更新用户（借款、投资）账户资金状态，包括提现后资金状态、借款成功后资金状态等等'),
+      'title'       => t('财务人员权限'),
+      'description' => t('财务人员：网站中级管理员，除具备所有初级管理员的权限外，负责更新用户（借款、投资）账户资金状态，包括提现后资金状态、借款成功后资金状态等等'),
     ),
     'manager permission' => array(
-      'title'       => t('信息及用户管理员'),
-      'description' => t('网站高级管理员，除具备所有中级管理员的权限外，负责管理网站信息（发布、修改、删除），管理投资产品（发布、修改、删除），最终审核用户、禁止用户'),
+      'title'       => t('信息及用户管理员权限'),
+      'description' => t('信息及用户管理员：网站高级管理员，除具备所有中级管理员的权限外，负责管理网站信息（发布、修改、删除），管理投资产品（发布、修改、删除），最终审核用户、禁止用户'),
     ),
   );
 }
+
+/*
+function easyloan_node_info() {
+  return array(
+    'notice' => array(
+      'name' => t('网站公告内容类型'),
+      'base' => 'notice',
+      'description' => t('好易贷网站公告内容类型'),
+    ),
+    'about' => array(
+      'name' => t('关于我们内容类型'),
+      'base' => 'about',
+      'description' => t('关于我们内容类型'),
+    ),
+  );
+}
+*/
 
 /**
 * Implementation of hook_menu().
@@ -69,7 +86,7 @@ function easyloan_menu() {
     'access callback' => TRUE, 
     'type'            => MENU_NORMAL_ITEM, 
   );
-  $items['borrow/car/apply'] = array(
+  $items['borrow/car/apply'] = array( 
     'title'           => t('机动车抵押申请'), 
     'page callback'   => 'menu_callback', 
     'page arguments'  => array('borrow_car_apply'),
@@ -744,27 +761,40 @@ function easyloan_menu_tree__menu_account_second($variables){
   return '<ul class="ui-side-sub-list">' . $variables['tree'] . '</ul>';
 }
 
-function easyloan_menu_link($variables){
-  $element = $variables['element'];
-  $sub_menu = '';
+function easyloan_menu_link($variables){ 
+
+  $element = $variables['element']; 
+  $sub_menu = ''; 
   
-  $is_active = $element['#original_link']['in_active_trail'];
-  //$has_children = $element['#original_link']['has_children'];
-  $element['#localized_options']['attributes']['title'] = $element['#title'];
+  $is_active = $element['#original_link']['in_active_trail']; 
+
+  $element['#localized_options']['attributes']['title'] = $element['#title']; 
   
   switch ($element['#theme']) {
-    case 'menu_link__easyloan_help': 
-    case 'menu_link__easyloan_about': 
-    case 'menu_link__easyloan_account': 
-      // for top level menu 
+    case 'menu_link__easyloan_about':
+    case 'menu_link__easyloan_help':
+    case 'menu_link__easyloan_account':
+      $node = menu_get_object();
+      if ($node){
+        switch ($node->type){
+          case 'notice':
+            if ($element['#href']=='about/notices'){
+              $is_active = true;     
+            }
+            break;
+          case 'news':
+            if ($element['#href']=='about/news'){
+              $is_active = true;
+            }
+            break;
+
+          default:
+            break;
+        }
+      }
+
       $depth = $element['#original_link']['depth'];
       $li_class = 'ui-side-item';
-      // the left menu for helpcenter/about/account 
-      //if ($element['#original_link']['router_path']=='user' && $depth == '1') 
-      //var_dump($element);
-      //if ($element['#below']){
-      //  $element['#below']['#theme_wrappers'] = array('Test' => 123456, );
-      //}
 
       if ($element['#below']) {
         //var_dump($element['#below']);
@@ -772,11 +802,11 @@ function easyloan_menu_link($variables){
         $sub_menu = drupal_render($element['#below']);
       }
 
-      $link_style = 'ui-side-item-link';
+      $link_style = 'ui-side-item-link'; 
       if ($depth!='1'){ 
         // sub menu 
-        $link_style = 'ui-side-sub-item-link';
-        $li_class = 'ui-side-sub-item';
+        $link_style = 'ui-side-sub-item-link'; 
+        $li_class = 'ui-side-sub-item'; 
       }
 
       $element['#localized_options']['attributes']['class'][] = $link_style;  
@@ -1103,7 +1133,7 @@ function authenticated_access() {
 
 
 function easyloan_block_list_alter(&$blocks){
-  // var_dump($blocks);
+  // var_dump($blocks); 
 }
 
 function easyloan_goto($path = NULL){
@@ -1111,5 +1141,25 @@ function easyloan_goto($path = NULL){
 }
 
 
+function easyloan_block_view_alter(&$data, $block) {
 
+  if ($block->delta=='easyloan_about' && $block->module=='menu'){
+    $node = menu_get_object();
 
+    if ($node && $node->type=='notice') {
+      // You have a valid node to work with.
+      // print 'hahahahaha';
+
+    }
+  }
+  
+  // Add contextual links for system menu blocks.
+/*
+  if ($block->module == 'system' && !empty($data['content'])) {
+    $system_menus = menu_list_system_menus();
+    if (isset($system_menus[$block->delta])) {
+      $data['content']['#contextual_links']['menu'] = array('admin/structure/menu/manage', array($block->delta));
+    }
+  }
+*/
+}

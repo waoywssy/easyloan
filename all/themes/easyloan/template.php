@@ -247,3 +247,13 @@ function easyloan_preprocess_user_login(&$variables){
       //var_dump($caller);
     }
     */
+
+/*
+ * This method provides us with page template override for certain node types.
+ */
+function easyloan_preprocess_page(&$vars, $hook) {
+  if (isset($vars['node'])) {
+  // If the node type is "notice" the template suggestion will be "page--notice.tpl.php".
+   $vars['theme_hook_suggestions'][] = 'page__'. str_replace('_', '--', $vars['node']->type);
+  }
+}

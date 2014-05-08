@@ -5,12 +5,15 @@
  *
  */
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/jquery.validate.min.js');
+drupal_add_js(drupal_get_path('theme','easyloan') . '/js/jquery.steps.min.js');
 drupal_add_js(drupal_get_path('theme','easyloan') . '/js/reg.js');
 drupal_add_css(drupal_get_path('theme','easyloan') . '/css/reg.css');
+//drupal_add_js(drupal_get_path('theme','easyloan') . '/js/counter.js');
+//drupal_add_js(drupal_get_path('theme','easyloan') . '/js/regvcode.js');
 
 
-$f = drupal_get_form('user_register_form'); // use this to retrieve the captcha
-if ($f['captcha']){
+$f = drupal_get_form('user_register_form'); // use this to retrieve the captcha 
+if ($f['captcha']) { 
   $form['captcha'] = $f['captcha'];
   $form['captcha']['#theme_wrappers']                                       = NULL; 
   $form['captcha']['captcha_widgets']['captcha_response']['#title']         ='';
@@ -26,15 +29,15 @@ if ($f['captcha']){
   <div class="container_12"> 
     <div class="p20bs color-white-bg regbox"> 
       <div data-name="register" class="ui-form" id="reg"> 
-        <fieldset> 
+        <h3>注册</h3>
+        <section>
           <input id="edit-user-register-timezone" name="timezone" value="28800" type="hidden">
           <?php 
             print drupal_render($form['form_build_id']);
             print drupal_render($form['form_id']);
-            print drupal_render($form['account']['timezone']);
+            print drupal_render($form['account']['timezone']); 
             if(empty($form['vcode'])){
           ?>
-          <legend>注册</legend>
           <div class="ui-form-item">
             <label class="ui-label">昵称</label>
             <input type="text" name="name" id="edit-name" value="<?php print $form['account']['name']['#value'];?>" class="ui-input input-icon form-text required">
@@ -72,16 +75,14 @@ if ($f['captcha']){
             <input type="checkbox" class="form-checkbox" value="0" name="agree" id="edit-agree">我已阅读并同意
             <a href="/agreement/rv_webservice.html" target="_blank">《好易贷网站服务协议》</a>
           </div> 
-          <div class="ui-form-item">
+          <!--div class="ui-form-item">
             <?php
-              print drupal_render($form['next']);
+              //print drupal_render($form['next']);
             ?> 
-          </div>
-          <?php 
-            } else {  
-                drupal_add_js(drupal_get_path('theme','easyloan') . '/js/counter.js');
-                drupal_add_js(drupal_get_path('theme','easyloan') . '/js/regvcode.js');
-          ?>
+          </div-->
+        </section>
+        <h3>验证</h3>
+        <section>
           <legend>短信已发送至您手机，请输入短信中的验证码，确保您的手机号真实有效</legend>
           <div class="ui-form-item">
             <label class="ui-label">手机号确认</label>
@@ -106,7 +107,7 @@ if ($f['captcha']){
           如果您在1分钟之内没有收到验证码，请退回<strong>上一步</strong>填写新号码<br /> 或 <span id="countdown"><span id="seconds">60</span>秒后</span><a id="resend">重新获取</a>
           </div>
           <?php } ?>
-        </fieldset>
+        </section>
       </div>
     </div>
   </div>

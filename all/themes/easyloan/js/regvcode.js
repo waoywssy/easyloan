@@ -24,7 +24,7 @@
 			});
 
 			$("#edit-prev").prop('type', 'button').bind('click', function(){
-				$("#edit-prev").submit();
+				// $("#edit-prev").submit();
 			});
 		}
 	};

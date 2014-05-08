@@ -111,3 +111,19 @@ padding-left:75px;
     clear: both;
     margin-top: 5px;
 }
+
+/***************wizard fixing***************/
+div.steps{
+	display: none;
+}
+div.actions .disabled{
+	display: none;
+}
+#reg h3.title{
+	display: none;
+}
+div.actions li{
+	width: 100px;
+	float: left;
+}
+
