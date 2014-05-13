@@ -20,23 +20,6 @@ function easyloan_permission() {
   );
 }
 
-/*
-function easyloan_node_info() {
-  return array(
-    'notice' => array(
-      'name' => t('网站公告内容类型'),
-      'base' => 'notice',
-      'description' => t('好易贷网站公告内容类型'),
-    ),
-    'about' => array(
-      'name' => t('关于我们内容类型'),
-      'base' => 'about',
-      'description' => t('关于我们内容类型'),
-    ),
-  );
-}
-*/
-
 /**
 * Implementation of hook_menu().
 */
@@ -167,16 +150,6 @@ function easyloan_menu() {
     'menu_name'       => 'easyloan_account',
     'weight'          => '30'
   );
-  /*
-  $items['account/invest'] = array( 
-    'title'           => t('理财管理'), 
-    'page callback'   => 'menu_callback', 
-    'page arguments'  => array('account_invest'),
-    'access callback' => TRUE, 
-    'type'            => MENU_NORMAL_ITEM, 
-    'menu_name'       => 'easyloan_account',
-    'weight'          => '0'
-  );*/
   $items['invest_management'] = array(
     'title'           => t('理财管理'), 
     'page callback'   => 'menu_callback', 
@@ -430,8 +403,8 @@ function easyloan_menu() {
     'access callback' => TRUE, 
     'type'            => MENU_NORMAL_ITEM, 
   );*/
-  $items['about/company'] = array( 
-    'title'           => t('公司简介'), 
+  $items['about/company'] = array(
+    'title'           => t('公司简介'),
     'page callback'   => 'menu_callback', 
     'page arguments'  => array('about_about'),
     'access callback' => TRUE, 
@@ -476,7 +449,6 @@ function easyloan_menu() {
     'weight'          => '40'
   );
   /*******************关于我们 end***********************/
-
   return $items; 
 } 
 
@@ -580,7 +552,11 @@ function easyloan_block_view($delta = ''){
       $block['content'] = array('#title' => '', );
       return $block;
     case 'newslist':
-      $block['subject'] = t('');
+      $block['subject'] = t('asdfasdf');
+      $block['content'] = array('#title' => '', );
+      return $block;
+    case 'noticeslist':
+      $block['subject'] = t('hahah');
       $block['content'] = array('#title' => '', );
       return $block;
     case 'menu-easyloan_account':
@@ -678,18 +654,18 @@ function menu_callback($menu, $param = ''){
 
     case 'about_news':
       // check if param is a valid news id
-      if (intval($param) > 0){
+      /*if (intval($param) > 0){
         return theme('about-news-detail', $content);
-      } else {
+      } else {*/
         return theme('about-news', $content);
-      }
+      //}
     case 'about_notices':
       // check if param is a valid notice id
-      if (intval($param) > 0){
+      /*if (intval($param) > 0){
         return theme('about-notices-detail', $content);
-      } else {
+      } else {*/
         return theme('about-notices', $content);
-      }
+      //}
 
     case 'about_invite':
       return theme('about-invite', $content);
@@ -1153,13 +1129,19 @@ function easyloan_block_view_alter(&$data, $block) {
     }
   }
   
-  // Add contextual links for system menu blocks.
-/*
-  if ($block->module == 'system' && !empty($data['content'])) {
-    $system_menus = menu_list_system_menus();
-    if (isset($system_menus[$block->delta])) {
-      $data['content']['#contextual_links']['menu'] = array('admin/structure/menu/manage', array($block->delta));
-    }
-  }
-*/
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function easyloan_views_api() {
+  return array('api' => 3.0);
+}
+
+function easyloan_init(){
+  // Set theme's path
+  $themepath = drupal_get_path('theme', 'easyloan');
+  // add theme css in group CSS_SYSTEM
+  drupal_add_css($themepath . '/css/one.css', 
+    array('group' => CSS_SYSTEM, 'type' => 'file', 'weight' => -100));
 }

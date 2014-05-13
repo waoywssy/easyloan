@@ -6,10 +6,15 @@ core = 7.x
 files[] = easyloan.module
 files[] = easyloan.install
 
-
 configure=admin/config/content/easyloan/settings
 
-; dependencies[] = jquery_update
+
+dependencies[] = captcha
+dependencies[] = ctools
+;dependencies[] = csna
+dependencies[] = jquery_update
+dependencies[] = views
+
 ; Information added by drupal.org packaging script on 2010-11-22
 version = "1.0"
 project = "Boryi"

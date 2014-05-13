@@ -41,15 +41,16 @@ function easyloan_theme() {
     'about-news' => array(
         'path'     => $path . '/about', 
         'template' => 'news',),
-    'about-news-detail' => array(
+    /*'about-news-detail' => array(
         'path'     => $path . '/about', 
-        'template' => 'news-detail',),
+        'template' => 'news-detail',),*/
     'about-notices' => array(
         'path'     => $path . '/about', 
         'template' => 'notices',),
+    /*
     'about-notices-detail' => array(
         'path'     => $path . '/about', 
-        'template' => 'notices-detail',),
+        'template' => 'notices-detail',),*/
 
     'about-invite' => array(
         'path'     => $path . '/about', 

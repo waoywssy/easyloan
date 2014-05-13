@@ -36,9 +36,6 @@ function easyloan_install(){
 		'status'      => 1,
 		'comment'     => 0,
 	);
-
-	_declare_node_type('notice', $notice);
-
 	$news = array(
 		'type'        => 'news',
 		'name'        => $t('最新动态'),
@@ -49,9 +46,20 @@ function easyloan_install(){
 		'status'      => 1,
 		'comment'     => 0,
 	);
+	$explanation = array(
+		'type'        => 'explanation',
+		'name'        => $t('名词解释'),
+		'base'        => 'node_content',
+		'description' => $t('好易贷名词解释内容类型'),
+		'body_label'  => $t('名词解释'),
+		'promote'     => 0,
+		'status'      => 1,
+		'comment'     => 0,
+	);
 
-	//_declare_node_type('notice', $notice);
+	_declare_node_type('notice', $notice);
 	_declare_node_type('news', $news);
+	_declare_node_type('explanation', $news);
 }
 
 /*
@@ -96,22 +104,22 @@ function _declare_node_type($type, $content_type_array){
 	->condition('name', $type)
 	->execute();
 
-	variable_set('flippy_custom_sorting_' . $type, 0x693a303b);
-	variable_set('flippy_ellipse_' . $type, 0x733a333a222e2e2e223b);
-	variable_set('flippy_firstlast_' . $type, 0x693a303b);
-	variable_set('flippy_first_label_' . $type, 0x733a383a22c2ab204669727374223b);
-	variable_set('flippy_head_' . $type, 0x693a303b);
-	variable_set('flippy_last_label_' . $type, 0x733a373a224c61737420c2bb223b);
-	variable_set('flippy_loop_' . $type, 0x693a303b);
-	variable_set('flippy_' . $type, 0x693a313b);
-	variable_set('flippy_next_label_' . $type, 0x733a393a22e4b88be4b880e7af87223b);
-	variable_set('flippy_order_' . $type, 0x733a333a22415343223b);
-	variable_set('flippy_prev_label_' . $type, 0x733a393a22e4b88ae4b880e7af87223b);
-	variable_set('flippy_random_label_' . $type, 0x733a363a2252616e646f6d223b);
-	variable_set('flippy_random_' . $type, 0x693a303b);
-	variable_set('flippy_show_empty_' . $type, 0x693a303b);
-	variable_set('flippy_sort_' . $type, 0x733a373a2263726561746564223b);
-	variable_set('flippy_truncate_' . $type, 0x733a303a22223b);
+	variable_set('flippy_custom_sorting_' . $type, 0);
+	variable_set('flippy_ellipse_' . $type, '');
+	variable_set('flippy_firstlast_' . $type, 0);
+	variable_set('flippy_first_label_' . $type, '');
+	variable_set('flippy_head_' . $type, 0);
+	variable_set('flippy_last_label_' . $type, '');
+	variable_set('flippy_loop_' . $type, 0);
+	variable_set('flippy_' . $type, 1);
+	variable_set('flippy_next_label_' . $type, '下一篇');
+	variable_set('flippy_order_' . $type, 'ASC');
+	variable_set('flippy_prev_label_' . $type, '上一篇');
+	variable_set('flippy_random_label_' . $type, '');
+	variable_set('flippy_random_' . $type, 0);
+	variable_set('flippy_show_empty_' . $type, 1);
+	variable_set('flippy_sort_' . $type, 'created');
+	variable_set('flippy_truncate_' . $type, '');
 }
 
 function _remove_node_type($type){
@@ -181,6 +189,8 @@ function _installed_fields($type) {
 	    ),
 	  );
 	  return $fields;
+  	case 'explanation':
+	  return $fields;
   	
   	default:
   		# code...
@@ -233,6 +243,8 @@ function _installed_instances($type) {
 	    ),
 	  );
 	  return $instances;
+	case 'explanation':
+	  return $fields;
   	
   	default:
   		# code...
@@ -240,10 +252,6 @@ function _installed_instances($type) {
   }
   
 }
-
-
-
-
 
 
 /**
@@ -323,7 +331,6 @@ function easyloan_enable() {
 			'module'     => 'easyloan',
 		);
 		menu_link_save($menu_item);
-
 /*
 		// add sample exchange links
 		$menu_item = array(
@@ -340,18 +347,18 @@ function easyloan_enable() {
 	// 好易贷‘关于我们’左边菜单模块设置
 	db_update('block') 
 	    ->fields(array(
-			'region'     => 'sidebar_first',
-			'visibility' => 1,	// show only on listed pages 
-			'status'     => 1,
+			'region'     => 'sidebar_first', 
+			'visibility' => 2,	// 1: listed pages; 2: show PHP code 
+			'status'     => 1, 
 			'title'      => '<none>',
 			'pages'      => '<?php 
 $m = FALSE;
-$target = array("notice"=>1, "news"=>1, );
+$types = array("notice"=>1, "news"=>1, );
 $url = request_uri();
 if ((arg(0) == "node") && is_numeric(arg(1))) {
 $node = node_load(arg(1));
-	if ($node){
-		$m = isset(target[$node->type]);
+	if (isset(types[$node->type])){
+		$m = TRUE;
 	}
 }
 // block is invisible on URLs entered here 
@@ -462,12 +469,14 @@ function easyloan_uninstall() {
 			menu_delete($menu); 
 		}
 	}
-
+	
 	_remove_node_type('notice');
 	_remove_node_type('news');
+	_remove_node_type('explanation');
 
-	// variable_del('devel_debug_mail_directory'); 
-	// remove from variables table like 'flippy_%'
+	// remove the flippy settings for content types 
+	_remove_flippy_variables('notice');
+	_remove_flippy_variables('news');
 }
 
 function easyloan_disable(){
@@ -479,4 +488,23 @@ function easyloan_disable(){
 		menu_delete_links('easyloan_account'); 
 		menu_delete_links('easyloan_help'); 
 	}
+}
+
+function _remove_flippy_variables($type){
+	variable_del('flippy_custom_sorting_' . $type);
+	variable_del('flippy_ellipse_' . $type);
+	variable_del('flippy_firstlast_' . $type);
+	variable_del('flippy_first_label_' . $type);
+	variable_del('flippy_head_' . $type);
+	variable_del('flippy_last_label_' . $type);
+	variable_del('flippy_loop_' . $type);
+	variable_del('flippy_' . $type);
+	variable_del('flippy_next_label_' . $type);
+	variable_del('flippy_order_' . $type);
+	variable_del('flippy_prev_label_' . $type);
+	variable_del('flippy_random_label_' . $type);
+	variable_del('flippy_random_' . $type);
+	variable_del('flippy_show_empty_' . $type);
+	variable_del('flippy_sort_' . $type);
+	variable_del('flippy_truncate_' . $type);
 }

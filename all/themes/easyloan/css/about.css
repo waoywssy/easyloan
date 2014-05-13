@@ -3,3 +3,6 @@
 li.viewall{
 	list-style: none;
 }
+table.pagerer{
+	width:740px;
+}

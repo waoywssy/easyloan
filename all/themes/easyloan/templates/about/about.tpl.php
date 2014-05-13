@@ -6,13 +6,13 @@
  * Complete documentation for this file is available online.
  * @see https://drupal.org/node/1728148
  */
-/*
+
 $options = array(
-    'group'  => CSS_SYSTEM - 1,
-    'weight' => -10,
+    'group'  => CSS_THEME,
+    'weight' => 10,
   );
-*/
-drupal_add_css(drupal_get_path('theme','easyloan') . '/css/about.css');
+
+drupal_add_css(drupal_get_path('theme','easyloan') . '/css/about.css', $options);
 ?>
 <div class="pg-about-main right-container p20bs">
   <h1 class="rrdcolor-blue-text">公司简介</h1>

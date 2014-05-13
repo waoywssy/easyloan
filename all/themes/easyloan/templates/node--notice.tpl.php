@@ -14,7 +14,6 @@ $time = mktime(0, 0, 0, $date_array['month'], $date_array['day'], $date_array['y
 $date = date("Y-m-d", $time);
 $date1 = date("Y年m月d日", $time);
 global $base_url;
-
 ?>
 <div class="pg-about-main right-container p20bs"> 
   <h3 class="title"><?php print $title; ?></h3>  
