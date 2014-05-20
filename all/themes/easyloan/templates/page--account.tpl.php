@@ -11,7 +11,7 @@
   <?php print render($page['header']); ?>
   <?php //print $messages; ?>
   <div class="pg-container-content">
-	<div id="pg-account-index" class="pg-account">
+	<div>
 	    <div class="container_12 mt10 fn-clear">
 	      <div class="grid_2">
 			<?php print render($page['sidebar_first']); ?>

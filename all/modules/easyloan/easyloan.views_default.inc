@@ -376,10 +376,24 @@ function easyloan_views_default_views() {
   $handler->display->display_options['fields']['body']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['body']['hide_alter_empty'] = FALSE;
   $handler->display->display_options['fields']['body']['type'] = 'text_plain';
+  /* Field: Content: 分组标签 */
+  $handler->display->display_options['fields']['explanation_group']['id'] = 'explanation_group';
+  $handler->display->display_options['fields']['explanation_group']['table'] = 'field_data_explanation_group';
+  $handler->display->display_options['fields']['explanation_group']['field'] = 'explanation_group';
+  $handler->display->display_options['fields']['explanation_group']['label'] = '';
+  $handler->display->display_options['fields']['explanation_group']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['explanation_group']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['explanation_group']['type'] = 'taxonomy_term_reference_plain';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['created']['granularity'] = 'day';
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'OR',
+  );
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -394,11 +408,31 @@ function easyloan_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'explanation' => 'explanation',
   );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: 分组标签 (explanation_group) */
+  $handler->display->display_options['filters']['explanation_group_tid']['id'] = 'explanation_group_tid';
+  $handler->display->display_options['filters']['explanation_group_tid']['table'] = 'field_data_explanation_group';
+  $handler->display->display_options['filters']['explanation_group_tid']['field'] = 'explanation_group_tid';
+  $handler->display->display_options['filters']['explanation_group_tid']['operator'] = 'and';
+  $handler->display->display_options['filters']['explanation_group_tid']['value'] = array(
+    10 => '10',
+  );
+  $handler->display->display_options['filters']['explanation_group_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['explanation_group_tid']['vocabulary'] = 'help';
+  $handler->display->display_options['filters']['explanation_group_tid']['hierarchy'] = 1;
+
 
   /* Display: Block */
   $handler = $view->new_display('block', 'Block', 'block');
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['grouping'] = array(
+    0 => array(
+      'field' => 'explanation_group',
+      'rendered' => 0,
+      'rendered_strip' => 0,
+    ),
+  );
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['defaults']['style_options'] = FALSE;
@@ -421,7 +455,830 @@ function easyloan_views_default_views() {
     t('Block'),
   );
   $views[$view->name] = $view;
+
+  $view = new view();
+  $view->name = 'introlist';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = '平台介绍列表';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = '平台介绍列表';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['style_plugin'] = 'list';
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
+  $handler->display->display_options['style_options']['type'] = 'ol';
+  $handler->display->display_options['style_options']['wrapper_class'] = '';
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  /* Field: Global: View result counter */
+  $handler->display->display_options['fields']['counter']['id'] = 'counter';
+  $handler->display->display_options['fields']['counter']['table'] = 'views';
+  $handler->display->display_options['fields']['counter']['field'] = 'counter';
+  $handler->display->display_options['fields']['counter']['label'] = '';
+  $handler->display->display_options['fields']['counter']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['counter']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['counter']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['counter']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['counter']['counter_start'] = '1';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['text'] = '[counter].[title]';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_type'] = 'span';
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_wrapper_type'] = 'h2';
+  $handler->display->display_options['fields']['title']['element_wrapper_class'] = 'h4';
+  $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['title']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['body']['id'] = 'body';
+  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['body']['field'] = 'body';
+  $handler->display->display_options['fields']['body']['label'] = '';
+  $handler->display->display_options['fields']['body']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['body']['alter']['text'] = '<dl><dd>[body]</dd></dl>';
+  $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['body']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['body']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['body']['type'] = 'text_plain';
+  /* Field: Content: 分组标签 */
+  $handler->display->display_options['fields']['explanation_group']['id'] = 'explanation_group';
+  $handler->display->display_options['fields']['explanation_group']['table'] = 'field_data_explanation_group';
+  $handler->display->display_options['fields']['explanation_group']['field'] = 'explanation_group';
+  $handler->display->display_options['fields']['explanation_group']['label'] = '';
+  $handler->display->display_options['fields']['explanation_group']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['explanation_group']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['explanation_group']['type'] = 'taxonomy_term_reference_plain';
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['created']['granularity'] = 'day';
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'OR',
+  );
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'explanation' => 'explanation',
+  );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: 分组标签 (explanation_group) */
+  $handler->display->display_options['filters']['explanation_group_tid']['id'] = 'explanation_group_tid';
+  $handler->display->display_options['filters']['explanation_group_tid']['table'] = 'field_data_explanation_group';
+  $handler->display->display_options['filters']['explanation_group_tid']['field'] = 'explanation_group_tid';
+  $handler->display->display_options['filters']['explanation_group_tid']['value'] = array(
+    14 => '14',
+    12 => '12',
+    13 => '13',
+    11 => '11',
+  );
+  $handler->display->display_options['filters']['explanation_group_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['explanation_group_tid']['vocabulary'] = 'help';
+  $handler->display->display_options['filters']['explanation_group_tid']['hierarchy'] = 1;
+
+  /* Display: Block */
+  $handler = $view->new_display('block', 'Block', 'block');
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['grouping'] = array(
+    0 => array(
+      'field' => 'explanation_group',
+      'rendered' => 0,
+      'rendered_strip' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['separator'] = '.';
+  $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $translatables['introlist'] = array(
+    t('Master'),
+    t('平台介绍列表'),
+    t('more'),
+    t('Apply'),
+    t('Reset'),
+    t('Sort by'),
+    t('Asc'),
+    t('Desc'),
+    t('[counter].[title]'),
+    t('<dl><dd>[body]</dd></dl>'),
+    t('Block'),
+  );
+  $views[$view->name] = $view;
      
+
+  $view = new view();
+  $view->name = 'feelist';
+  $view->description = '';
+  $view->tag = '帮助中心';
+  $view->base_table = 'node';
+  $view->human_name = '利息和费用列表';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = '利息和费用列表';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['style_plugin'] = 'list';
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
+  $handler->display->display_options['style_options']['type'] = 'ol';
+  $handler->display->display_options['style_options']['wrapper_class'] = '';
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  /* Field: Global: View result counter */
+  $handler->display->display_options['fields']['counter']['id'] = 'counter';
+  $handler->display->display_options['fields']['counter']['table'] = 'views';
+  $handler->display->display_options['fields']['counter']['field'] = 'counter';
+  $handler->display->display_options['fields']['counter']['label'] = '';
+  $handler->display->display_options['fields']['counter']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['counter']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['counter']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['counter']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['counter']['counter_start'] = '1';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['text'] = '[counter].[title]';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_type'] = 'span';
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_wrapper_type'] = 'h2';
+  $handler->display->display_options['fields']['title']['element_wrapper_class'] = 'h4';
+  $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['title']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['body']['id'] = 'body';
+  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['body']['field'] = 'body';
+  $handler->display->display_options['fields']['body']['label'] = '';
+  $handler->display->display_options['fields']['body']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['body']['alter']['text'] = '<dl><dd>[body]</dd></dl>';
+  $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['body']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['body']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['body']['type'] = 'text_plain';
+  /* Field: Content: 分组标签 */
+  $handler->display->display_options['fields']['explanation_group']['id'] = 'explanation_group';
+  $handler->display->display_options['fields']['explanation_group']['table'] = 'field_data_explanation_group';
+  $handler->display->display_options['fields']['explanation_group']['field'] = 'explanation_group';
+  $handler->display->display_options['fields']['explanation_group']['label'] = '';
+  $handler->display->display_options['fields']['explanation_group']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['explanation_group']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['explanation_group']['type'] = 'taxonomy_term_reference_plain';
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['created']['granularity'] = 'day';
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'OR',
+  );
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'explanation' => 'explanation',
+  );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: 分组标签 (explanation_group) */
+  $handler->display->display_options['filters']['explanation_group_tid']['id'] = 'explanation_group_tid';
+  $handler->display->display_options['filters']['explanation_group_tid']['table'] = 'field_data_explanation_group';
+  $handler->display->display_options['filters']['explanation_group_tid']['field'] = 'explanation_group_tid';
+  $handler->display->display_options['filters']['explanation_group_tid']['value'] = array(
+    16 => '16',
+    15 => '15',
+  );
+  $handler->display->display_options['filters']['explanation_group_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['explanation_group_tid']['vocabulary'] = 'help';
+  $handler->display->display_options['filters']['explanation_group_tid']['hierarchy'] = 1;
+
+  /* Display: Block */
+  $handler = $view->new_display('block', 'Block', 'block');
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['grouping'] = array(
+    0 => array(
+      'field' => 'explanation_group',
+      'rendered' => 0,
+      'rendered_strip' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['separator'] = '.';
+  $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $translatables['feelist'] = array(
+    t('Master'),
+    t('利息和费用列表'),
+    t('more'),
+    t('Apply'),
+    t('Reset'),
+    t('Sort by'),
+    t('Asc'),
+    t('Desc'),
+    t('[counter].[title]'),
+    t('<dl><dd>[body]</dd></dl>'),
+    t('Block'),
+  );
+  $views[$view->name] = $view;
+
+
+  $view = new view();
+  $view->name = 'borrowlist';
+  $view->description = '';
+  $view->tag = '帮助中心';
+  $view->base_table = 'node';
+  $view->human_name = '我要借款列表';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = '我要借款列表';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['style_plugin'] = 'list';
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
+  $handler->display->display_options['style_options']['type'] = 'ol';
+  $handler->display->display_options['style_options']['wrapper_class'] = '';
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  /* Field: Global: View result counter */
+  $handler->display->display_options['fields']['counter']['id'] = 'counter';
+  $handler->display->display_options['fields']['counter']['table'] = 'views';
+  $handler->display->display_options['fields']['counter']['field'] = 'counter';
+  $handler->display->display_options['fields']['counter']['label'] = '';
+  $handler->display->display_options['fields']['counter']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['counter']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['counter']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['counter']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['counter']['counter_start'] = '1';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['text'] = '[counter].[title]';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_type'] = 'span';
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_wrapper_type'] = 'h2';
+  $handler->display->display_options['fields']['title']['element_wrapper_class'] = 'h4';
+  $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['title']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['body']['id'] = 'body';
+  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['body']['field'] = 'body';
+  $handler->display->display_options['fields']['body']['label'] = '';
+  $handler->display->display_options['fields']['body']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['body']['alter']['text'] = '<dl><dd>[body]</dd></dl>';
+  $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['body']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['body']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['body']['type'] = 'text_plain';
+  /* Field: Content: 分组标签 */
+  $handler->display->display_options['fields']['explanation_group']['id'] = 'explanation_group';
+  $handler->display->display_options['fields']['explanation_group']['table'] = 'field_data_explanation_group';
+  $handler->display->display_options['fields']['explanation_group']['field'] = 'explanation_group';
+  $handler->display->display_options['fields']['explanation_group']['label'] = '';
+  $handler->display->display_options['fields']['explanation_group']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['explanation_group']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['explanation_group']['type'] = 'taxonomy_term_reference_plain';
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['created']['granularity'] = 'day';
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'OR',
+  );
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'explanation' => 'explanation',
+  );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: 分组标签 (explanation_group) */
+  $handler->display->display_options['filters']['explanation_group_tid']['id'] = 'explanation_group_tid';
+  $handler->display->display_options['filters']['explanation_group_tid']['table'] = 'field_data_explanation_group';
+  $handler->display->display_options['filters']['explanation_group_tid']['field'] = 'explanation_group_tid';
+  $handler->display->display_options['filters']['explanation_group_tid']['value'] = array(
+    23 => '23',
+    24 => '24',
+    18 => '18',
+    22 => '22',
+    17 => '17',
+    21 => '21',
+    19 => '19',
+    20 => '20',
+  );
+  $handler->display->display_options['filters']['explanation_group_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['explanation_group_tid']['vocabulary'] = 'help';
+  $handler->display->display_options['filters']['explanation_group_tid']['hierarchy'] = 1;
+
+  /* Display: Block */
+  $handler = $view->new_display('block', 'Block', 'block');
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['grouping'] = array(
+    0 => array(
+      'field' => 'explanation_group',
+      'rendered' => 0,
+      'rendered_strip' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['separator'] = '.';
+  $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $translatables['borrowlist'] = array(
+    t('Master'),
+    t('我要借款列表'),
+    t('more'),
+    t('Apply'),
+    t('Reset'),
+    t('Sort by'),
+    t('Asc'),
+    t('Desc'),
+    t('[counter].[title]'),
+    t('<dl><dd>[body]</dd></dl>'),
+    t('Block'),
+  );
+
+  $views[$view->name] = $view;
+
+
+  $view = new view();
+  $view->name = 'investlist';
+  $view->description = '';
+  $view->tag = '帮助中心';
+  $view->base_table = 'node';
+  $view->human_name = '我要投资列表';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = '我要投资列表';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['style_plugin'] = 'list';
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
+  $handler->display->display_options['style_options']['type'] = 'ol';
+  $handler->display->display_options['style_options']['wrapper_class'] = '';
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  /* Field: Global: View result counter */
+  $handler->display->display_options['fields']['counter']['id'] = 'counter';
+  $handler->display->display_options['fields']['counter']['table'] = 'views';
+  $handler->display->display_options['fields']['counter']['field'] = 'counter';
+  $handler->display->display_options['fields']['counter']['label'] = '';
+  $handler->display->display_options['fields']['counter']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['counter']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['counter']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['counter']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['counter']['counter_start'] = '1';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['text'] = '[counter].[title]';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_type'] = 'span';
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_wrapper_type'] = 'h2';
+  $handler->display->display_options['fields']['title']['element_wrapper_class'] = 'h4';
+  $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['title']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['body']['id'] = 'body';
+  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['body']['field'] = 'body';
+  $handler->display->display_options['fields']['body']['label'] = '';
+  $handler->display->display_options['fields']['body']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['body']['alter']['text'] = '<dl><dd>[body]</dd></dl>';
+  $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['body']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['body']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['body']['type'] = 'text_plain';
+  /* Field: Content: 分组标签 */
+  $handler->display->display_options['fields']['explanation_group']['id'] = 'explanation_group';
+  $handler->display->display_options['fields']['explanation_group']['table'] = 'field_data_explanation_group';
+  $handler->display->display_options['fields']['explanation_group']['field'] = 'explanation_group';
+  $handler->display->display_options['fields']['explanation_group']['label'] = '';
+  $handler->display->display_options['fields']['explanation_group']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['explanation_group']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['explanation_group']['type'] = 'taxonomy_term_reference_plain';
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['created']['granularity'] = 'day';
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'OR',
+  );
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'explanation' => 'explanation',
+  );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: 分组标签 (explanation_group) */
+  $handler->display->display_options['filters']['explanation_group_tid']['id'] = 'explanation_group_tid';
+  $handler->display->display_options['filters']['explanation_group_tid']['table'] = 'field_data_explanation_group';
+  $handler->display->display_options['filters']['explanation_group_tid']['field'] = 'explanation_group_tid';
+  $handler->display->display_options['filters']['explanation_group_tid']['value'] = array(
+    25 => '25',
+    26 => '26',
+    28 => '28',
+    27 => '27',
+  );
+  $handler->display->display_options['filters']['explanation_group_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['explanation_group_tid']['vocabulary'] = 'help';
+  $handler->display->display_options['filters']['explanation_group_tid']['hierarchy'] = 1;
+
+  /* Display: Block */
+  $handler = $view->new_display('block', 'Block', 'block');
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['grouping'] = array(
+    0 => array(
+      'field' => 'explanation_group',
+      'rendered' => 0,
+      'rendered_strip' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['separator'] = '.';
+  $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $translatables['investlist'] = array(
+    t('Master'),
+    t('我要投资列表'),
+    t('more'),
+    t('Apply'),
+    t('Reset'),
+    t('Sort by'),
+    t('Asc'),
+    t('Desc'),
+    t('[counter].[title]'),
+    t('<dl><dd>[body]</dd></dl>'),
+    t('Block'),
+  );
+
+  $views[$view->name] = $view;
+
+
+  $view = new view();
+  $view->name = 'accountlist';
+  $view->description = '';
+  $view->tag = '帮助中心';
+  $view->base_table = 'node';
+  $view->human_name = '好易贷账户列表';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = '好易贷账户列表';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['style_plugin'] = 'list';
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
+  $handler->display->display_options['style_options']['type'] = 'ol';
+  $handler->display->display_options['style_options']['wrapper_class'] = '';
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  /* Field: Global: View result counter */
+  $handler->display->display_options['fields']['counter']['id'] = 'counter';
+  $handler->display->display_options['fields']['counter']['table'] = 'views';
+  $handler->display->display_options['fields']['counter']['field'] = 'counter';
+  $handler->display->display_options['fields']['counter']['label'] = '';
+  $handler->display->display_options['fields']['counter']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['counter']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['counter']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['counter']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['counter']['counter_start'] = '1';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['text'] = '[counter].[title]';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_type'] = 'span';
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_wrapper_type'] = 'h2';
+  $handler->display->display_options['fields']['title']['element_wrapper_class'] = 'h4';
+  $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['title']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['body']['id'] = 'body';
+  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['body']['field'] = 'body';
+  $handler->display->display_options['fields']['body']['label'] = '';
+  $handler->display->display_options['fields']['body']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['body']['alter']['text'] = '<dl><dd>[body]</dd></dl>';
+  $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['body']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['body']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['body']['type'] = 'text_plain';
+  /* Field: Content: 分组标签 */
+  $handler->display->display_options['fields']['explanation_group']['id'] = 'explanation_group';
+  $handler->display->display_options['fields']['explanation_group']['table'] = 'field_data_explanation_group';
+  $handler->display->display_options['fields']['explanation_group']['field'] = 'explanation_group';
+  $handler->display->display_options['fields']['explanation_group']['label'] = '';
+  $handler->display->display_options['fields']['explanation_group']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['explanation_group']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['explanation_group']['type'] = 'taxonomy_term_reference_plain';
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['created']['granularity'] = 'day';
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'OR',
+  );
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'explanation' => 'explanation',
+  );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: 分组标签 (explanation_group) */
+  $handler->display->display_options['filters']['explanation_group_tid']['id'] = 'explanation_group_tid';
+  $handler->display->display_options['filters']['explanation_group_tid']['table'] = 'field_data_explanation_group';
+  $handler->display->display_options['filters']['explanation_group_tid']['field'] = 'explanation_group_tid';
+  $handler->display->display_options['filters']['explanation_group_tid']['value'] = array(
+    31 => '31',
+    30 => '30',
+    29 => '29',
+  );
+  $handler->display->display_options['filters']['explanation_group_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['explanation_group_tid']['vocabulary'] = 'help';
+  $handler->display->display_options['filters']['explanation_group_tid']['hierarchy'] = 1;
+
+  /* Display: Block */
+  $handler = $view->new_display('block', 'Block', 'block');
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['grouping'] = array(
+    0 => array(
+      'field' => 'explanation_group',
+      'rendered' => 0,
+      'rendered_strip' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['separator'] = '.';
+  $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $translatables['accountlist'] = array(
+    t('Master'),
+    t('好易贷账户列表'),
+    t('more'),
+    t('Apply'),
+    t('Reset'),
+    t('Sort by'),
+    t('Asc'),
+    t('Desc'),
+    t('[counter].[title]'),
+    t('<dl><dd>[body]</dd></dl>'),
+    t('Block'),
+  );
+  $views[$view->name] = $view;
+
+
+  $view = new view();
+  $view->name = 'slideshow';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = '首页幻灯片视图';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = '首页幻灯片视图';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '5';
+  $handler->display->display_options['style_plugin'] = 'list';
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
+  $handler->display->display_options['style_options']['class'] = 'bjqs';
+  $handler->display->display_options['style_options']['wrapper_class'] = '';
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  /* Field: Content: 链接 */
+  $handler->display->display_options['fields']['field_link']['id'] = 'field_link';
+  $handler->display->display_options['fields']['field_link']['table'] = 'field_data_field_link';
+  $handler->display->display_options['fields']['field_link']['field'] = 'field_link';
+  $handler->display->display_options['fields']['field_link']['label'] = '';
+  $handler->display->display_options['fields']['field_link']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_link']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_link']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['field_link']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['field_link']['click_sort_column'] = 'url';
+  $handler->display->display_options['fields']['field_link']['type'] = 'link_plain';
+  /* Field: Content: 幻灯片图片 */
+  $handler->display->display_options['fields']['field_img']['id'] = 'field_img';
+  $handler->display->display_options['fields']['field_img']['table'] = 'field_data_field_img';
+  $handler->display->display_options['fields']['field_img']['field'] = 'field_img';
+  $handler->display->display_options['fields']['field_img']['label'] = '';
+  $handler->display->display_options['fields']['field_img']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_img']['alter']['text'] = '<li class="ui-slide01">
+    <a href="[field_link]" target="_blank"><img src="[field_img]"></img></a>
+  </li>';
+  $handler->display->display_options['fields']['field_img']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_img']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['field_img']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['field_img']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_img']['type'] = 'image_url';
+  $handler->display->display_options['fields']['field_img']['settings'] = array(
+    'url_type' => '0',
+    'image_style' => '',
+    'image_link' => '',
+  );
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'slideshow' => 'slideshow',
+  );
+
+  /* Display: Block */
+  $handler = $view->new_display('block', 'Block', 'block');
+  $translatables['slideshow'] = array(
+    t('Master'),
+    t('首页幻灯片视图'),
+    t('more'),
+    t('Apply'),
+    t('Reset'),
+    t('Sort by'),
+    t('Asc'),
+    t('Desc'),
+    t('<li class="ui-slide01">
+    <a href="[field_link]" target="_blank"><img src="[field_img]"></img></a>
+  </li>'),
+    t('Block'),
+  );
+  $views[$view->name] = $view;
+
   // return views
   return $views;
 }

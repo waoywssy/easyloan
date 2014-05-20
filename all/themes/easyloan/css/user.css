@@ -113,3 +113,11 @@
 #pg-account-user .ui-form-item .noauth{
   background:url("../images/noauth.png") left center no-repeat; 
 }
+
+#pg-account-user .ui-button{
+  display: inline-block;
+}
+
+label {
+  font-weight: normal;
+}

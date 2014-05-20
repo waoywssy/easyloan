@@ -10,10 +10,19 @@ configure=admin/config/content/easyloan/settings
 
 
 dependencies[] = captcha
-dependencies[] = ctools
+dependencies[] = ckeditor
 ;dependencies[] = csna
+dependencies[] = ctools
+dependencies[] = date
+dependencies[] = flippy
+dependencies[] = imce
+dependencies[] = pagerer
 dependencies[] = jquery_update
+dependencies[] = link
+dependencies[] = pagerer
 dependencies[] = views
+
+
 
 ; Information added by drupal.org packaging script on 2010-11-22
 version = "1.0"

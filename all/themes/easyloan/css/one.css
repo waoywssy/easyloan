@@ -3428,7 +3428,7 @@ text-align:center;
 width:10px;
 }
 
-.slider-nav-pointer li.active {
+.slider-nav-pointer li.active-marker {
 border:1px solid #0697da;
 background:#0697da;
 }

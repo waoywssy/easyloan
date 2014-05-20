@@ -112,28 +112,6 @@ global $base_url;
         </span>
       </li>
 
-      <li class="ui-list-item fn-clear ">
-        <span class="ui-list-field fn-left text-big w200 pr20">
-          <a class="fn-left w200 rrd-dimgray fn-text-overflow" href="./lend/10001" target="_blank" title="以房养老，周游世界">以房养老，周游世界，周游世界</a>
-        </span>
-        <span class="ui-list-field fn-left w80">房产商铺</span>
-        <span class="ui-list-field fn-left w110">一次性还本付息</span>
-        <span class="ui-list-field fn-left num text-right w70 pr10"><em class="value">11.00</em>%</span>
-        <span class="ui-list-field fn-left num text-right w70 pr30"><em class="value">20,000</em>元</span>
-        <span class="ui-list-field fn-left num text-right w50 pr30"><em class="value">12</em>个月</span>
-        <span class="ui-list-field fn-left w90">2014-01-01</span>
-        <span class="ui-list-field fn-left w80">
-          <strong class="ui-progressbar-mid ui-progressbar-mid-100"><em>23</em>%</strong>
-        </span>
-        <span class="ui-list-field fn-left w90">
-          <a class="ui-button ui-button-mid ui-button-blue ui-list-invest-button ui-list-invest-button-OPEN">
-            <span class="OPEN">投标</span>
-            <span class="READY FIRST_READY">已满标</span>
-            <span class="IN_PROGRESS">还款中</span>
-          </a>
-        </span>
-      </li>
-
       <li class="ui-list-more">
         <a class="darkgray" href="lend" target="_blank">查看更多投资理财项目</a>
       </li>

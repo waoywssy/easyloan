@@ -632,6 +632,10 @@ function menu_callback($menu, $param = ''){
     case 'account_myloan':
       return theme('account-myloan', $content);
     case 'account_basicinfo':
+
+      $content['age'] = 119;
+
+
       return theme('account-basicinfo', $content);
     case 'account_security':
       return theme('account-security', $content);
@@ -800,7 +804,6 @@ function easyloan_menu_link($variables){
       }*/
       
       $output = '<li class="' . $li_class . ' ' . ($is_active ? 'active' : '') . '">' . $output . $sub_menu . '</li>';
-
       return $output;
 
     case 'menu_link__easyloan_guide':
